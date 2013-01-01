@@ -3,7 +3,7 @@ layout: post
 title: "八月: 青海湖(下)"
 date: 2015-10-07 10:26:54 +0800
 comments: true
-categories: [Travel, 驴行]
+categories: Travel
 keywords: Qinghai, 青海湖
 description: 
 ---

@@ -62,6 +62,8 @@ OneNote：以前用Evernote为主，但是更偏重于收集。OneNote的整理�
 
 Office： 送了一年的365，提供最新版下载更新，PPT做Presentation会很方便。
 
+Update: 刚夸了巨硬大法，就被打脸了。发现屏幕触控有些问题，客服和支持都无法解决，所幸Reddit看到一个神回复，解决了问题。
+
 [img1]: http://7xj95q.com1.z0.glb.clouddn.com/surface-think.jpg?imageView2/2/w/400/h/300/q/85|watermark/2/text/TGF3cmVuY2UgU3Vu/font/YXJpYWw=/fontsize/200/fill/I0VGRUZFRg==/dissolve/56/gravity/SouthEast/dx/10/dy/10
 
 [img2]: http://7xj95q.com1.z0.glb.clouddn.com/surface-mac.jpg?imageView2/2/w/400/h/300/q/85|watermark/2/text/TGF3cmVuY2UgU3Vu/font/YXJpYWw=/fontsize/200/fill/I0VGRUZFRg==/dissolve/56/gravity/SouthEast/dx/10/dy/10
