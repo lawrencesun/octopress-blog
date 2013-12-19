@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Lawrence Sun's Blog]]></title>
   <link href="http://lawrencesun.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://lawrencesun.github.io/"/>
-  <updated>2013-12-19T12:43:40+00:00</updated>
+  <updated>2013-12-19T13:23:43+00:00</updated>
   <id>http://lawrencesun.github.io/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -20,7 +20,31 @@
     <id>http://lawrencesun.github.io/blog/2013/12/19/set-up-octopress</id>
     <content type="html"><![CDATA[<p>I have a blog built by powerful Wordpress and quite like it. There are plenty of great plugins and themes to help you customize blog.</p>
 
-<p>Octopress is definately built for hackers. Pure words and command lines. So I think building a Octopress blog would be a good way to learn and share.</p>
+<p><strong>Octopress</strong> is definately built for hackers. Pure words and command lines. So I think building a Octopress blog would be a good way to learn and share.</p>
+
+<p>The advantages of Octopress:
+&ndash; static page
+&ndash; markdown
+&ndash; hosting on github pages</p>
+
+<p>Setup Octopress is easy if you are familar with ruby and git.
+<code> ruby [linenos:false]
+git clone git://github.com/imathis/octopress.git octopress
+cd octopress
+</code></p>
+
+<p>Then install dependencies and default theme.
+<code> ruby [linenos:false]
+gem install bundler
+bundler install
+rake install
+</code></p>
+
+<p>Using third-party theme
+<code> ruby [linenos:false]
+git clone git@github.com:USERNAME/THEMENAME.git .themes/THEMENAME
+rake "install[THEMENAME]"
+</code></p>
 ]]></content>
   </entry>
   
