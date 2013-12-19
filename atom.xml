@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Lawrence Sun's Blog]]></title>
+  <link href="http://lawrencesun.github.io/atom.xml" rel="self"/>
+  <link href="http://lawrencesun.github.io/"/>
+  <updated>2013-12-19T00:43:38+00:00</updated>
+  <id>http://lawrencesun.github.io/</id>
+  <author>
+    <name><![CDATA[Lawrence Sun]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+</feed>
