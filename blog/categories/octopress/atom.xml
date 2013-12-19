@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Lawrence Sun's Blog]]></title>
-  <link href="http://lawrencesun.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Octopress | Lawrence Sun's Blog]]></title>
+  <link href="http://lawrencesun.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://lawrencesun.github.io/"/>
   <updated>2013-12-19T02:41:26+00:00</updated>
   <id>http://lawrencesun.github.io/</id>
