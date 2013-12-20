@@ -8,12 +8,13 @@ categories: Octopress
 
 I have a blog built by powerful Wordpress and quite like it. There are plenty of great plugins and themes to help you customize blog. 
 
-__Octopress__ is definately built for hackers. Pure words and command lines. So I think building a Octopress blog would be a good way to learn and share.
+[__Octopress__](http://octopress.org) is definately built for hackers. Pure words and command lines. So I think building a Octopress blog would be a good way to learn and share.
 
-The advantages of Octopress:
-- static page 
-- markdown
-- hosting on github pages
+The _advantages_ of Octopress:
+
+*  static page
+*  markdown
+*  hosting on github pages
   
 Setup Octopress is easy if you are familar with ruby and git.
 ```  ruby 

@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://lawrencesun.github.io
+url: http://voice.lawrencesun.info
 title: Lawrence Sun's Blog 
 subtitle: learn and share
 author: Lawrence Sun
@@ -90,7 +90,7 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name:
+disqus_short_name: voicelawrencesun
 disqus_show_comment_count: false
 
 # Google Analytics
