@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Lawrence Sun's Blog]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2013-12-20T01:16:47+00:00</updated>
+  <updated>2013-12-20T01:20:44+00:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -28,7 +28,7 @@
 rake setup_github_pages
 </code></p>
 
-<p>Copy SSH URL of this new repo(e.g. git@github.com:lawrencesun/lawrencesun.github.io.git)</p>
+<p>Copy URL of this new repo.</p>
 
 <p>Next run:</p>
 
