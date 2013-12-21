@@ -4,6 +4,9 @@ title: "Hello Octopress"
 date: 2013-12-19 02:13:05 +0000
 comments: true
 categories: Octopress
+
+keywords: octopress, wordpress, markdown, git
+description: How to set up Octopress Blog and the advantages of Octopress blog.
 ---
 
 I have a blog built by powerful Wordpress and quite like it. There are plenty of great plugins and themes to help you customize blog. 

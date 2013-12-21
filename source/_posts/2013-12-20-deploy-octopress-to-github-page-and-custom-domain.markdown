@@ -4,6 +4,9 @@ title: "Deploying Octopress to Github Pages and Custom Domain"
 date: 2013-12-20 00:16:04 +0000
 comments: true
 categories: Octopress
+
+keywords: octopress, github, deploy
+description: Deploy Octopress to custom subdomain using Github pages
 ---
 
 After [_Set up Octopress blog_](/blog/2013/12/19/set-up-octopress), I tried to deploying it to my own _subdomain_. 
@@ -16,7 +19,7 @@ Then run:
 rake setup_github_pages
 ```
 
-Copy SSH URL of this new repo(e.g. git@github.com:lawrencesun/lawrencesun.github.io.git)
+Copy URL of this new repo.
 
 Next run:
 
