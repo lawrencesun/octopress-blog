@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Lawrence Sun's Blog]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2013-12-20T01:20:44+00:00</updated>
+  <updated>2013-12-21T17:57:39+00:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Blogging With Octopress -- Posts, Comments and SEO]]></title>
+    <link href="http://voice.lawrencesun.info/blog/2013/12/21/blogging-with-octopress/"/>
+    <updated>2013-12-21T17:34:23+00:00</updated>
+    <id>http://voice.lawrencesun.info/blog/2013/12/21/blogging-with-octopress</id>
+    <content type="html"><![CDATA[<p>Run the following code to generate a new post:</p>
+
+<p><code>ruby
+rake new_post["new post"]
+</code>
+Octopress uses <a href="http://daringfireball.net/projects/markdown/">Markdown</a>, which&rsquo;s clean and simple as writing a text. I am still learning how to use it well.</p>
+
+<p>In order to get better SEO optimizations, add <em>keywords</em> and <em>description</em> at the beginning of each post after <em>catagories</em>.</p>
+
+<p>Octopress also allows us to add google analytics. Simply add Analytics ID in _config.yml file and add included</p>
+
+<p><code>
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-43779948-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</code>
+in _includes/custom/after_footer.html.</p>
+
+<p>If you want to add comments after each post like me, add Disqus shortname in _config.yml file and set URL, username etc. in Disqus Setting.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Deploying Octopress to Github Pages and Custom Domain]]></title>

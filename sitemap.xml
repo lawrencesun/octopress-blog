@@ -2,17 +2,21 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://voice.lawrencesun.info/blog/2013/12/19/set-up-octopress/</loc>
-        <lastmod>2013-12-19T13:37:59+00:00</lastmod>
+        <lastmod>2013-12-21T17:27:23+00:00</lastmod>
     </url>
     <url>
         <loc>
             http://voice.lawrencesun.info/blog/2013/12/20/deploy-octopress-to-github-page-and-custom-domain/
         </loc>
-        <lastmod>2013-12-20T01:20:35+00:00</lastmod>
+        <lastmod>2013-12-21T17:26:08+00:00</lastmod>
+    </url>
+    <url>
+        <loc>http://voice.lawrencesun.info/blog/2013/12/21/blogging-with-octopress/</loc>
+        <lastmod>2013-12-21T17:57:02+00:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/blog/archives/</loc>
-        <lastmod>2013-12-20T01:20:35+00:00</lastmod>
+        <lastmod>2013-12-21T17:57:02+00:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/blog/categories/</loc>
@@ -20,7 +24,7 @@
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/</loc>
-        <lastmod>2013-12-20T01:20:35+00:00</lastmod>
+        <lastmod>2013-12-21T17:57:02+00:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/robots.txt</loc>
