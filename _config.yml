@@ -68,6 +68,10 @@ github_repo_count: 0
 github_show_profile_link: true
 github_skip_forks: true
 
+# Weibo
+weibo_user: ylsun # 微博数字 ID 或域名 ID
+weibo_share: true 
+
 # Twitter
 twitter_user: sunyuliang
 twitter_tweet_button: true
