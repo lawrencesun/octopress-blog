@@ -4,7 +4,7 @@
   <title><![CDATA[Lawrence Sun's Blog]]></title>
   <link href="http://voice.lawrencesun.info/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-01-08T23:28:24+00:00</updated>
+  <updated>2014-01-08T23:55:45+00:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -33,6 +33,9 @@ git push
 </code></pre>
 
 <p>After watching and practing Git command from <strong>Git Real</strong> on <a href="http://zfer.us/9yIBW">Code School</a>, I generated a basic <em>cheat sheet</em> for myself. Here it is.</p>
+
+<!-- more -->
+
 
 <ul>
 <li><strong>Create</strong></li>
