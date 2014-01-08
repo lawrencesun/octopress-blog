@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Lawrence Sun's Blog]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-01-08T19:30:47+00:00</updated>
+  <updated>2014-01-08T20:29:56+00:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Add Weibo Support to Octopress Blog]]></title>
+    <link href="http://voice.lawrencesun.info/blog/2014/01/08/add-weibo-support-to-octopress-blog/"/>
+    <updated>2014-01-08T19:39:38+00:00</updated>
+    <id>http://voice.lawrencesun.info/blog/2014/01/08/add-weibo-support-to-octopress-blog</id>
+    <content type="html"><![CDATA[<p>Since I will go back China very soon, I think adding a <em>Weibo</em> link on the sidebar might be a good move. To be honest, I am not too keen on Weibo. The reason? Information overload.</p>
+
+<ul>
+<li>First, add following code to &ldquo;/source/_includes/header.html&rdquo;</li>
+</ul>
+
+
+<p>```</p>
+
+<pre><code>{ % if site.weibo_user % }
+    &lt;a class="weibo" href="http://www.weibo.com/ylsun" title="Weibo"&gt;Weibo&lt;/a&gt;
+{ % endif % }
+</code></pre>
+
+<p>```
+* Second, add following code to &ldquo;/sass/parts/_header.scss&rdquo;</p>
+
+<p>``` css
+&amp;.weibo{
+  background: image-url(&lsquo;social/weibo.png&rsquo;) center no-repeat #e32529;
+  border: 1px solid #e32529;
+  &amp;:hover{</p>
+
+<pre><code>  border: 1px solid darken(#e32529, 10%);
+</code></pre>
+
+<p>  }
+}
+```
+* Then, add the <a href="https://github.com/lawrencesun/lawrencesun.github.io/tree/source/source/images/social">“weibo.png”</a> to “/source/images/social” dirctory.
+* Finally, add following code to &ldquo;_config.yml&rdquo;</p>
+
+<p>```</p>
+
+<h1>Weibo</h1>
+
+<p>weibo_user: ylsun # 微博数字 ID 或域名 ID
+weibo_share: true
+```
+<sub>Thanks for sharing <a href="http://www.imallen.com/blog/2013/05/12/add-support-for-weibo-and-dribbble-to-greyshade.html">Allen</a> </sub></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Blogging With Octopress -- Posts, Comments and SEO]]></title>
