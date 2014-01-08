@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Git | Lawrence Sun's Blog]]></title>
+  <link href="http://voice.lawrencesun.info/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://voice.lawrencesun.info/"/>
+  <updated>2014-01-08T23:28:24+00:00</updated>
+  <id>http://voice.lawrencesun.info/</id>
+  <author>
+    <name><![CDATA[Lawrence Sun]]></name>
+    <email><![CDATA[yuliang1987@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[My Git Cheet Sheet]]></title>
+    <link href="http://voice.lawrencesun.info/blog/2014/01/08/my-git-cheet-sheet/"/>
+    <updated>2014-01-08T21:08:18+00:00</updated>
+    <id>http://voice.lawrencesun.info/blog/2014/01/08/my-git-cheet-sheet</id>
+    <content type="html"><![CDATA[<p>When I saw the Error on my rails sample_app and couldn&rsquo;t find the solution the other day, I wanted to abort the changes and intended to go back to the last commit. I searched on <em>stackoverflow</em> and followed the instruction, ran something like</p>
+
+<pre><code>git reset --Hard 
+</code></pre>
+
+<p>Then&hellip; I messed up the files and commits, unsurprisingly.</p>
+
+<p>So I decided to learn some basic command of <strong>Git</strong> apart from</p>
+
+<pre><code>git add .
+git commit -m "I need a cupa"
+git push
+</code></pre>
+
+<p>After watching and practing Git command from <strong>Git Real</strong> on <a href="http://zfer.us/9yIBW">Code School</a>, I generated a basic <em>cheat sheet</em> for myself. Here it is.</p>
+
+<ul>
+<li><p><strong>Create</strong>
+```ruby</p>
+
+<h1>Start a new repo</h1>
+
+$ git init
+
+<h1>Clone existing repo</h1>
+
+<p>$ git clone ssh://user@domain.com/rego.git
+```</p></li>
+<li><p><strong>Local Change</strong>
+```ruby</p>
+
+<h1>Check what&rsquo;s changed</h1>
+
+$ git status
+
+<h1>Add all current changes to the next commit (staging area)</h1>
+
+$ git add .
+
+<h1>Add some files</h1>
+
+$ git add <filename>
+
+<h1>Add files in /doc directory</h1>
+
+$ git add doc/
+
+<h1>Add all txt files</h1>
+
+$ git add *.txt
+
+<h1>Commit previously staged changes</h1>
+
+$ git commit -m &ldquo;Desperately need coffee&rdquo;
+
+<h1>Commit all changes from tracked(not new) files</h1>
+
+$ git commit -a -m &ldquo;Coffee&hellip;&rdquo;
+
+<h1>Change the last commit</h1>
+
+$ git commit &mdash;amend
+
+<h1>Show difference</h1>
+
+$ git diff
+
+<h1>Show staged difference</h1>
+
+<h1>git diff &mdash;staged</h1>
+
+<p>```</p></li>
+<li><p><strong>Remote</strong>
+```ruby</p>
+
+<h1>Add a remote</h1>
+
+$ git remote add <remote> <url>
+
+<h1>Delete a remote</h1>
+
+$ git remote -mv <remote>
+
+<h1>List all remote repos</h1>
+
+$ git remote -v
+
+<h1>Push local branch to remote repo, -u to set default</h1>
+
+$ git push -u <remote> <branch>
+
+<h1>Pull changes down from the remote. Including fetch(sync) and merge.</h1>
+
+<p>$ git pull
+```</p></li>
+<li><p><strong>History</strong>
+```ruby</p>
+
+<h1>Show all commits</h1>
+
+$ git log
+
+<h1>Show commits with graph</h1>
+
+$ git log &mdash;online &mdash;graph
+
+<h1>Show who chaged what</h1>
+
+<p>$ git blame <filename>
+```</p></li>
+<li><p><strong>Undo</strong>
+```ruby</p>
+
+<h1>Discard all the changes since last commit</h1>
+
+$ git checkout &mdash; <filename>
+
+<h1>Undo last commit and put changes into staging</h1>
+
+$ git reset &mdash;soft HEAD^
+
+<h1>Undo last 2 commits and all changes</h1>
+
+<p>$ git reset &mdash;hard HEAD^^
+```</p></li>
+<li><p><strong>Tags and Branches</strong>
+```ruby</p>
+
+<h1>Mark current commit with a tag</h1>
+
+$ git tag <name>
+
+<h1>List existing branches</h1>
+
+$ git branch
+
+<h1>Create a new branch</h1>
+
+$ git branch &lt;new_branch>
+
+<h1>Create a new branch and switch to it</h1>
+
+$ git checkout -b &lt;new_branch>
+
+<h1>Switch HEAD branch</h1>
+
+$ git checkout <branch>
+
+<h1>Check remote branches</h1>
+
+$ git branch -r
+
+<h1>Delete a local branch</h1>
+
+$ git branch -d <branch>
+
+<h1>Delete a remote <branch></h1>
+
+$ git push origin <branch>
+
+<h1>Clean up deleted remote branches</h1>
+
+<p>$ git remote prune origin
+```</p></li>
+<li><p><strong>Merge and Rebase</strong>
+```ruby</p>
+
+<h1>Merge <branch> into current HEAD</h1>
+
+$ git merge <branch>
+
+<h1>Fetch(sync) remote but don&rsquo;t merge</h1>
+
+$ git fetch
+
+<h1>Rebase current HEAD onto <branch></h1>
+
+<p>$ git rebase <branch>
+```</p></li>
+<li><p><strong>Config</strong>
+```ruby</p>
+
+<h1>Global user name and email</h1>
+
+$ git config &mdash;global user.name &ldquo;name&rdquo;
+$ git config &mdash;global user.email &ldquo;email&rdquo;
+
+<h1>Alias</h1>
+
+$ git config alias.<name> <command>
+
+<h1>Colour UI</h1>
+
+<p>$ git config &mdash;global color.ui true
+```</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

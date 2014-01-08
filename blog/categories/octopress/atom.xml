@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Lawrence Sun's Blog]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-01-08T20:29:56+00:00</updated>
+  <updated>2014-01-08T23:28:24+00:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,33 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Add About Page]]></title>
+    <link href="http://voice.lawrencesun.info/blog/2014/01/08/add-about-page/"/>
+    <updated>2014-01-08T20:47:46+00:00</updated>
+    <id>http://voice.lawrencesun.info/blog/2014/01/08/add-about-page</id>
+    <content type="html"><![CDATA[<p>Three steps:</p>
+
+<ul>
+<li>Run
+<code>
+rake new_page[about]
+</code></li>
+<li>Add following code to &ldquo;/source/_includes/custom/navigation.html file&rdquo;</li>
+</ul>
+
+
+<p><code>
+ &lt;li&gt;&lt;a href="/about"&gt;About&lt;/a&gt;&lt;/li&gt;
+</code></p>
+
+<ul>
+<li>Edit &ldquo;/about/index.markdown&rdquo; file if you want.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Add Weibo Support to Octopress Blog]]></title>
