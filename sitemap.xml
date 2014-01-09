@@ -1,39 +1,39 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://voice.lawrencesun.info/blog/2013/12/19/set-up-octopress/</loc>
+        <loc>http://voice.lawrencesun.info/posts/2013/12/19/set-up-octopress/</loc>
         <lastmod>2014-01-05T00:10:09+00:00</lastmod>
     </url>
     <url>
         <loc>
-            http://voice.lawrencesun.info/blog/2013/12/20/deploy-octopress-to-github-page-and-custom-domain/
+            http://voice.lawrencesun.info/posts/2013/12/20/deploy-octopress-to-github-page-and-custom-domain/
         </loc>
         <lastmod>2014-01-05T00:10:09+00:00</lastmod>
     </url>
     <url>
-        <loc>http://voice.lawrencesun.info/blog/2013/12/21/blogging-with-octopress/</loc>
+        <loc>http://voice.lawrencesun.info/posts/2013/12/21/blogging-with-octopress/</loc>
         <lastmod>2014-01-05T00:10:09+00:00</lastmod>
     </url>
     <url>
-        <loc>http://voice.lawrencesun.info/blog/2013/12/25/cracker-jokes/</loc>
+        <loc>http://voice.lawrencesun.info/posts/2013/12/25/cracker-jokes/</loc>
         <lastmod>2014-01-05T00:10:09+00:00</lastmod>
     </url>
     <url>
-        <loc>http://voice.lawrencesun.info/blog/2013/12/30/fitbit-flex-review/</loc>
+        <loc>http://voice.lawrencesun.info/posts/2013/12/30/fitbit-flex-review/</loc>
         <lastmod>2014-01-05T00:10:09+00:00</lastmod>
     </url>
     <url>
         <loc>
-            http://voice.lawrencesun.info/blog/2014/01/08/add-weibo-support-to-octopress-blog/
+            http://voice.lawrencesun.info/posts/2014/01/08/add-weibo-support-to-octopress-blog/
         </loc>
         <lastmod>2014-01-08T20:29:25+00:00</lastmod>
     </url>
     <url>
-        <loc>http://voice.lawrencesun.info/blog/2014/01/08/add-about-page/</loc>
+        <loc>http://voice.lawrencesun.info/posts/2014/01/08/add-about-page/</loc>
         <lastmod>2014-01-08T21:03:35+00:00</lastmod>
     </url>
     <url>
-        <loc>http://voice.lawrencesun.info/blog/2014/01/08/my-git-cheet-sheet/</loc>
+        <loc>http://voice.lawrencesun.info/posts/2014/01/08/my-git-cheet-sheet/</loc>
         <lastmod>2014-01-08T23:38:08+00:00</lastmod>
     </url>
     <url>

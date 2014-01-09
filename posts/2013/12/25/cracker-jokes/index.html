@@ -5,12 +5,12 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Blogging with Octopress -- Posts, Comments and SEO - Lawrence Sun's Blog</title>
+	<title>Cracker Jokes - Lawrence Sun's Blog</title>
 	<meta name="author" content="Lawrence Sun">
 
 	
-	<meta name="description" content="How to blogging with Octopress, use markdown and disqus, better SEO.">
-	<meta name="keywords" content="markdown, disqus, SEO, octopress">
+	<meta name="description" content="Build a cracker jokes web application for Christmas.">
+	<meta name="keywords" content="cracker jokes, ruby, sinatra, bootstrap, heroku, web app">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -19,7 +19,7 @@
 
 	<link href="/atom.xml" rel="alternate" title="Lawrence Sun's Blog" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://voice.lawrencesun.info/blog/2013/12/21/blogging-with-octopress/">
+	<link rel="canonical" href="http://voice.lawrencesun.info/posts/2013/12/25/cracker-jokes/">
 	<link href="/favicon.png" rel="shortcut icon">
 	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -74,6 +74,12 @@
   <li><a href="/about">About</a></li>
 </ul>
 
+
+<section class="aboutme">
+  <p>
+    Lawrence Sun's Blog
+  </p>
+</section>
 </nav>
 <nav id="sub-nav">
 	<div class="social">
@@ -112,44 +118,41 @@
 			
 			<div class="mid-col-container">
 				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-	<h1 class="title" itemprop="name">Blogging With Octopress -- Posts, Comments and SEO</h1>
-	<div class="entry-content" itemprop="articleBody"><p>Run the following code to generate a new post:</p>
+	<h1 class="title" itemprop="name">Cracker Jokes</h1>
+	<div class="entry-content" itemprop="articleBody"><p>I spent few hours on building <a href="http://crackerjokes.herokuapp.com/"><strong>Cracker Jokes</strong></a> &mdash; A Web Application based on <em>Ruby</em> and <em>Sinatra</em>.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rake</span> <span class="n">new_post</span><span class="o">[</span><span class="s2">&quot;new post&quot;</span><span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>I have little knowledge of Christmas. Sleeping and eating instant noodles was the theme of last few Christmas. This year, however, I am invited to a Christmas party. Apart from chosing the gifts, I also got to know some more about Christmas tradition.</p>
 
+<p>Craker Jokes is one of them. I have seen it few times on UK films and also inside Tescos. So I came up with the idea &mdash; backing up some <em>cracker jokes</em> for the party.</p>
 
-<p>Octopress uses <a href="http://daringfireball.net/projects/markdown/">Markdown</a>, which&rsquo;s clean and simple as writing a text. I am still learning how to use it well.</p>
+<p>I decide to use Ruby and Sinatra to realize it. Since I built a similar web app last summer, I set up this app quickly.</p>
 
-<p>In order to get better SEO optimizations, add <em>keywords</em> and <em>description</em> at the beginning of each post after <em>catagories</em>.</p>
+<p>The feature is quite simple, pop up a joke and click to see the next. <a href="http://crackerjokes.herokuapp.com/">Click here and have fun!</a> Suggestions are always <a href="https://github.com/lawrencesun/crackerjokes"><em>welcome</em></a>.</p>
 
-<p>Octopress also allows us to add google analytics. Simply add Analytics ID in _config.yml file and add included</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="p">{</span><span class="o">%</span> <span class="kp">include</span> <span class="n">google_analytics</span><span class="o">.</span><span class="n">html</span> <span class="o">%</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>in _includes/custom/after_footer.html.</p>
-
-<p>If you want to add comments after each post like me, add Disqus shortname in _config.yml file and set URL, username etc. in Disqus Setting.</p>
+<p><em>Merry Christmas and Happy New Year</em></p>
 </div>
 
 </article>
 
 	<div class="share">
-	<div class="addthis_toolbox addthis_default_style ">
+	<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
 
     
 	
-	<a class="addthis_button_tweet"></a>
+	<a class="addthis_button_preferred_1"></a>
 	
+    
+    <a class="addthis_button_sinaweibo"></a>
+    
 	
-	<a class="addthis_counter addthis_pill_style"></a>
+	<a class="addthis_button_compact"></a>
+    <a class="addthis_counter addthis_bubble_style"></a>
 	</div>
-  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52cdf8bd1d6c9646"></script>
 </div>
+
+
 
 
 
@@ -173,8 +176,8 @@ Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Sha
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://voice.lawrencesun.info/blog/2013/12/21/blogging-with-octopress/';
-        var disqus_url = 'http://voice.lawrencesun.info/blog/2013/12/21/blogging-with-octopress/';
+        var disqus_identifier = 'http://voice.lawrencesun.info/posts/2013/12/25/cracker-jokes/';
+        var disqus_url = 'http://voice.lawrencesun.info/posts/2013/12/25/cracker-jokes/';
         var disqus_script = 'embed.js';
       
     (function () {

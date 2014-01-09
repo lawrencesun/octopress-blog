@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Web App | Lawrence Sun's Blog]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/web-app/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-01-08T23:55:45+00:00</updated>
+  <updated>2014-01-09T01:38:23+00:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Cracker Jokes]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2013/12/25/cracker-jokes/"/>
+    <link href="http://voice.lawrencesun.info/posts/2013/12/25/cracker-jokes/"/>
     <updated>2013-12-25T05:25:07+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2013/12/25/cracker-jokes</id>
+    <id>http://voice.lawrencesun.info/posts/2013/12/25/cracker-jokes</id>
     <content type="html"><![CDATA[<p>I spent few hours on building <a href="http://crackerjokes.herokuapp.com/"><strong>Cracker Jokes</strong></a> &mdash; A Web Application based on <em>Ruby</em> and <em>Sinatra</em>.</p>
 
 <p>I have little knowledge of Christmas. Sleeping and eating instant noodles was the theme of last few Christmas. This year, however, I am invited to a Christmas party. Apart from chosing the gifts, I also got to know some more about Christmas tradition.</p>

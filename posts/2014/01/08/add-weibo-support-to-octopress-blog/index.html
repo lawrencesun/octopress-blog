@@ -5,12 +5,12 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Fitbit Flex Review - Lawrence Sun's Blog</title>
+	<title>Add Weibo Support to Octopress Blog - Lawrence Sun's Blog</title>
 	<meta name="author" content="Lawrence Sun">
 
 	
-	<meta name="description" content="Fitbit Flex Unbox and Review.">
-	<meta name="keywords" content="fitbit flex, fitness, wearable devices">
+	<meta name="description" content="Add Sina Weibo link to Octopress Blog.">
+	<meta name="keywords" content="octopress, sina weibo">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -19,7 +19,7 @@
 
 	<link href="/atom.xml" rel="alternate" title="Lawrence Sun's Blog" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://voice.lawrencesun.info/blog/2013/12/30/fitbit-flex-review/">
+	<link rel="canonical" href="http://voice.lawrencesun.info/posts/2014/01/08/add-weibo-support-to-octopress-blog/">
 	<link href="/favicon.png" rel="shortcut icon">
 	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -74,6 +74,12 @@
   <li><a href="/about">About</a></li>
 </ul>
 
+
+<section class="aboutme">
+  <p>
+    Lawrence Sun's Blog
+  </p>
+</section>
 </nav>
 <nav id="sub-nav">
 	<div class="social">
@@ -112,76 +118,83 @@
 			
 			<div class="mid-col-container">
 				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-	<h1 class="title" itemprop="name">Fitbit Flex Review</h1>
-	<div class="entry-content" itemprop="articleBody"><p>I bought myself <a href="http://www.fitbit.com/uk"><em>Fitbit Flex</em></a> as a Christmas gift. It was on the top of my wishing list. I was planning to wait <em>Fitbit Force</em> which might be released in the next few months. However, after reading the reviews on Amazon US, I decided to buy <em>Flex</em> instead.</p>
-
-<p>I have used it for nearly a week. Really enjoyed it so far.</p>
-
-<p><img src="https://lh4.googleusercontent.com/-VtniTUVFNMA/UsIWsq2Bq5I/AAAAAAAAAI0/36cxzvZAYLE/w250/h200"></p>
-
-<p><strong>Motivation</strong></p>
-
-<p>I walked more than usual this week. I went to City Centre on foot twice in order to achieve everyday goal set on this tiny device.</p>
-
-<p><strong>Battery</strong></p>
-
-<p>I haven&rsquo;t charged it for almost one week. Impressed.</p>
-
-<p><strong>Steps Count</strong></p>
-
-<p>Unlike the traditional step counter, <em>Flex</em> is with you all the time. You can also track the progress by simply tap it twice.</p>
-
-<p><strong>Sleep Tracking</strong></p>
-
-<p>Another feature I liked is sleep tracking. Tap it rapidly to step into sleep model. It will record the time of restless and awake, as well as the sleeping hour.</p>
-
-<p><img src="https://lh4.googleusercontent.com/iO0bpbGT6CFjslpMTKCE8GrU5NsbBXQI9gd8Bo-WvrY=w170-h225-no"> <img src="https://lh3.googleusercontent.com/-T2gqv0pND1g/UsIWunWl3LI/AAAAAAAAAJE/ojbTvVVeQRM/w170/h225"></p>
-
-<p><strong>Alarm</strong></p>
-
-<p>It will vibrates at the time you set on the iPhone.</p>
-
-<p><strong>Sync</strong></p>
-
-<p>Sync smoothly with my iPhone through Bluetooth. So I am able to see the realtime data of steps, distance, calories burned, active minutes etc.</p>
-
-<p><strong>Water Proof</strong></p>
-
-<p>You can used it in the shower or in the rain in theory. I have never tried this though.</p>
-
-<p><strong>Third Party App</strong></p>
-
-<p>Several fitness apps support it.</p>
-
-<p><strong>Downsides</strong></p>
+	<h1 class="title" itemprop="name">Add Weibo Support to Octopress Blog</h1>
+	<div class="entry-content" itemprop="articleBody"><p>Since I will go back China very soon, I think adding a <em>Weibo</em> link on the sidebar might be a good move. To be honest, I am not too keen on Weibo. The reason? Information overload.</p>
 
 <ul>
-<li><p>Have to log food eaten by myself. So I just ignore this.</p></li>
-<li><p>Not be able to track other activities like cycling.</p></li>
-<li><p>Will get some <em>&lsquo;bonus&rsquo;</em> steps since it&rsquo;s wrist-based.</p></li>
-<li><p>No altimeter.</p></li>
+<li>First, add following code to &ldquo;/source/_includes/header.html&rdquo;</li>
 </ul>
 
 
-<p><em>Overall</em>, I highly recommend it.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{ % if site.weibo_user % }
+</span><span class='line'>  &lt;a class="weibo" href="http://www.weibo.com/ylsun" title="Weibo"&gt;Weibo&lt;/a&gt;
+</span><span class='line'>{ % endif % }</span></code></pre></td></tr></table></div></figure>
 
-<p><sub><a href="http://lawrencesun.info/blog/?cat=71">Previous Gadgets Reviews</a> </sub></p>
+
+<ul>
+<li>Second, add following code to &ldquo;/sass/parts/_header.scss&rdquo;</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="o">&amp;</span><span class="nc">.weibo</span><span class="p">{</span>
+</span><span class='line'>  <span class="k">background</span><span class="o">:</span> <span class="n">image</span><span class="o">-</span><span class="sx">url(&#39;social/weibo.png&#39;)</span> <span class="k">center</span> <span class="k">no-repeat</span> <span class="m">#e32529</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="m">#e32529</span><span class="p">;</span>
+</span><span class='line'>  <span class="o">&amp;:</span><span class="n">hover</span><span class="err">{</span>
+</span><span class='line'>      <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="n">darken</span><span class="p">(</span><span class="m">#e32529</span><span class="o">,</span> <span class="m">10</span><span class="o">%</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Then, add the <a href="https://github.com/lawrencesun/lawrencesun.github.io/tree/source/source/images/social">“weibo.png”</a> to “/source/images/social” dirctory.</li>
+<li>Finally, add following code to &ldquo;_config.yml&rdquo;</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="err">#</span> <span class="nt">Weibo</span>
+</span><span class='line'><span class="nt">weibo_user</span><span class="o">:</span> <span class="nt">ylsun</span> <span class="err">#</span> <span class="err">微博数字</span> <span class="nt">ID</span> <span class="err">或域名</span> <span class="nt">ID</span>
+</span><span class='line'><span class="nt">weibo_share</span><span class="o">:</span> <span class="nt">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><sub>Thanks for sharing <a href="http://www.imallen.com/blog/2013/05/12/add-support-for-weibo-and-dribbble-to-greyshade.html">Allen</a> </sub></p>
 </div>
 
 </article>
 
 	<div class="share">
-	<div class="addthis_toolbox addthis_default_style ">
+	<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
 
     
 	
-	<a class="addthis_button_tweet"></a>
+	<a class="addthis_button_preferred_1"></a>
 	
+    
+    <a class="addthis_button_sinaweibo"></a>
+    
 	
-	<a class="addthis_counter addthis_pill_style"></a>
+	<a class="addthis_button_compact"></a>
+    <a class="addthis_counter addthis_bubble_style"></a>
 	</div>
-  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52cdf8bd1d6c9646"></script>
 </div>
+
+
 
 
 
@@ -205,8 +218,8 @@ Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Sha
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://voice.lawrencesun.info/blog/2013/12/30/fitbit-flex-review/';
-        var disqus_url = 'http://voice.lawrencesun.info/blog/2013/12/30/fitbit-flex-review/';
+        var disqus_identifier = 'http://voice.lawrencesun.info/posts/2014/01/08/add-weibo-support-to-octopress-blog/';
+        var disqus_url = 'http://voice.lawrencesun.info/posts/2014/01/08/add-weibo-support-to-octopress-blog/';
         var disqus_script = 'embed.js';
       
     (function () {

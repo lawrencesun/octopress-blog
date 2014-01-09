@@ -4,7 +4,7 @@
   <title><![CDATA[Lawrence Sun's Blog]]></title>
   <link href="http://voice.lawrencesun.info/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-01-08T23:55:45+00:00</updated>
+  <updated>2014-01-09T01:38:23+00:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[My Git Cheet Sheet]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2014/01/08/my-git-cheet-sheet/"/>
+    <link href="http://voice.lawrencesun.info/posts/2014/01/08/my-git-cheet-sheet/"/>
     <updated>2014-01-08T21:08:18+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2014/01/08/my-git-cheet-sheet</id>
+    <id>http://voice.lawrencesun.info/posts/2014/01/08/my-git-cheet-sheet</id>
     <content type="html"><![CDATA[<p>When I saw the Error on my rails sample_app and couldn&rsquo;t find the solution the other day, I wanted to abort the changes and intended to go back to the last commit. I searched on <em>stackoverflow</em> and followed the instruction, ran something like</p>
 
 <pre><code>git reset --Hard 
@@ -259,9 +259,9 @@ git push
   
   <entry>
     <title type="html"><![CDATA[Add About Page]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2014/01/08/add-about-page/"/>
+    <link href="http://voice.lawrencesun.info/posts/2014/01/08/add-about-page/"/>
     <updated>2014-01-08T20:47:46+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2014/01/08/add-about-page</id>
+    <id>http://voice.lawrencesun.info/posts/2014/01/08/add-about-page</id>
     <content type="html"><![CDATA[<p>Three steps:</p>
 
 <ul>
@@ -286,9 +286,9 @@ rake new_page[about]
   
   <entry>
     <title type="html"><![CDATA[Add Weibo Support to Octopress Blog]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2014/01/08/add-weibo-support-to-octopress-blog/"/>
+    <link href="http://voice.lawrencesun.info/posts/2014/01/08/add-weibo-support-to-octopress-blog/"/>
     <updated>2014-01-08T19:39:38+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2014/01/08/add-weibo-support-to-octopress-blog</id>
+    <id>http://voice.lawrencesun.info/posts/2014/01/08/add-weibo-support-to-octopress-blog</id>
     <content type="html"><![CDATA[<p>Since I will go back China very soon, I think adding a <em>Weibo</em> link on the sidebar might be a good move. To be honest, I am not too keen on Weibo. The reason? Information overload.</p>
 
 <ul>
@@ -347,9 +347,9 @@ rake new_page[about]
   
   <entry>
     <title type="html"><![CDATA[Fitbit Flex Review]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2013/12/30/fitbit-flex-review/"/>
+    <link href="http://voice.lawrencesun.info/posts/2013/12/30/fitbit-flex-review/"/>
     <updated>2013-12-30T23:54:52+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2013/12/30/fitbit-flex-review</id>
+    <id>http://voice.lawrencesun.info/posts/2013/12/30/fitbit-flex-review</id>
     <content type="html"><![CDATA[<p>I bought myself <a href="http://www.fitbit.com/uk"><em>Fitbit Flex</em></a> as a Christmas gift. It was on the top of my wishing list. I was planning to wait <em>Fitbit Force</em> which might be released in the next few months. However, after reading the reviews on Amazon US, I decided to buy <em>Flex</em> instead.</p>
 
 <p>I have used it for nearly a week. Really enjoyed it so far.</p>
@@ -408,9 +408,9 @@ rake new_page[about]
   
   <entry>
     <title type="html"><![CDATA[Cracker Jokes]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2013/12/25/cracker-jokes/"/>
+    <link href="http://voice.lawrencesun.info/posts/2013/12/25/cracker-jokes/"/>
     <updated>2013-12-25T05:25:07+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2013/12/25/cracker-jokes</id>
+    <id>http://voice.lawrencesun.info/posts/2013/12/25/cracker-jokes</id>
     <content type="html"><![CDATA[<p>I spent few hours on building <a href="http://crackerjokes.herokuapp.com/"><strong>Cracker Jokes</strong></a> &mdash; A Web Application based on <em>Ruby</em> and <em>Sinatra</em>.</p>
 
 <p>I have little knowledge of Christmas. Sleeping and eating instant noodles was the theme of last few Christmas. This year, however, I am invited to a Christmas party. Apart from chosing the gifts, I also got to know some more about Christmas tradition.</p>
@@ -427,9 +427,9 @@ rake new_page[about]
   
   <entry>
     <title type="html"><![CDATA[Blogging with Octopress -- Posts, Comments and SEO]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2013/12/21/blogging-with-octopress/"/>
+    <link href="http://voice.lawrencesun.info/posts/2013/12/21/blogging-with-octopress/"/>
     <updated>2013-12-21T17:34:23+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2013/12/21/blogging-with-octopress</id>
+    <id>http://voice.lawrencesun.info/posts/2013/12/21/blogging-with-octopress</id>
     <content type="html"><![CDATA[<p>Run the following code to generate a new post:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -456,9 +456,9 @@ rake new_page[about]
   
   <entry>
     <title type="html"><![CDATA[Deploying Octopress to Github Pages and Custom Domain]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2013/12/20/deploy-octopress-to-github-page-and-custom-domain/"/>
+    <link href="http://voice.lawrencesun.info/posts/2013/12/20/deploy-octopress-to-github-page-and-custom-domain/"/>
     <updated>2013-12-20T00:16:04+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2013/12/20/deploy-octopress-to-github-page-and-custom-domain</id>
+    <id>http://voice.lawrencesun.info/posts/2013/12/20/deploy-octopress-to-github-page-and-custom-domain</id>
     <content type="html"><![CDATA[<p>After <a href="http://voice.lawrencesun.info/blog/2013/12/19/set-up-octopress"><em>Set up Octopress blog</em></a>, I tried to deploying it to my own <em>subdomain</em>.</p>
 
 <p>First, create a new Github repository called &ldquo;username.github.io&rdquo;. e.g. I created a new repo &ldquo;lawrencesun.github.io&rdquo;.</p>
@@ -518,9 +518,9 @@ create a new CNAME record in domain name server.</p>
   
   <entry>
     <title type="html"><![CDATA[Hello Octopress]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2013/12/19/set-up-octopress/"/>
+    <link href="http://voice.lawrencesun.info/posts/2013/12/19/set-up-octopress/"/>
     <updated>2013-12-19T02:13:05+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2013/12/19/set-up-octopress</id>
+    <id>http://voice.lawrencesun.info/posts/2013/12/19/set-up-octopress</id>
     <content type="html"><![CDATA[<p>I have a blog built by powerful Wordpress and quite like it. There are plenty of great plugins and themes to help you customize blog.</p>
 
 <p><a href="http://octopress.org"><strong>Octopress</strong></a> is definately built for hackers. Pure words and command lines. So I think building a Octopress blog would be a good way to learn and share.</p>

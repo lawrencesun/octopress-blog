@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | Lawrence Sun's Blog]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-01-08T23:55:45+00:00</updated>
+  <updated>2014-01-09T01:38:23+00:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[My Git Cheet Sheet]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2014/01/08/my-git-cheet-sheet/"/>
+    <link href="http://voice.lawrencesun.info/posts/2014/01/08/my-git-cheet-sheet/"/>
     <updated>2014-01-08T21:08:18+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2014/01/08/my-git-cheet-sheet</id>
+    <id>http://voice.lawrencesun.info/posts/2014/01/08/my-git-cheet-sheet</id>
     <content type="html"><![CDATA[<p>When I saw the Error on my rails sample_app and couldn&rsquo;t find the solution the other day, I wanted to abort the changes and intended to go back to the last commit. I searched on <em>stackoverflow</em> and followed the instruction, ran something like</p>
 
 <pre><code>git reset --Hard 

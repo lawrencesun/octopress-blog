@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Lawrence Sun's Blog]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-01-08T23:55:45+00:00</updated>
+  <updated>2014-01-09T01:38:23+00:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Add About Page]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2014/01/08/add-about-page/"/>
+    <link href="http://voice.lawrencesun.info/posts/2014/01/08/add-about-page/"/>
     <updated>2014-01-08T20:47:46+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2014/01/08/add-about-page</id>
+    <id>http://voice.lawrencesun.info/posts/2014/01/08/add-about-page</id>
     <content type="html"><![CDATA[<p>Three steps:</p>
 
 <ul>
@@ -42,9 +42,9 @@ rake new_page[about]
   
   <entry>
     <title type="html"><![CDATA[Add Weibo Support to Octopress Blog]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2014/01/08/add-weibo-support-to-octopress-blog/"/>
+    <link href="http://voice.lawrencesun.info/posts/2014/01/08/add-weibo-support-to-octopress-blog/"/>
     <updated>2014-01-08T19:39:38+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2014/01/08/add-weibo-support-to-octopress-blog</id>
+    <id>http://voice.lawrencesun.info/posts/2014/01/08/add-weibo-support-to-octopress-blog</id>
     <content type="html"><![CDATA[<p>Since I will go back China very soon, I think adding a <em>Weibo</em> link on the sidebar might be a good move. To be honest, I am not too keen on Weibo. The reason? Information overload.</p>
 
 <ul>
@@ -90,9 +90,9 @@ weibo_share: true
   
   <entry>
     <title type="html"><![CDATA[Blogging With Octopress -- Posts, Comments and SEO]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2013/12/21/blogging-with-octopress/"/>
+    <link href="http://voice.lawrencesun.info/posts/2013/12/21/blogging-with-octopress/"/>
     <updated>2013-12-21T17:34:23+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2013/12/21/blogging-with-octopress</id>
+    <id>http://voice.lawrencesun.info/posts/2013/12/21/blogging-with-octopress</id>
     <content type="html"><![CDATA[<p>Run the following code to generate a new post:</p>
 
 <p><code>ruby
@@ -128,9 +128,9 @@ in _includes/custom/after_footer.html.</p>
   
   <entry>
     <title type="html"><![CDATA[Deploying Octopress to Github Pages and Custom Domain]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2013/12/20/deploy-octopress-to-github-page-and-custom-domain/"/>
+    <link href="http://voice.lawrencesun.info/posts/2013/12/20/deploy-octopress-to-github-page-and-custom-domain/"/>
     <updated>2013-12-20T00:16:04+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2013/12/20/deploy-octopress-to-github-page-and-custom-domain</id>
+    <id>http://voice.lawrencesun.info/posts/2013/12/20/deploy-octopress-to-github-page-and-custom-domain</id>
     <content type="html"><![CDATA[<p>After <a href="/blog/2013/12/19/set-up-octopress"><em>Set up Octopress blog</em></a>, I tried to deploying it to my own <em>subdomain</em>.</p>
 
 <p>First, create a new Github repository called &ldquo;username.github.io&rdquo;. e.g. I created a new repo &ldquo;lawrencesun.github.io&rdquo;.</p>
@@ -181,9 +181,9 @@ echo '_yourdomain.com_(e.g. voice.lawrencesun.info)' &gt;&gt; source/CNAME
   
   <entry>
     <title type="html"><![CDATA[Hello Octopress]]></title>
-    <link href="http://voice.lawrencesun.info/blog/2013/12/19/set-up-octopress/"/>
+    <link href="http://voice.lawrencesun.info/posts/2013/12/19/set-up-octopress/"/>
     <updated>2013-12-19T02:13:05+00:00</updated>
-    <id>http://voice.lawrencesun.info/blog/2013/12/19/set-up-octopress</id>
+    <id>http://voice.lawrencesun.info/posts/2013/12/19/set-up-octopress</id>
     <content type="html"><![CDATA[<p>I have a blog built by powerful Wordpress and quite like it. There are plenty of great plugins and themes to help you customize blog.</p>
 
 <p><a href="http://octopress.org"><strong>Octopress</strong></a> is definately built for hackers. Pure words and command lines. So I think building a Octopress blog would be a good way to learn and share.</p>
