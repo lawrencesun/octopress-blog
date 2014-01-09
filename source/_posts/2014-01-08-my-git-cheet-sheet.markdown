@@ -20,6 +20,8 @@ So I decided to learn some basic command of __Git__ apart from
 
 After watching and practing Git command from __Git Real__ on [Code School](http://zfer.us/9yIBW), I generated a basic _cheat sheet_ for myself. Here it is.
 
+<!-- more -->
+
 * __Create__
 ```ruby
  # Start a new repo

@@ -7,7 +7,7 @@ title: Lawrence Sun's Blog
 subtitle: Hello World
 author: Lawrence Sun
 simple_search: http://google.com/search
-description:
+description: Lawrence Sun's Blog
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -27,7 +27,7 @@ email: yuliang1987@gmail.com
 
 # If publishing to a subdirectory as in http://site.com/project set 'root: /project'
 root: /
-permalink: /blog/:year/:month/:day/:title/
+permalink: /posts/:year/:month/:day/:title/
 source: source
 destination: public
 plugins: plugins
