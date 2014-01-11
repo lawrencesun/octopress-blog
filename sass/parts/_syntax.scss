@@ -38,22 +38,23 @@ $solarized: light !default;
   $base3:   $_base03;
 }
 
-$pre-bg: $color-gray04;
-$pre-border: $color-gray03;
+$pre-bg: #ededed;
+$pre-border: $color-gray04;
 
 article{
 	code, pre{
 		background: $pre-bg;
 		border: 1px solid $pre-border;
+		border-radius: 6px;
 		font-family: $font-mono;
 	}
 	code{
-		font-size: 0.9em;
+		font-size: 0.7em;
 		padding: 1px 3px;
 		margin: 0 3px;
 	}
 	pre{
-		font-size: 1 / 0.9em;
+		font-size: 1 / 0.7em;
 		line-height: 1.5;
 		margin-top: 10px;
 		padding: 5px 15px;
@@ -69,8 +70,10 @@ article{
 
 figure.code{
 	border: 1px solid $pre-border;
+	border-radius: 6px;
 	margin-top: 10px;
 	padding: 5px 15px;
+	background: #ededed;
 	figcaption{
 		font-size: 0.9em;
 		position: relative;
@@ -78,7 +81,7 @@ figure.code{
 			margin: -5px -15px 0;
 			padding: 5px 15px;
 			display: block;
-			background: #ececec;
+			background: #ededed;
 			&:empty{
 				display: none;
 			}
@@ -90,7 +93,7 @@ figure.code{
 		}
 	}
 	code, pre{
-		background: none;
+		background: #ededed;
 		border: none;
 		padding: 0;
 		margin: 0;
@@ -99,13 +102,13 @@ figure.code{
 		overflow-x: auto;
 	}
 	.line-numbers{
-		border-right: 1px solid $pre-border;
+    border-right: 1px solid $pre-border;
 		font-family: $font-mono;
 		padding-right: 15px;
 		text-align: right;
 	}
 	table{
-		background: white;
+		background: #ededed;
 		border: none;
 		text-align: left;
 		margin-top: 0;
