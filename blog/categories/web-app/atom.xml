@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Web App | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/web-app/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-01-15T12:24:31+00:00</updated>
+  <updated>2014-01-27T11:38:03+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Cracker Jokes]]></title>
     <link href="http://voice.lawrencesun.info/posts/2013/12/25/cracker-jokes/"/>
-    <updated>2013-12-25T05:25:07+00:00</updated>
+    <updated>2013-12-25T13:25:07+08:00</updated>
     <id>http://voice.lawrencesun.info/posts/2013/12/25/cracker-jokes</id>
     <content type="html"><![CDATA[<p>I spent few hours on building <a href="http://crackerjokes.herokuapp.com/"><strong>Cracker Jokes</strong></a> &mdash; A Web Application based on <em>Ruby</em> and <em>Sinatra</em>.</p>
 

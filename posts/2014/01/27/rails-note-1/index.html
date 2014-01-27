@@ -1,0 +1,573 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Rails Notes (1) - Lawrence Sun</title>
+	<meta name="author" content="Lawrence Sun">
+
+	
+	<meta name="description" content="notes taken for rails learning.">
+	<meta name="keywords" content="ruby, rails">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Lawrence Sun" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://voice.lawrencesun.info/posts/2014/01/27/rails-note-1/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-43779948-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("yuliang1987@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+	
+</div>
+<hgroup>
+  <h1><a href="/">Lawrence Sun</a></h1>
+  
+    <h2>Hello World</h2>
+  
+</hgroup>
+
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://lawrencesun.info/blog">Previous Blog</a></li>
+</ul>
+
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		<!--
+			<a class="email" href="mailto:yuliang1987@gmail.com" title="Email">Email</a>
+		 -->
+		
+		
+		
+			<a class="twitter" href="http://twitter.com/sunyuliang" title="Twitter">Twitter</a>
+		
+        
+            <a class="weibo" href="http://www.weibo.com/ylsun" title="Weibo">Weibo</a>
+        
+		
+			<a class="github" href="https://github.com/lawrencesun" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">Rails Notes (1)</h1>
+	<div class="entry-content" itemprop="articleBody"><p>After reading <a href="http://ruby.railstutorial.org"><em>Ruby on Rails Tutorial</em></a> &mdash;without a sound approach to the testing part, I am still confused. Before that I read the first chapter of <a href="http://guides.rubyonrails.org"><em>Rails Guides</em></a>, watched some courses about HTML and CSS on <a href="http://zfer.us/9yIBW"><em>Code School</em></a>. So it&rsquo;s better than the first time when I gived up halfway.</p>
+
+<p>I decided to start a project similar to the sample_app for practice. It will be a blog-like web app, focusing on the startup news and stories in Chinese.</p>
+
+<p>I will take some notes here throughout the whole progress.</p>
+
+<!-- more -->
+
+
+<ul>
+<li><strong>Migrations</strong></li>
+</ul>
+
+
+<p>run <code>rails generate migration CreatePosts title:string text:text</code> to create a blank migration</p>
+
+<p>create tables and run <code>rake db:migrate</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreatePosts</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">up</span>
+</span><span class='line'>      <span class="n">create_table</span> <span class="ss">:posts</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>          <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:title</span>
+</span><span class='line'>          <span class="n">t</span><span class="o">.</span><span class="n">text</span> <span class="ss">:text</span>
+</span><span class='line'>          <span class="n">t</span><span class="o">.</span><span class="n">timestamps</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">down</span>
+</span><span class='line'>      <span class="n">drop_table</span> <span class="ss">:posts</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><strong>Models</strong></li>
+</ul>
+
+
+<p>create &lsquo;post.rb&rsquo; under /app/models, some valiations and 1-M relationship.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:comments</span>
+</span><span class='line'>  <span class="n">validates</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">presence</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="ss">uniqueness</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="ss">length</span><span class="p">:</span> <span class="p">{</span> <span class="ss">minimum</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+</span><span class='line'>  <span class="n">validates</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">presence</span><span class="p">:</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><strong>Routes</strong></li>
+</ul>
+
+
+<p>nested routes:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">resources</span> <span class="ss">:posts</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">resources</span> <span class="ss">:comments</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>run <code>rake routes</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>         <span class="no">Prefix</span> <span class="no">Verb</span>             <span class="no">URI</span> <span class="no">Pattern</span>                             <span class="no">Controller</span><span class="c1">#Action</span>
+</span><span class='line'><span class="n">post_comments</span> <span class="no">GET</span>    <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>          <span class="n">comments</span><span class="c1">#index</span>
+</span><span class='line'>              <span class="no">POST</span>   <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>          <span class="n">comments</span><span class="c1">#create</span>
+</span><span class='line'> <span class="n">new_post_comment</span> <span class="no">GET</span>    <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="o">/</span><span class="kp">new</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">comments</span><span class="c1">#new</span>
+</span><span class='line'><span class="n">edit_post_comment</span> <span class="no">GET</span>    <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">edit</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span> <span class="n">comments</span><span class="c1">#edit</span>
+</span><span class='line'> <span class="n">post_comment</span> <span class="no">GET</span>    <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="o">/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">comments</span><span class="c1">#show</span>
+</span><span class='line'>              <span class="no">PATCH</span>  <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="o">/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">comments</span><span class="c1">#update</span>
+</span><span class='line'>              <span class="no">PUT</span>    <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="o">/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">comments</span><span class="c1">#update</span>
+</span><span class='line'>              <span class="no">DELETE</span> <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="o">/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">comments</span><span class="c1">#destroy</span>
+</span><span class='line'>        <span class="n">posts</span> <span class="no">GET</span>    <span class="sr">/posts(.:format)                            posts#index</span>
+</span><span class='line'><span class="sr">              POST   /</span><span class="n">posts</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                            <span class="n">posts</span><span class="c1">#create</span>
+</span><span class='line'>     <span class="n">new_post</span> <span class="no">GET</span>    <span class="sr">/posts/ne</span><span class="n">w</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                        <span class="n">posts</span><span class="c1">#new</span>
+</span><span class='line'>    <span class="n">edit_post</span> <span class="no">GET</span>    <span class="sr">/posts/</span><span class="ss">:id</span><span class="o">/</span><span class="n">edit</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                   <span class="n">posts</span><span class="c1">#edit</span>
+</span><span class='line'>         <span class="n">post</span> <span class="no">GET</span>    <span class="sr">/posts/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                        <span class="n">posts</span><span class="c1">#show</span>
+</span><span class='line'>              <span class="no">PATCH</span>  <span class="sr">/posts/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                        <span class="n">posts</span><span class="c1">#update</span>
+</span><span class='line'>              <span class="no">PUT</span>    <span class="sr">/posts/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                        <span class="n">posts</span><span class="c1">#update</span>
+</span><span class='line'>              <span class="no">DELETE</span> <span class="sr">/posts/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                        <span class="n">posts</span><span class="c1">#destroy</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Example link to usage</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="sx">%= link_to &#39;All posts&#39;, posts_path %&gt;</span>
+</span><span class='line'><span class="sx">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;New post&#39;</span><span class="p">,</span> <span class="n">new_post_path</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">&lt;%= link_to &#39;Edit post&#39;, edit_post_path(@post) %&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sx">%= link_to &#39;Show post&#39;, post_path(@post)%&gt; # or @post</span>
+</span><span class='line'><span class="sx">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Delete post&#39;</span><span class="p">,</span> <span class="vi">@post</span><span class="p">,</span> <span class="nb">method</span><span class="p">:</span> <span class="ss">:delete</span><span class="p">,</span> <span class="ss">data</span><span class="p">:</span> <span class="p">{</span> <span class="ss">confirm</span><span class="p">:</span> <span class="s1">&#39;Sure&#39;</span><span class="sc">?}</span> <span class="o">%&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><strong>Controller</strong></li>
+</ul>
+
+
+<p>create &lsquo;posts_controller.rb&rsquo; under /app/controllers</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">PostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>  <span class="n">before_action</span> <span class="ss">:find_post</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span><span class="o">[</span><span class="ss">:show</span><span class="p">,</span> <span class="ss">:edit</span><span class="p">,</span> <span class="ss">:update</span><span class="p">,</span> <span class="ss">:destroy</span><span class="o">]</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">def</span> <span class="nf">index</span>
+</span><span class='line'>      <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">all</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">show</span>
+</span><span class='line'>      <span class="vi">@comment</span> <span class="o">=</span> <span class="no">Comment</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">new</span>
+</span><span class='line'>      <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>      <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">post_params</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="vi">@post</span><span class="o">.</span><span class="n">save</span>
+</span><span class='line'>          <span class="n">flash</span><span class="o">[</span><span class="ss">:success</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;发布成功&quot;</span>
+</span><span class='line'>          <span class="n">redirect_to</span> <span class="vi">@post</span>
+</span><span class='line'>      <span class="k">else</span>
+</span><span class='line'>          <span class="n">render</span> <span class="s1">&#39;new&#39;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">edit</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">update</span>
+</span><span class='line'>      <span class="k">if</span> <span class="vi">@post</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:post</span><span class="o">].</span><span class="n">permit</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:text</span><span class="p">))</span>
+</span><span class='line'>          <span class="n">flash</span><span class="o">[</span><span class="ss">:success</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;更新成功&quot;</span>
+</span><span class='line'>          <span class="n">redirect_to</span> <span class="vi">@post</span>
+</span><span class='line'>      <span class="k">else</span>
+</span><span class='line'>          <span class="n">render</span> <span class="s1">&#39;edit&#39;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">destroy</span>
+</span><span class='line'>      <span class="vi">@post</span><span class="o">.</span><span class="n">destroy</span>
+</span><span class='line'>      <span class="n">redirect_to</span> <span class="vi">@post</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kp">private</span>
+</span><span class='line'>      <span class="k">def</span> <span class="nf">find_post</span>
+</span><span class='line'>          <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">def</span> <span class="nf">post_params</span>
+</span><span class='line'>          <span class="n">params</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="ss">:post</span><span class="p">)</span><span class="o">.</span><span class="n">permit</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:text</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><strong>Views</strong></li>
+</ul>
+
+
+<p>View Partials
+create &lsquo;_form.html.erb&rsquo; under /app/views/posts</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># model backed form</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;well&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="sx">%= form_for @post do |f| %&gt;</span>
+</span><span class='line'><span class="sx">     &lt;%=</span> <span class="n">render</span> <span class="s1">&#39;shared/error&#39;</span><span class="p">,</span> <span class="ss">object</span><span class="p">:</span> <span class="vi">@post</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">     </span>
+</span><span class='line'><span class="sx">     &lt;div class=&quot;control-group&quot;&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="sx">%= f.label &quot;标题&quot; %&gt;</span>
+</span><span class='line'><span class="sx">     &lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">text_field</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s2">&quot;input-block-level&quot;</span> <span class="sx">%&gt; #full-width</span>
+</span><span class='line'><span class="sx">     &lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;control-group&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="sx">%= f.label &quot;内容&quot; %&gt;</span>
+</span><span class='line'><span class="sx">     &lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">text_area</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">rows</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s2">&quot;input-block-level&quot;</span> <span class="sx">%&gt; </span>
+</span><span class='line'><span class="sx">     &lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="o">&lt;</span><span class="sx">%= f.submit(@post.new_record? ? &quot;发布&quot; : &quot;更新&quot;, class: &quot;btn btn-primary&quot;) %&gt;</span>
+</span><span class='line'><span class="sx"> &lt;% end %&gt;</span>
+</span><span class='line'><span class="sx"> &lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;取消&#39;</span><span class="p">,</span> <span class="n">posts_path</span><span class="p">(</span><span class="vi">@post</span><span class="p">)</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&lsquo;show.html.erb&rsquo; under /app/views/posts</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;container&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;span9&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;well&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="sx">% if </span><span class="vi">@post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">any?</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">                 &lt;% @post.comments.each do |c| %&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;&lt;</span><span class="sx">%= c.body %&gt;&lt;/p&gt;</span>
+</span><span class='line'><span class="sx">                 &lt;% end %&gt;</span>
+</span><span class='line'><span class="sx">             &lt;% end %&gt;</span>
+</span><span class='line'><span class="sx">             &lt;hr&gt;</span>
+</span><span class='line'><span class="sx">             &lt;%=</span> <span class="n">form_for</span> <span class="o">[</span><span class="vi">@post</span><span class="p">,</span> <span class="vi">@comment</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">                 &lt;%= render &#39;shared/error&#39;, object: @comment %&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;control-group&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="sx">%= f.text_area :body, rows: 5, class: &quot;input-block-level&quot; %&gt;</span>
+</span><span class='line'><span class="sx">                 &lt;/div&gt;</span>
+</span><span class='line'><span class="sx">                 &lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">submit</span> <span class="s1">&#39;发表评论&#39;</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s2">&quot;btn btn-primary&quot;</span><span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">             &lt;% end %&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="sr">/div&gt;</span>
+</span><span class='line'><span class="sr">     &lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;span3&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="sr">/div&gt;</span>
+</span><span class='line'><span class="sr"> &lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sr">/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+</article>
+
+	<div class="share">
+        <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+        
+        
+        <a class="addthis_button_twitter"></a>
+        
+        
+        <a class="addthis_button_sinaweibo"></a>
+        
+        
+        
+        <a class="addthis_button_compact"></a>
+        <a class="addthis_counter addthis_bubble_style"></a>
+        </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - Lawrence Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			
+
+<script type="text/javascript">
+      var disqus_shortname = 'voicelawrencesun';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://voice.lawrencesun.info/posts/2014/01/27/rails-note-1/';
+        var disqus_url = 'http://voice.lawrencesun.info/posts/2014/01/27/rails-note-1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-43779948-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+		</div>
+	</div>
+</body>
+</html>
