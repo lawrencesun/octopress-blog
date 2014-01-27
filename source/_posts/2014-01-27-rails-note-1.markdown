@@ -1,0 +1,209 @@
+---
+layout: post
+title: "Rails Notes"
+date: 2014-01-27 09:32:52 +0800
+comments: true
+categories: [Rails, Ruby]
+
+keywords: ruby, rails
+description: notes taken for rails learning.
+---
+
+After reading [_Ruby on Rails Tutorial_](http://ruby.railstutorial.org) --without a sound approach to the testing part, I am still confused. Before that I read the first chapter of [_Rails Guides_](http://guides.rubyonrails.org), watched some courses about HTML and CSS on [_Code School_](http://zfer.us/9yIBW). So it's better than the first time when I gived up halfway. 
+
+I decided to start a project similar to the sample_app for practice. It will be a blog-like web app, focusing on the startup news and stories in Chinese.
+
+I will take some notes here throughout the whole progress.
+
+<!-- more -->
+
+* __Migrations__
+
+run `rails generate migration CreatePosts title:string text:text` to create a blank migration
+
+create tables and run `rake db:migrate`
+``` ruby
+class CreatePosts < ActiveRecord::Migration
+	def up
+		create_table :posts do |t|
+			t.string :title
+			t.text :text
+			t.timestamps
+		end
+	end
+
+	def down
+		drop_table :posts
+	end
+end
+```
+
+* __Models__
+
+create 'post.rb' under /app/models, some valiations and 1-M relationship.
+``` ruby
+class Post < ActiveRecord::Base
+	has_many :comments
+	validates :title, presence: true, 
+										uniqueness: true,
+										length: { minimum: 5}
+	validates :text, presence: true
+end
+```
+
+* __Routes__
+
+nested routes:
+``` ruby
+resources :posts do
+  resources :comments 
+end
+```
+
+run `rake routes` 
+```
+				Prefix Verb   			URI Pattern                             Controller#Action
+    post_comments GET    /posts/:post_id/comments(.:format)          comments#index
+                  POST   /posts/:post_id/comments(.:format)          comments#create
+ new_post_comment GET    /posts/:post_id/comments/new(.:format)      comments#new
+edit_post_comment GET    /posts/:post_id/comments/:id/edit(.:format) comments#edit
+     post_comment GET    /posts/:post_id/comments/:id(.:format)      comments#show
+                  PATCH  /posts/:post_id/comments/:id(.:format)      comments#update
+                  PUT    /posts/:post_id/comments/:id(.:format)      comments#update
+                  DELETE /posts/:post_id/comments/:id(.:format)      comments#destroy
+            posts GET    /posts(.:format)                            posts#index
+                  POST   /posts(.:format)                            posts#create
+         new_post GET    /posts/new(.:format)                        posts#new
+        edit_post GET    /posts/:id/edit(.:format)                   posts#edit
+             post GET    /posts/:id(.:format)                        posts#show
+                  PATCH  /posts/:id(.:format)                        posts#update
+                  PUT    /posts/:id(.:format)                        posts#update
+                  DELETE /posts/:id(.:format)                        posts#destroy
+```
+
+Example link to usage
+```ruby
+<%= link_to 'All posts', posts_path %>
+<%= link_to 'New post', new_post_path %>
+<%= link_to 'Edit post', edit_post_path(@post) %>
+<%= link_to 'Show post', post_path(@post)%> # or @post
+<%= link_to 'Delete post', @post, method: :delete, data: { confirm: 'Sure'?} %>
+```
+
+* __Controller__
+
+create 'posts_controller.rb' under /app/controllers
+```ruby
+class PostsController < ApplicationController
+	before_action :find_post, only:[:show, :edit, :update, :destroy]
+	
+	def index
+		@post = Post.all
+	end
+
+	def show
+		@comment = Comment.new
+	end
+
+	def new
+		@post = Post.new
+	end
+
+	def create
+		@post = Post.new(post_params)
+
+		if @post.save
+			flash[:success] = "发布成功"
+			redirect_to @post
+		else
+			render 'new'
+		end
+	end 
+
+	def edit
+	end
+
+	def update
+		if @post.update(params[:post].permit(:title, :text))
+			flash[:success] = "更新成功"
+			redirect_to @post
+		else 
+			render 'edit'
+		end
+	end 
+
+	def destroy
+		@post.destroy
+		redirect_to @post
+	end
+
+	private
+		def find_post
+			@post = Post.find(params[:id])
+		end
+
+		def post_params
+			params.require(:post).permit(:title, :text)
+		end
+end
+```
+
+* __Views__
+
+View Partials 
+create '_form.html.erb' under /app/views/posts
+```ruby
+# model backed form
+<div class="well">
+	<%= form_for @post do |f| %>
+		<%= render 'shared/error', object: @post %>
+		
+		<div class="control-group">
+		<%= f.label "标题" %>
+		<%= f.text_field :title, class: "input-block-level" %> #full-width
+		</div>
+
+		<div class="control-group">
+		<%= f.label "内容" %>
+		<%= f.text_area :text, rows: 10, class: "input-block-level" %> 
+		</div>
+
+		<%= f.submit(@post.new_record? ? "发布" : "更新", class: "btn btn-primary") %>
+	<% end %>
+	<%= link_to '取消', posts_path(@post) %>
+</div>
+```
+
+'show.html.erb' under /app/views/posts
+```ruby
+<div class="container">
+	<div class="row">
+		<div class="span9">
+			...
+
+			<div class="well">
+				<% if @post.comments.any? %>
+					<% @post.comments.each do |c| %>
+						<p><%= c.body %></p>
+					<% end %>
+				<% end %>
+				<hr>
+				<%= form_for [@post, @comment] do |f| %>
+					<%= render 'shared/error', object: @comment %>
+					<div class="control-group">
+						<%= f.text_area :body, rows: 5, class: "input-block-level" %>
+					</div>
+					<%= f.submit '发表评论', class: "btn btn-primary"%>
+				<% end %>
+			</div>
+		</div>
+
+  	<div class="span3">
+  		...
+  	</div>
+	</div>
+</div>
+```
+
+
+
