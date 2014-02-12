@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-01-27T14:30:32+08:00</updated>
+  <updated>2014-02-12T12:21:50+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -14,7 +14,567 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Rails Notes]]></title>
+    <title type="html"><![CDATA[Rails Notes: Adding a 'Like' Function]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-adding-a-like-function/"/>
+    <updated>2014-02-11T21:16:52+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-adding-a-like-function</id>
+    <content type="html"><![CDATA[<p>Instead of text comments, we can easily state our opinion on the article by clicking a &lsquo;Like&rsquo; button or a &lsquo;Vote&rsquo; arrow. It is not uncommon that this function plays a role of recommendation. Last week, I added a similar function called &lsquo;Likeable&rsquo; to my blog-like app. Here is the key notes.</p>
+
+<!-- more -->
+
+
+<p><strong>Migration and Models</strong></p>
+
+<p>First of all, we <code>rails g migration create_likes</code>.</p>
+
+<p>```ruby
+class CreateLikes &lt; ActiveRecord::Migration
+  def up</p>
+
+<pre><code>create_table :likes do |t|
+    t.boolean :like
+    t.references :likeable, polymorphic: true
+    t.integer :user_id
+    t.timestamps
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  def down</p>
+
+<pre><code>drop_table :likes
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>Here, like boolean will show the choice of like(true) or unlike(false), :user_id will show who made the choice.</p>
+
+<p><code>t.references :likeable, polymorphic: true</code> will generate two columns: <em>likeable_id</em> and <em>likeable_type</em> (e.g. Post or Comment).</p>
+
+<p>With <em>Polymorphic</em> association, a model can belong to more than one other model, on a single association <a href="http://guides.rubyonrails.org/association_basics.html#polymorphic-associations">[1]</a>. In our case, like model can belong to post model or comment model.</p>
+
+<p>```ruby
+class Like &lt; ActiveRecord::Base</p>
+
+<pre><code>belongs_to :user
+belongs_to :likeable, polymorphic: true.
+</code></pre>
+
+<p>end</p>
+
+<p>class Post &lt; ActiveRecord::Base</p>
+
+<pre><code>has_many :likes, as :likeable
+</code></pre>
+
+<p>end</p>
+
+<p>class Comment &lt; ActiveRecord::Base</p>
+
+<pre><code>has_many :likes, as :likeable
+</code></pre>
+
+<p>end
+```</p>
+
+<p><strong>Routes</strong></p>
+
+<p>We would like to use a member routes here.
+```ruby
+resources :posts do</p>
+
+<pre><code>member do 
+    post 'like'
+end
+resources :comments do
+    member do
+        post 'like'
+    end
+end
+</code></pre>
+
+<p>end
+```</p>
+
+<p>It will recognise &lsquo;/post/post_id/like&rsquo; and &lsquo;/post/post_id/comment/id/like&rsquo; with POST, route to the action of PostsController and CommentsController, create the like_post_path and like_post_comment_path helpers.</p>
+
+<p><strong>Views</strong></p>
+
+<p>&lsquo;app/views/posts/show.html.erb&rsquo;
+```ruby
+<span class="pull-right"></p>
+
+<pre><code>&lt;%= link_to like_post_path(@post, like: true), method: 'post' do %&gt;
+</code></pre>
+
+<p>  <i class="icon-thumbs-up"></i></p>
+
+<pre><code>&lt;%= @post.likes.size %&gt;likes %&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p></span>
+<code>``
+Here we specify the method POST instead of the default a_tag method GET, by adding</code>method: &lsquo;post&rsquo;`. This will add &lsquo;data_method=&ldquo;post&rdquo;&rsquo; to link tag, which will revoke a javascript in rails that convert the link tag to a form and submit it. We also pass in a params &lsquo;like&rsquo; to be true, which means it will count as a &lsquo;Like&rsquo;.</p>
+
+<p>Now we need some actions.</p>
+
+<p><strong>Action</strong></p>
+
+<p>```ruby
+class PostsController &lt; ApplicationController</p>
+
+<pre><code>before_action :find_post, only:[…, :like]
+before_action :require_user, except:[…]
+…
+
+def like
+    Like.create(likeable: @post, user: current_user, like: params[:like])
+    flash[:success] = "Like Counted!"
+    redirect_to :back
+end
+</code></pre>
+
+<p>```</p>
+
+<p>Here, we will pass params of @post to likeable_id and likeable_type, current_user &rsquo;s id and set &lsquo;true&rsquo; on like boolean.</p>
+
+<p><strong>Ajax</strong></p>
+
+<p>Every time we hit the &lsquo;Thumbs-up&rsquo; button, it will hit the datebase and rebuild the whole page. It&rsquo;s quite expensive. So we will use another rails magic here.</p>
+
+<p>Simply add <code>remote: true</code>: &lsquo;&lt;%= link_to like_post_path(@post, like: true), method: 'post&rsquo;, remote: true do %>&lsquo;. It will become a ajax request when we hit the 'Thumbs-up&rsquo;.</p>
+
+<p>In the meantime, we add response to this request in controller, revise our show.html.erb and add a <code>like.js.erb</code> view template file in app/views/posts, respectively.</p>
+
+<p>```ruby
+def like</p>
+
+<pre><code>    ...
+respond_to do |format|
+    format.html do
+    flash[:success] = "Like Counted!"
+    redirect_to :back
+end
+
+format.js
+end         
+</code></pre>
+
+<p>end
+```</p>
+
+<p><code>ruby
+&lt;span id="post_&lt;%= @post.id %&gt;_likes"&gt;&lt;%= @post.likes.size %&gt;likes&lt;/span&gt;
+</code></p>
+
+<p><code>ruby
+$("#post_&lt;%= @post.id %&gt;_likes").html("&lt;%= @post.likes.size %&gt;likes");
+</code></p>
+
+<p><strong>Expansion</strong></p>
+
+<p>We can also add a &lsquo;Unlike&rsquo; function with a &lsquo;Thumbs-down&rsquo; button.
+Instead of <code>like: true</code> params, we set it to false. In order to show the total likes, we add a method called <code>total_likes</code> in post.rb.</p>
+
+<p>```ruby
+def total_likes</p>
+
+<pre><code>self.likes.where(like: true).size - self.likes.where(like :false).size
+</code></pre>
+
+<p>end
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: Adding Categories]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-adding-categories/"/>
+    <updated>2014-02-11T20:23:51+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-adding-categories</id>
+    <content type="html"><![CDATA[<p>In the third note, a brief description about adding categories in a blog-like app will be presented. It is a <a href="http://guides.rubyonrails.org/association_basics.html">M-M relationship</a>. We will  apply <code>has_many :through</code> association.</p>
+
+<!-- more -->
+
+
+<p><strong>Migration</strong>:</p>
+
+<p>```ruby
+class CreatePostCategories &lt; ActiveRecord::Migration
+  def up</p>
+
+<pre><code>create_table :post_categories do |t|
+    t.integer :post_id, :category_id
+
+    t.timestamps
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  def down</p>
+
+<pre><code>drop_table :post_categories
+</code></pre>
+
+<p>  end
+end
+```
+PostCategories will have two foreign keys: :post_id and :category_id</p>
+
+<p><strong>Models</strong>:</p>
+
+<p>```ruby
+class PostCategory &lt; ActiveRecord::Base</p>
+
+<pre><code>belongs_to :post
+belongs_to :category
+</code></pre>
+
+<p>end
+```</p>
+
+<p>```ruby
+class Category &lt; ActiveRecord::Base</p>
+
+<pre><code>has_many :post_categories
+has_many :posts, through: :post_categories
+...
+</code></pre>
+
+<p>end
+```</p>
+
+<p>```ruby
+class Post &lt; ActiveRecord::Base</p>
+
+<pre><code>...
+has_many :post_categories
+has_many :categories, through: :post_categories
+...
+</code></pre>
+
+<p>end
+```</p>
+
+<p><strong>Controller and routes</strong></p>
+
+<p>similar to other resources.</p>
+
+<p><strong>Views</strong></p>
+
+<p>&lsquo;shared/_posts.html.erb&rsquo;
+```ruby
+&lt;% object.reverse.each do |post| %></p>
+
+<pre><code>&lt;p&gt;
+    &lt;span class="badge pull-right"&gt;&lt;%= post.comments.count %&gt;&lt;/span&gt;
+    &lt;%= link_to "#{post.title}", post_path(post) %&gt;&lt;br&gt;
+    &lt;% post.categories.each do |category| %&gt;
+    &lt;%= link_to category.name, category_path(category), class: "label" %&gt;
+  &lt;% end %&gt;
+  &lt;span class="timestamp"&gt;
+        &lt;small&gt;posted by &lt;% unless post.user.blank? %&gt;
+            &lt;%= link_to post.user.username, user_path(post.user) %&gt;
+            &lt;% end %&gt;
+            &lt;%= time_ago_in_words(post.created_at)%&gt; ago 
+        &lt;/small&gt;
+    &lt;/span&gt;
+    &lt;hr&gt;
+&lt;/p&gt;
+</code></pre>
+
+<p>&lt;% end %>
+```</p>
+
+<p>&lsquo;app/views/categories/show.html.erb&rsquo;
+<code>ruby
+...
+&lt;%= render 'shared/posts', object: @category.posts %&gt;
+...
+</code></p>
+
+<p>Add categories selection in _form partial
+```ruby</p>
+
+<div class='control-group'>
+  <%= f.label "选择节点" %>
+  <%= f.select :category_ids, Category.all.collect{|c| [c.name, c.id]}, {}, {multiple: false} %>
+</div>
+
+
+<p>```</p>
+
+<p>Add get_categories method in ApplicationController to show categories in header.
+```ruby
+def get_categories</p>
+
+<pre><code>@categories = Category.all
+</code></pre>
+
+<p>end</p>
+
+<p>before_action :get_categories</p>
+
+<p>&lt;% @categories.each do |cat| %>
+<li>&lt;%= link_to cat.name, category_path(cat) %></li>  <br/>
+&lt;% end %>
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes 2]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-2/"/>
+    <updated>2014-02-11T13:28:40+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-2</id>
+    <content type="html"><![CDATA[<p>Last week, I built a blog prototype based on the twitter-like app in Rails Tutorial. Here is the 2nd note.</p>
+
+<!-- more -->
+
+
+<p><strong>Email validation</strong></p>
+
+<p>Create a database index on the email column, and require that the index be unique.
+```ruby
+class AddIndexToUsersEmail &lt; ActiveRecord::Migration
+  def change</p>
+
+<pre><code>add_index :users, :email, unique: true
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>Add validation &lsquo;app/models/user.rb&rsquo;
+```ruby
+before_save { self.email = email.downcase }
+validates :username, presence: true, uniqueness: true, length:  { maximum: 15 }
+VALID_EMAIL_REGEX = /\A[\w+-.]+@[a-z\d-.]+.[a-z]+\z/i
+validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },</p>
+
+<pre><code>                                    uniqueness: { case_sensitive: false}
+</code></pre>
+
+<p>```</p>
+
+<p><strong>User authentication</strong></p>
+
+<p>Apply a gem called <code>bcrypt-ruby</code>. Presence validations for the password and its confirmation are automatically added by <code>has_secure_password</code>. Call method <code>authenticate</code> to confirm and   get user.</p>
+
+<p>Generate migration and <code>add_column :users, :password_digest, :string</code> to the table.
+<code>
+rails g migration add_password_digest_to_users
+</code></p>
+
+<p><strong>Sign in user</strong></p>
+
+<p>create a non-model backed controller <code>sessions</code>. A session is a semi-permanent connection between two computers, such as a client computer running a web browser and a server running Rails. Sessions resource will use a cookie, which is a small piece of text placed on the user’s browser.</p>
+
+<p>non-model backed form for sign-in, using form_tag
+alternatively, using form_for(:session, url: sessions_path)
+```ruby
+&lt;%= form_tag &lsquo;/signin&rsquo;, method: &lsquo;post&rsquo; do %></p>
+
+<pre><code>&lt;%= label_tag :username, "用户名" %&gt;
+&lt;%= text_field_tag :username %&gt;
+&lt;br/&gt;
+&lt;%= label_tag :password, "密码" %&gt;
+&lt;%= password_field_tag :password %&gt;
+&lt;br/&gt;
+&lt;%= submit_tag "登录", class: "btn btn-primary" %&gt;
+</code></pre>
+
+<p>&lt;% end %>
+```</p>
+
+<p>signin page above for <em>new</em> sessions, signing in will <em>create</em> a session, and signing out will <em>destroy</em> it
+```ruby
+def create</p>
+
+<pre><code>user = User.find_by_username(params[:username])
+</code></pre>
+
+<p>  if user &amp;&amp; user.authenticate(params[:session][:password])</p>
+
+<pre><code>...
+</code></pre>
+
+<p>def destroy</p>
+
+<pre><code>session[:user_id] = nil
+    ...
+</code></pre>
+
+<p>```</p>
+
+<p>routes:
+<code>
+get     '/signup', to: 'users#new'
+get     '/signin', to: 'sessions#new'
+post    '/signin', to: 'sessions#create'
+get '/signout', to: 'sessions#destroy'
+</code></p>
+
+<p><strong>Current_user</strong></p>
+
+<p>define current_user in ApplicationController and add <code>helper_method :current_user, :sign_in?, …</code> to make it available to view templates. Alternatively, we can add methods in ApplicationHelper, and add<code>include SessionsHelper</code> in ApplicationController to make it available in controller.</p>
+
+<p>```ruby
+def current_user
+  @current_user ||= User.find(session[:user_id]) if session[:user_id]
+end</p>
+
+<p>def signed_in?</p>
+
+<pre><code>!!current_user
+</code></pre>
+
+<p>end</p>
+
+<p>def require_user</p>
+
+<pre><code>unless signed_in?
+flash[:error] = "请登录."
+redirect_to '/signin'
+end
+</code></pre>
+
+<p>end
+```
+&ldquo;||=&rdquo; assigning to a variable if it’s nil but otherwise leaving it alone. <em>memorization</em>: calls the find_by method the first time current_user is called, but on subsequent invocations returns @current_user without hitting the database.</p>
+
+<p>sign in user upon sign up:
+```ruby
+if @user.save</p>
+
+<pre><code>session[:user_id] = @user.id
+...
+</code></pre>
+
+<p>```</p>
+
+<p><code>add_user_id_to_post</code> and assign user_id to new post
+```ruby
+def create</p>
+
+<pre><code>@post = Post.new(post_params)
+@post.user = current_user
+...
+</code></pre>
+
+<p>```</p>
+
+<p><strong>Update user</strong></p>
+
+<p>```ruby
+def update</p>
+
+<pre><code>if @user.update_attributes(user_params)
+...
+</code></pre>
+
+<p>end</p>
+
+<p>&lt;%= f.submit(@user.new_record? ? &ldquo;注册&rdquo; : &ldquo;更新&rdquo;, class: &ldquo;btn btn-primary&rdquo;) %>
+```</p>
+
+<p><strong>Add gravatar</strong></p>
+
+<p>add in &lsquo;app/helper/user_helper.rb&rsquo; and call &lt;%= gravatar_for @user %>
+```ruby
+module UsersHelper
+  # Returns the Gravatar (<a href="http://gravatar.com/">http://gravatar.com/</a>) for the given user.
+  def gravatar_for(user)</p>
+
+<pre><code>gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
+gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}"
+image_tag(gravatar_url, alt: user.username, class: "gravatar")
+end 
+</code></pre>
+
+<p>end
+```</p>
+
+<p>add some styles
+```css
+/<em> gravatar </em>/
+.gravatar-sm {</p>
+
+<pre><code>margin-right: 10px;
+height:48px;
+width:48px;
+</code></pre>
+
+<p>}</p>
+
+<p>.gravatar-normal {</p>
+
+<pre><code>height:64px;
+width:64px;
+</code></pre>
+
+<p>}
+```</p>
+
+<p><strong>Require the same user</strong></p>
+
+<p>&lsquo;app/controllers/application_controller.rb&rsquo;
+<code>ruby
+def correct_user?(user)
+  user == current_user
+end
+</code>
+&lsquo;app/controllers/users_controller.rb&rsquo;
+```ruby
+before_action :correct_user, only:[:edit, :update]</p>
+
+<p>def correct_user
+  @user = User.find(params[:id])
+  redirect_to root_path unless correct_user?(@user)
+end
+```</p>
+
+<p><strong>Change date format</strong></p>
+
+<p>```ruby
+module ApplicationHelper</p>
+
+<pre><code>def display_date(dt)
+    dt.strftime("%d/%m/%Y") 
+end
+</code></pre>
+
+<p>end
+```</p>
+
+<p><strong>Others</strong></p>
+
+<p>apart from @import bootstrap in app/assets/stylesheets/custom.css.scss
+//= require bootstrap in app/assets/javascripts/application.js</p>
+
+<p>flash.now #disappear as soon as there is an additional request.</p>
+
+<p>issue:
+when I submit blank comment, it leads to error. this is because I run the _comments.html.erb before render the error message.</p>
+
+<p>solution:
+add &lt;% unless comment.body.blank? %> &hellip;. &lt;% end %> in _comments partial.</p>
+
+<p>Strong parameters:
+The reason is that initializing the entire params hash is extremely dangerous—it arranges to pass to User.new all data submitted by a user. In particular, suppose that, in addition to the current attributes, the User model included an admin attribute used to identify administrative users of the site. The way to set such an attribute to true is to pass the value admin=’1’ as part of params[:user], a task that is easy to accomplish using a command-line HTTP client such as curl. The result would be that, by passing in the entire params hash to User.new, we would allow any user of the site to gain administrative access by including admin=’1’ in the web request.</p>
+
+<p>&lt;%= render &lsquo;shared/posts&rsquo; , objects: @posts%> to reduce duplication</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes 1]]></title>
     <link href="http://voice.lawrencesun.info/posts/2014/01/27/rails-note-1/"/>
     <updated>2014-01-27T09:32:52+08:00</updated>
     <id>http://voice.lawrencesun.info/posts/2014/01/27/rails-note-1</id>
@@ -52,7 +612,8 @@ end
 </code></pre>
 
 <p>end
-```</p>
+<code>``
+naming:</code>PostCategory.tableize`</p>
 
 <ul>
 <li><strong>Models</strong></li>
@@ -72,6 +633,49 @@ validates :text, presence: true
 
 <p>end
 ```</p>
+
+<p>create &lsquo;category.rb&rsquo; and &lsquo;post_categories.rb&rsquo; to establish a M-M relationship
+```ruby
+class Category &lt; ActiveRecord::Base</p>
+
+<pre><code>has_many :post_categories
+has_many :posts, through: :post_categories
+
+validates :name, presence: true, uniqueness: true
+</code></pre>
+
+<p>end
+```</p>
+
+<p>```ruby
+class Post &lt; ActiveRecord::Base</p>
+
+<pre><code>...
+has_many :post_categories
+has_many :categories, through: :post_categories
+...
+</code></pre>
+
+<p>end
+```</p>
+
+<p>```ruby
+class PostCategory &lt; ActiveRecord::Base</p>
+
+<pre><code>belongs_to :post
+belongs_to :category
+</code></pre>
+
+<p>end
+```</p>
+
+<p>run <code>rails console</code> to check
+<code>ruby
+post = Post.first
+post.categories
+cat = Category.create(name: "news")
+post.categories &lt;&lt; cat
+</code></p>
 
 <ul>
 <li><strong>Routes</strong></li>
@@ -251,6 +855,19 @@ create &lsquo;_form.html.erb&rsquo; under /app/views/posts
 
 
 <p>```</p>
+
+<p>non-model backed form:
+```ruby
+&lt;%= form_tag :title %></p>
+
+<pre><code>&lt;%= lable_tag :title%&gt;
+&lt;%= text_field_tag :title%&gt;
+,,,
+&lt;%=submit_tag 'create post'%&gt;
+</code></pre>
+
+<p>&lt;%end %>
+```</p>
 ]]></content>
   </entry>
   
