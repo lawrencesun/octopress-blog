@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rails Notes"
+title: "Rails Notes 1"
 date: 2014-01-27 09:32:52 +0800
 comments: true
 categories: [Rails, Ruby]
@@ -37,6 +37,7 @@ class CreatePosts < ActiveRecord::Migration
 	end
 end
 ```
+naming: `PostCategory.tableize`
 
 * __Models__
 
@@ -49,6 +50,40 @@ class Post < ActiveRecord::Base
 										length: { minimum: 5}
 	validates :text, presence: true
 end
+```
+
+create 'category.rb' and 'post_categories.rb' to establish a M-M relationship
+```ruby
+class Category < ActiveRecord::Base
+	has_many :post_categories
+	has_many :posts, through: :post_categories
+
+	validates :name, presence: true, uniqueness: true
+end
+```
+
+```ruby
+class Post < ActiveRecord::Base
+	...
+	has_many :post_categories
+	has_many :categories, through: :post_categories
+	...
+end
+```
+
+```ruby
+class PostCategory < ActiveRecord::Base
+	belongs_to :post
+	belongs_to :category
+end
+```
+
+run `rails console` to check
+```ruby
+post = Post.first
+post.categories
+cat = Category.create(name: "news")
+post.categories << cat
 ```
 
 * __Routes__
@@ -203,6 +238,16 @@ create '_form.html.erb' under /app/views/posts
   	</div>
 	</div>
 </div>
+```
+
+non-model backed form:
+```ruby
+<%= form_tag :title %>
+	<%= lable_tag :title%>
+	<%= text_field_tag :title%>
+	,,,
+	<%=submit_tag 'create post'%>
+<%end %>
 ```
 
 
