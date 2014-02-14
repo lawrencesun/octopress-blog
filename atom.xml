@@ -4,7 +4,7 @@
   <title><![CDATA[Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-02-12T12:21:50+08:00</updated>
+  <updated>2014-02-14T13:13:27+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: Markdown Support]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/02/14/rails-notes-markdown-support/"/>
+    <updated>2014-02-14T12:40:02+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/02/14/rails-notes-markdown-support</id>
+    <content type="html"><![CDATA[<p>The default output of the content in my app is directly shown as HTML. The problem is even I entered several paragraphs, it will be shown in one. On the other hand, I intend to add markdown support in the beginning. Thanks Google and Github, I found a gem called <a href="https://github.com/vmg/redcarpet">Redcarpet</a>.</p>
+
+<p>First I found a screencast in <a href="1">Railscasts</a>. Unfortunately, this solution was introduced 2 years ago. However, I found an up-to-date one by SimplizIT below the video. Here it is.</p>
+
+<!-- more -->
+
+
+<ul>
+<li><p>Install it by adding <code>gem 'redcarpet'</code> to Gemfile, and run <code>bundle install</code>.</p></li>
+<li><p>Then add the following code to <code>application_helper.rb</code></p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">markdown</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">renderOptions</span> <span class="o">=</span> <span class="p">{</span><span class="n">hard_wrap</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span> <span class="n">filter_html</span><span class="p">:</span> <span class="kp">true</span><span class="p">}</span>
+</span><span class='line'>  <span class="n">markdownOptions</span> <span class="o">=</span> <span class="p">{</span><span class="ss">autolink</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span> <span class="n">fenced_code_blocks</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span> <span class="n">no_intra_emphasis</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">strikethrough</span><span class="p">:</span> <span class="kp">true</span><span class="p">}</span>
+</span><span class='line'>  <span class="n">markdown</span> <span class="o">=</span> <span class="ss">Redcarpet</span><span class="p">:</span><span class="ss">:Markdown</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">Redcarpet</span><span class="p">:</span><span class="ss">:Render</span><span class="o">::</span><span class="no">HTML</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">renderOptions</span><span class="p">),</span> <span class="n">markdownOptions</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">markdown</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">html_safe</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><sub>here, we can customise the markdown extension and html output by changing the renderOptions and markdownOptions. The full option shows <a href="1">here</a>.</sub></p>
+
+<ul>
+<li>Apply &lsquo;markdown&rsquo; function in the view template.</li>
+</ul>
+
+
+<p><code>&lt;%= markdown(@post.text) %&gt;</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: Adding a 'Like' Function]]></title>

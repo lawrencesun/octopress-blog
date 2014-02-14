@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-02-12T12:21:50+08:00</updated>
+  <updated>2014-02-14T13:13:27+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: Markdown Support]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/02/14/rails-notes-markdown-support/"/>
+    <updated>2014-02-14T12:40:02+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/02/14/rails-notes-markdown-support</id>
+    <content type="html"><![CDATA[<p>The default output of the content in my app is directly shown as HTML. The problem is even I entered several paragraphs, it will be shown in one. On the other hand, I intend to add markdown support in the beginning. Thanks Google and Github, I found a gem called <a href="https://github.com/vmg/redcarpet">Redcarpet</a>.</p>
+
+<p>First I found a screencast in <a href="1">Railscasts</a>. Unfortunately, this solution was introduced 2 years ago. However, I found an up-to-date one by SimplizIT below the video. Here it is.</p>
+
+<!-- more -->
+
+
+<ul>
+<li><p>Install it by adding <code>gem 'redcarpet'</code> to Gemfile, and run <code>bundle install</code>.</p></li>
+<li><p>Then add the following code to <code>application_helper.rb</code></p></li>
+</ul>
+
+
+<p>```ruby
+def markdown(text)</p>
+
+<pre><code>renderOptions = {hard_wrap: true, filter_html: true}
+</code></pre>
+
+<p>  markdownOptions = {autolink: true, fenced_code_blocks: true, no_intra_emphasis: true, strikethrough: true}</p>
+
+<pre><code>markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(renderOptions), markdownOptions)
+</code></pre>
+
+<p>  markdown.render(text).html_safe
+end
+```</p>
+
+<p><sub>here, we can customise the markdown extension and html output by changing the renderOptions and markdownOptions. The full option shows <a href="1">here</a>.</sub></p>
+
+<ul>
+<li>Apply &lsquo;markdown&rsquo; function in the view template.</li>
+</ul>
+
+
+<p><code>&lt;%= markdown(@post.text) %&gt;</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: Adding a 'Like' Function]]></title>
