@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-02-16T11:45:22+08:00</updated>
+  <updated>2014-02-16T22:53:20+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,106 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: Pagination With Kaminari]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/02/16/rails-notes-pagination-with-kaminari/"/>
+    <updated>2014-02-16T22:13:47+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/02/16/rails-notes-pagination-with-kaminari</id>
+    <content type="html"><![CDATA[<p>With hundreds and thousands of posts on website, we would like to insert some breaks. The first choice for pagination in Rails is will_paginate. However, I find a better one called <a href="https://github.com/amatsuda/kaminari">Kaminari</a>.</p>
+
+<!-- more -->
+
+
+<p><strong>Controllers and Views</strong></p>
+
+<p>First, add &lsquo;kaminari&rsquo; to &lsquo;Gemfile&rsquo; and run <code>bundle install</code></p>
+
+<p>Second, we apply the scope called <code>page</code> and <code>per</code> in our Controller.</p>
+
+<p><code>@posts = Post.all.page(params[:page]).per(15)</code></p>
+
+<p>that will show 15 posts per each page.</p>
+
+<p>Then, we call <code>paginate</code> helper in our views.</p>
+
+<p><code>&lt;%= paginate @posts %&gt;</code></p>
+
+<p><strong>Configure the default value</strong></p>
+
+<p>run <code>rails g kaminari:config</code> and change the file <code>kaminari_config.rb</code> in config/initializers</p>
+
+<p><code>ruby
+Kaminari.configure do |config|
+  config.default_per_page = 15
+  # config.max_per_page = nil
+  config.window = 2
+  config.outer_window = 1
+  # config.left = 0
+  # config.right = 0
+  # config.page_method_name = :page
+  # config.param_name = :page
+end
+</code></p>
+
+<p><strong>I18N and labels</strong></p>
+
+<p>We can change the default labels in config/locales.</p>
+
+<p>```ruby
+en:
+  views:</p>
+
+<pre><code>pagination:
+  first: "&amp;laquo; First"
+  last: "Last &amp;raquo;"
+  previous: "&amp;lsaquo; Prev"
+  next: "Next &amp;rsaquo;"
+  truncate: "..."
+</code></pre>
+
+<p>```</p>
+
+<p><strong>Configure the default view</strong></p>
+
+<p>run <code>rails g kaminari:views default</code> and change the files in app/views/kaminari</p>
+
+<p>e.g. I delete the first and last label in _pagination.html.erb and change the style to bootstrap according to the theme provided by the Kaminari.</p>
+
+<p><strong>Issue</strong></p>
+
+<p>I followed the instruction on Railscasts and the wiki of Kaminari. But my case seemed more complicated. I set three posts per page as default for test, but found that the posts presented in a strange array.</p>
+
+<p>PostsController:
+```ruby
+def index</p>
+
+<pre><code>...
+@posts = Post.all.page(params[:page])
+...
+</code></pre>
+
+<p>end
+```</p>
+
+<p>index.html.erb:
+<code>ruby
+&lt;%= render 'shared/posts' , object: @posts%&gt;
+&lt;%= paginate @posts %&gt;
+</code></p>
+
+<p>_posts.html.erb:
+<code>ruby
+&lt;% object.reverse.each do |post| %&gt;
+</code></p>
+
+<p>The problem was that 3 posts each time was passed into the partial and was implemented the reverse scope. So I deleted the <code>reverse</code> scope and changed the line in the controller like this:</p>
+
+<p><code>ruby
+@posts = @posts.order('created_at DESC').page(params[:page])
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: Add Administrator]]></title>
@@ -475,252 +575,6 @@ def get_categories</p>
 <li>&lt;%= link_to cat.name, category_path(cat) %></li>  <br/>
 &lt;% end %>
 ```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Notes 2]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-2/"/>
-    <updated>2014-02-11T13:28:40+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-2</id>
-    <content type="html"><![CDATA[<p>Last week, I built a blog prototype based on the twitter-like app in Rails Tutorial. Here is the 2nd note.</p>
-
-<!-- more -->
-
-
-<p><strong>Email validation</strong></p>
-
-<p>Create a database index on the email column, and require that the index be unique.
-```ruby
-class AddIndexToUsersEmail &lt; ActiveRecord::Migration
-  def change</p>
-
-<pre><code>add_index :users, :email, unique: true
-</code></pre>
-
-<p>  end
-end
-```</p>
-
-<p>Add validation &lsquo;app/models/user.rb&rsquo;
-```ruby
-before_save { self.email = email.downcase }
-validates :username, presence: true, uniqueness: true, length:  { maximum: 15 }
-VALID_EMAIL_REGEX = /\A[\w+-.]+@[a-z\d-.]+.[a-z]+\z/i
-validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },</p>
-
-<pre><code>                                    uniqueness: { case_sensitive: false}
-</code></pre>
-
-<p>```</p>
-
-<p><strong>User authentication</strong></p>
-
-<p>Apply a gem called <code>bcrypt-ruby</code>. Presence validations for the password and its confirmation are automatically added by <code>has_secure_password</code>. Call method <code>authenticate</code> to confirm and   get user.</p>
-
-<p>Generate migration and <code>add_column :users, :password_digest, :string</code> to the table.
-<code>
-rails g migration add_password_digest_to_users
-</code></p>
-
-<p><strong>Sign in user</strong></p>
-
-<p>create a non-model backed controller <code>sessions</code>. A session is a semi-permanent connection between two computers, such as a client computer running a web browser and a server running Rails. Sessions resource will use a cookie, which is a small piece of text placed on the user’s browser.</p>
-
-<p>non-model backed form for sign-in, using form_tag
-alternatively, using form_for(:session, url: sessions_path)
-```ruby
-&lt;%= form_tag &lsquo;/signin&rsquo;, method: &lsquo;post&rsquo; do %></p>
-
-<pre><code>&lt;%= label_tag :username, "用户名" %&gt;
-&lt;%= text_field_tag :username %&gt;
-&lt;br/&gt;
-&lt;%= label_tag :password, "密码" %&gt;
-&lt;%= password_field_tag :password %&gt;
-&lt;br/&gt;
-&lt;%= submit_tag "登录", class: "btn btn-primary" %&gt;
-</code></pre>
-
-<p>&lt;% end %>
-```</p>
-
-<p>signin page above for <em>new</em> sessions, signing in will <em>create</em> a session, and signing out will <em>destroy</em> it
-```ruby
-def create</p>
-
-<pre><code>user = User.find_by_username(params[:username])
-</code></pre>
-
-<p>  if user &amp;&amp; user.authenticate(params[:session][:password])</p>
-
-<pre><code>...
-</code></pre>
-
-<p>def destroy</p>
-
-<pre><code>session[:user_id] = nil
-    ...
-</code></pre>
-
-<p>```</p>
-
-<p>routes:
-<code>
-get     '/signup', to: 'users#new'
-get     '/signin', to: 'sessions#new'
-post    '/signin', to: 'sessions#create'
-get '/signout', to: 'sessions#destroy'
-</code></p>
-
-<p><strong>Current_user</strong></p>
-
-<p>define current_user in ApplicationController and add <code>helper_method :current_user, :sign_in?, …</code> to make it available to view templates. Alternatively, we can add methods in ApplicationHelper, and add<code>include SessionsHelper</code> in ApplicationController to make it available in controller.</p>
-
-<p>```ruby
-def current_user
-  @current_user ||= User.find(session[:user_id]) if session[:user_id]
-end</p>
-
-<p>def signed_in?</p>
-
-<pre><code>!!current_user
-</code></pre>
-
-<p>end</p>
-
-<p>def require_user</p>
-
-<pre><code>unless signed_in?
-flash[:error] = "请登录."
-redirect_to '/signin'
-end
-</code></pre>
-
-<p>end
-```
-&ldquo;||=&rdquo; assigning to a variable if it’s nil but otherwise leaving it alone. <em>memorization</em>: calls the find_by method the first time current_user is called, but on subsequent invocations returns @current_user without hitting the database.</p>
-
-<p>sign in user upon sign up:
-```ruby
-if @user.save</p>
-
-<pre><code>session[:user_id] = @user.id
-...
-</code></pre>
-
-<p>```</p>
-
-<p><code>add_user_id_to_post</code> and assign user_id to new post
-```ruby
-def create</p>
-
-<pre><code>@post = Post.new(post_params)
-@post.user = current_user
-...
-</code></pre>
-
-<p>```</p>
-
-<p><strong>Update user</strong></p>
-
-<p>```ruby
-def update</p>
-
-<pre><code>if @user.update_attributes(user_params)
-...
-</code></pre>
-
-<p>end</p>
-
-<p>&lt;%= f.submit(@user.new_record? ? &ldquo;注册&rdquo; : &ldquo;更新&rdquo;, class: &ldquo;btn btn-primary&rdquo;) %>
-```</p>
-
-<p><strong>Add gravatar</strong></p>
-
-<p>add in &lsquo;app/helper/user_helper.rb&rsquo; and call &lt;%= gravatar_for @user %>
-```ruby
-module UsersHelper
-  # Returns the Gravatar (<a href="http://gravatar.com/">http://gravatar.com/</a>) for the given user.
-  def gravatar_for(user)</p>
-
-<pre><code>gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
-gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}"
-image_tag(gravatar_url, alt: user.username, class: "gravatar")
-end 
-</code></pre>
-
-<p>end
-```</p>
-
-<p>add some styles
-```css
-/<em> gravatar </em>/
-.gravatar-sm {</p>
-
-<pre><code>margin-right: 10px;
-height:48px;
-width:48px;
-</code></pre>
-
-<p>}</p>
-
-<p>.gravatar-normal {</p>
-
-<pre><code>height:64px;
-width:64px;
-</code></pre>
-
-<p>}
-```</p>
-
-<p><strong>Require the same user</strong></p>
-
-<p>&lsquo;app/controllers/application_controller.rb&rsquo;
-<code>ruby
-def correct_user?(user)
-  user == current_user
-end
-</code>
-&lsquo;app/controllers/users_controller.rb&rsquo;
-```ruby
-before_action :correct_user, only:[:edit, :update]</p>
-
-<p>def correct_user
-  @user = User.find(params[:id])
-  redirect_to root_path unless correct_user?(@user)
-end
-```</p>
-
-<p><strong>Change date format</strong></p>
-
-<p>```ruby
-module ApplicationHelper</p>
-
-<pre><code>def display_date(dt)
-    dt.strftime("%d/%m/%Y") 
-end
-</code></pre>
-
-<p>end
-```</p>
-
-<p><strong>Others</strong></p>
-
-<p>apart from @import bootstrap in app/assets/stylesheets/custom.css.scss
-//= require bootstrap in app/assets/javascripts/application.js</p>
-
-<p>flash.now #disappear as soon as there is an additional request.</p>
-
-<p>issue:
-when I submit blank comment, it leads to error. this is because I run the _comments.html.erb before render the error message.</p>
-
-<p>solution:
-add &lt;% unless comment.body.blank? %> &hellip;. &lt;% end %> in _comments partial.</p>
-
-<p>Strong parameters:
-The reason is that initializing the entire params hash is extremely dangerous—it arranges to pass to User.new all data submitted by a user. In particular, suppose that, in addition to the current attributes, the User model included an admin attribute used to identify administrative users of the site. The way to set such an attribute to true is to pass the value admin=’1’ as part of params[:user], a task that is easy to accomplish using a command-line HTTP client such as curl. The result would be that, by passing in the entire params hash to User.new, we would allow any user of the site to gain administrative access by including admin=’1’ in the web request.</p>
-
-<p>&lt;%= render &lsquo;shared/posts&rsquo; , objects: @posts%> to reduce duplication</p>
 ]]></content>
   </entry>
   
