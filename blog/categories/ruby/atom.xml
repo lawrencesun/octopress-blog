@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-02-14T13:13:27+08:00</updated>
+  <updated>2014-02-16T11:45:22+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,113 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: Add Administrator]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/02/15/rails-notes-add-administrator/"/>
+    <updated>2014-02-15T16:02:33+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/02/15/rails-notes-add-administrator</id>
+    <content type="html"><![CDATA[<p>On the land of website/software, there is always an Administrator. The Administrator, like a king, has the right to change the rules, block the news and &lsquo;kill&rsquo; the innocent users whenever he likes.</p>
+
+<blockquote><p>Dieu et mon droit.</p></blockquote>
+
+<p>Today, I claimed to the throne &mdash; became an admin who had the power to delete comments and users.</p>
+
+<!-- more -->
+
+
+<p>First, <code>rails g migration add_admin_to_users</code>.</p>
+
+<p>Second, create a table and run <code>rake db:migrate</code></p>
+
+<p>```ruby
+class AddAdminToUsers &lt; ActiveRecord::Migration
+  def change</p>
+
+<pre><code>add_column :users, :admin, :boolean, default: false
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>Then, define a method in ApplicationController.</p>
+
+<p>```ruby
+def admin_user
+  unless current_user.admin?   # line_to_be_modified</p>
+
+<pre><code>flash[:error] = "Please contact admin."
+redirect_to root_path
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>Next, add <code>destroy</code> to UsersController</p>
+
+<p>```ruby
+&hellip;
+before_action :admin_user, only: :destroy
+&hellip;
+def destroy</p>
+
+<pre><code>@user.destroy
+flash[:success] = "User deleted."
+redirect_to users_path
+</code></pre>
+
+<p>end
+```</p>
+
+<p>Afterwards, add a delete link in the view.</p>
+
+<p><code>ruby
+&lt;%= link_to 'delete', user_path(user), method: 'delete', data: { confirm: 'You sure?'} %&gt;
+</code></p>
+
+<p>Finally, we would like to destroy the posts and comments automatically at the same time we delete the users. <code>has_many :posts, dependent: :destroy</code></p>
+
+<hr />
+
+<ul>
+<li>Issue 1:
+There would be a nil class error if there was no user signed in, <code>current_user.admin?</code> went wrong. Therefore, I added another method in ApplicationController and change the line_to_be_modified to <code>unless admin?</code></li>
+</ul>
+
+
+<p>```ruby
+def admin?</p>
+
+<pre><code>signed_in? &amp;&amp; current_user.admin?
+</code></pre>
+
+<p>end
+```</p>
+
+<ul>
+<li>Issue 2:
+Another error occurred when I tried to add the delete link on the comments partial.</li>
+</ul>
+
+
+<p>```ruby
+&lt;% if object.comments.any? %></p>
+
+<pre><code>&lt;% object.comments.each do |comment| %&gt;
+...
+&lt;% if admin? %&gt;
+    &lt;%= link_to 'delete', post_comment_path($params), method: 'delete', data: { confirm: 'You sure?'} %&gt;
+&lt;% end %&gt;
+...
+</code></pre>
+
+<p>```</p>
+
+<p>At first, I passed in the &lsquo;comment&rsquo; as $params, and it showed that  the post.id and :id were nil. So I changed the $params to &lsquo;comment.post.id, comment.id&rsquo; and it went well.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: Markdown Support]]></title>
@@ -614,304 +721,6 @@ add &lt;% unless comment.body.blank? %> &hellip;. &lt;% end %> in _comments part
 The reason is that initializing the entire params hash is extremely dangerous—it arranges to pass to User.new all data submitted by a user. In particular, suppose that, in addition to the current attributes, the User model included an admin attribute used to identify administrative users of the site. The way to set such an attribute to true is to pass the value admin=’1’ as part of params[:user], a task that is easy to accomplish using a command-line HTTP client such as curl. The result would be that, by passing in the entire params hash to User.new, we would allow any user of the site to gain administrative access by including admin=’1’ in the web request.</p>
 
 <p>&lt;%= render &lsquo;shared/posts&rsquo; , objects: @posts%> to reduce duplication</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Notes 1]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/01/27/rails-note-1/"/>
-    <updated>2014-01-27T09:32:52+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/01/27/rails-note-1</id>
-    <content type="html"><![CDATA[<p>After reading <a href="http://ruby.railstutorial.org"><em>Ruby on Rails Tutorial</em></a> &mdash;without a sound approach to the testing part, I am still confused. Before that I read the first chapter of <a href="http://guides.rubyonrails.org"><em>Rails Guides</em></a>, watched some courses about HTML and CSS on <a href="http://zfer.us/9yIBW"><em>Code School</em></a>. So it&rsquo;s better than the first time when I gived up halfway.</p>
-
-<p>I decided to start a project similar to the sample_app for practice. It will be a blog-like web app, focusing on the startup news and stories in Chinese.</p>
-
-<p>I will take some notes here throughout the whole progress.</p>
-
-<!-- more -->
-
-
-<ul>
-<li><strong>Migrations</strong></li>
-</ul>
-
-
-<p>run <code>rails generate migration CreatePosts title:string text:text</code> to create a blank migration</p>
-
-<p>create tables and run <code>rake db:migrate</code>
-``` ruby
-class CreatePosts &lt; ActiveRecord::Migration</p>
-
-<pre><code>def up
-    create_table :posts do |t|
-        t.string :title
-        t.text :text
-        t.timestamps
-    end
-end
-
-def down
-    drop_table :posts
-end
-</code></pre>
-
-<p>end
-<code>``
-naming:</code>PostCategory.tableize`</p>
-
-<ul>
-<li><strong>Models</strong></li>
-</ul>
-
-
-<p>create &lsquo;post.rb&rsquo; under /app/models, some valiations and 1-M relationship.
-``` ruby
-class Post &lt; ActiveRecord::Base</p>
-
-<pre><code>has_many :comments
-validates :title, presence: true, 
-                                    uniqueness: true,
-                                    length: { minimum: 5}
-validates :text, presence: true
-</code></pre>
-
-<p>end
-```</p>
-
-<p>create &lsquo;category.rb&rsquo; and &lsquo;post_categories.rb&rsquo; to establish a M-M relationship
-```ruby
-class Category &lt; ActiveRecord::Base</p>
-
-<pre><code>has_many :post_categories
-has_many :posts, through: :post_categories
-
-validates :name, presence: true, uniqueness: true
-</code></pre>
-
-<p>end
-```</p>
-
-<p>```ruby
-class Post &lt; ActiveRecord::Base</p>
-
-<pre><code>...
-has_many :post_categories
-has_many :categories, through: :post_categories
-...
-</code></pre>
-
-<p>end
-```</p>
-
-<p>```ruby
-class PostCategory &lt; ActiveRecord::Base</p>
-
-<pre><code>belongs_to :post
-belongs_to :category
-</code></pre>
-
-<p>end
-```</p>
-
-<p>run <code>rails console</code> to check
-<code>ruby
-post = Post.first
-post.categories
-cat = Category.create(name: "news")
-post.categories &lt;&lt; cat
-</code></p>
-
-<ul>
-<li><strong>Routes</strong></li>
-</ul>
-
-
-<p>nested routes:
-<code>ruby
-resources :posts do
-  resources :comments
-end
-</code></p>
-
-<p>run <code>rake routes</code>
-```</p>
-
-<pre><code>            Prefix Verb             URI Pattern                             Controller#Action
-post_comments GET    /posts/:post_id/comments(.:format)          comments#index
-              POST   /posts/:post_id/comments(.:format)          comments#create
-</code></pre>
-
-<p> new_post_comment GET    /posts/:post_id/comments/new(.:format)      comments#new
-edit_post_comment GET    /posts/:post_id/comments/:id/edit(.:format) comments#edit</p>
-
-<pre><code> post_comment GET    /posts/:post_id/comments/:id(.:format)      comments#show
-              PATCH  /posts/:post_id/comments/:id(.:format)      comments#update
-              PUT    /posts/:post_id/comments/:id(.:format)      comments#update
-              DELETE /posts/:post_id/comments/:id(.:format)      comments#destroy
-        posts GET    /posts(.:format)                            posts#index
-              POST   /posts(.:format)                            posts#create
-     new_post GET    /posts/new(.:format)                        posts#new
-    edit_post GET    /posts/:id/edit(.:format)                   posts#edit
-         post GET    /posts/:id(.:format)                        posts#show
-              PATCH  /posts/:id(.:format)                        posts#update
-              PUT    /posts/:id(.:format)                        posts#update
-              DELETE /posts/:id(.:format)                        posts#destroy
-</code></pre>
-
-<p>```</p>
-
-<p>Example link to usage
-<code>ruby
-&lt;%= link_to 'All posts', posts_path %&gt;
-&lt;%= link_to 'New post', new_post_path %&gt;
-&lt;%= link_to 'Edit post', edit_post_path(@post) %&gt;
-&lt;%= link_to 'Show post', post_path(@post)%&gt; # or @post
-&lt;%= link_to 'Delete post', @post, method: :delete, data: { confirm: 'Sure'?} %&gt;
-</code></p>
-
-<ul>
-<li><strong>Controller</strong></li>
-</ul>
-
-
-<p>create &lsquo;posts_controller.rb&rsquo; under /app/controllers
-```ruby
-class PostsController &lt; ApplicationController</p>
-
-<pre><code>before_action :find_post, only:[:show, :edit, :update, :destroy]
-
-def index
-    @post = Post.all
-end
-
-def show
-    @comment = Comment.new
-end
-
-def new
-    @post = Post.new
-end
-
-def create
-    @post = Post.new(post_params)
-
-    if @post.save
-        flash[:success] = "发布成功"
-        redirect_to @post
-    else
-        render 'new'
-    end
-end 
-
-def edit
-end
-
-def update
-    if @post.update(params[:post].permit(:title, :text))
-        flash[:success] = "更新成功"
-        redirect_to @post
-    else 
-        render 'edit'
-    end
-end 
-
-def destroy
-    @post.destroy
-    redirect_to @post
-end
-
-private
-    def find_post
-        @post = Post.find(params[:id])
-    end
-
-    def post_params
-        params.require(:post).permit(:title, :text)
-    end
-</code></pre>
-
-<p>end
-```</p>
-
-<ul>
-<li><strong>Views</strong></li>
-</ul>
-
-
-<p>View Partials
-create &lsquo;_form.html.erb&rsquo; under /app/views/posts
-```ruby</p>
-
-<h1>model backed form</h1>
-
-<div class="well">
-    <%= form_for @post do |f| %>
-        <%= render 'shared/error', object: @post %>
-        
-        <div class="control-group">
-        <%= f.label "标题" %>
-        <%= f.text_field :title, class: "input-block-level" %> #full-width
-        </div>
-
-        <div class="control-group">
-        <%= f.label "内容" %>
-        <%= f.text_area :text, rows: 10, class: "input-block-level" %> 
-        </div>
-
-        <%= f.submit(@post.new_record? ? "发布" : "更新", class: "btn btn-primary") %>
-    <% end %>
-    <%= link_to '取消', posts_path(@post) %>
-</div>
-
-
-<p>```</p>
-
-<p>&lsquo;show.html.erb&rsquo; under /app/views/posts
-```ruby</p>
-
-<div class="container">
-    <div class="row">
-        <div class="span9">
-            ...
-
-            <div class="well">
-                <% if @post.comments.any? %>
-                    <% @post.comments.each do |c| %>
-                        <p><%= c.body %></p>
-                    <% end %>
-                <% end %>
-                <hr>
-                <%= form_for [@post, @comment] do |f| %>
-                    <%= render 'shared/error', object: @comment %>
-                    <div class="control-group">
-                        <%= f.text_area :body, rows: 5, class: "input-block-level" %>
-                    </div>
-                    <%= f.submit '发表评论', class: "btn btn-primary"%>
-                <% end %>
-            </div>
-        </div>
-
-    <div class="span3">
-        ...
-    </div>
-    </div>
-</div>
-
-
-<p>```</p>
-
-<p>non-model backed form:
-```ruby
-&lt;%= form_tag :title %></p>
-
-<pre><code>&lt;%= lable_tag :title%&gt;
-&lt;%= text_field_tag :title%&gt;
-,,,
-&lt;%=submit_tag 'create post'%&gt;
-</code></pre>
-
-<p>&lt;%end %>
-```</p>
 ]]></content>
   </entry>
   

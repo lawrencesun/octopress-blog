@@ -1,0 +1,323 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Rails Notes: Add Administrator - Lawrence Sun</title>
+	<meta name="author" content="Lawrence Sun">
+
+	
+	<meta name="description" content="add administrator to a rails app.">
+	<meta name="keywords" content="rails, administrator">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Lawrence Sun" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://voice.lawrencesun.info/posts/2014/02/15/rails-notes-add-administrator/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-43779948-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("yuliang1987@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+	
+</div>
+<hgroup>
+  <h1><a href="/">Lawrence Sun</a></h1>
+  
+    <h2>Hello World</h2>
+  
+</hgroup>
+
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://lawrencesun.info/blog">Previous Blog</a></li>
+</ul>
+
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		<!--
+			<a class="email" href="mailto:yuliang1987@gmail.com" title="Email">Email</a>
+		 -->
+		
+		
+		
+			<a class="twitter" href="http://twitter.com/sunyuliang" title="Twitter">Twitter</a>
+		
+        
+            <a class="weibo" href="http://www.weibo.com/ylsun" title="Weibo">Weibo</a>
+        
+		
+			<a class="github" href="https://github.com/lawrencesun" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">Rails Notes: Add Administrator</h1>
+	<div class="entry-content" itemprop="articleBody"><p>On the land of website/software, there is always an Administrator. The Administrator, like a king, has the right to change the rules, block the news and &lsquo;kill&rsquo; the innocent users whenever he likes.</p>
+
+<blockquote><p>Dieu et mon droit.</p></blockquote>
+
+<p>Today, I claimed to the throne &mdash; became an admin who had the power to delete comments and users.</p>
+
+<!-- more -->
+
+
+<p>First, <code>rails g migration add_admin_to_users</code>.</p>
+
+<p>Second, create a table and run <code>rake db:migrate</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AddAdminToUsers</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
+</span><span class='line'>      <span class="n">add_column</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">:admin</span><span class="p">,</span> <span class="ss">:boolean</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="kp">false</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, define a method in ApplicationController.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">admin_user</span>
+</span><span class='line'>  <span class="k">unless</span> <span class="n">current_user</span><span class="o">.</span><span class="n">admin?</span>   <span class="c1"># line_to_be_modified </span>
+</span><span class='line'>    <span class="n">flash</span><span class="o">[</span><span class="ss">:error</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Please contact admin.&quot;</span>
+</span><span class='line'>    <span class="n">redirect_to</span> <span class="n">root_path</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next, add <code>destroy</code> to UsersController</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="n">before_action</span> <span class="ss">:admin_user</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="ss">:destroy</span>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">destroy</span>
+</span><span class='line'>  <span class="vi">@user</span><span class="o">.</span><span class="n">destroy</span>
+</span><span class='line'>  <span class="n">flash</span><span class="o">[</span><span class="ss">:success</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;User deleted.&quot;</span>
+</span><span class='line'>  <span class="n">redirect_to</span> <span class="n">users_path</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Afterwards, add a delete link in the view.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="n">user_path</span><span class="p">(</span><span class="n">user</span><span class="p">),</span> <span class="nb">method</span><span class="p">:</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="ss">data</span><span class="p">:</span> <span class="p">{</span> <span class="ss">confirm</span><span class="p">:</span> <span class="s1">&#39;You sure?&#39;</span><span class="p">}</span> <span class="o">%&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, we would like to destroy the posts and comments automatically at the same time we delete the users. <code>has_many :posts, dependent: :destroy</code></p>
+
+<hr />
+
+<ul>
+<li>Issue 1:
+There would be a nil class error if there was no user signed in, <code>current_user.admin?</code> went wrong. Therefore, I added another method in ApplicationController and change the line_to_be_modified to <code>unless admin?</code></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">admin?</span>
+</span><span class='line'>  <span class="n">signed_in?</span> <span class="o">&amp;&amp;</span> <span class="n">current_user</span><span class="o">.</span><span class="n">admin?</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Issue 2:
+Another error occurred when I tried to add the delete link on the comments partial.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="sx">% if </span><span class="n">object</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">any?</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx"> &lt;% object.comments.each do |comment| %&gt;</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="sx">% if </span><span class="n">admin?</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">     &lt;%= link_to &#39;delete&#39;, post_comment_path($params), method: &#39;delete&#39;, data: { confirm: &#39;You sure?&#39;} %&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="sx">% end </span><span class="o">%&gt;</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At first, I passed in the &lsquo;comment&rsquo; as $params, and it showed that  the post.id and :id were nil. So I changed the $params to &lsquo;comment.post.id, comment.id&rsquo; and it went well.</p>
+</div>
+
+</article>
+
+	<div class="share">
+        <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+        
+        
+        <a class="addthis_button_twitter"></a>
+        
+        
+        <a class="addthis_button_sinaweibo"></a>
+        
+        
+        
+        <a class="addthis_button_compact"></a>
+        <a class="addthis_counter addthis_bubble_style"></a>
+        </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - Lawrence Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			
+
+<script type="text/javascript">
+      var disqus_shortname = 'voicelawrencesun';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://voice.lawrencesun.info/posts/2014/02/15/rails-notes-add-administrator/';
+        var disqus_url = 'http://voice.lawrencesun.info/posts/2014/02/15/rails-notes-add-administrator/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-43779948-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+		</div>
+	</div>
+</body>
+</html>
