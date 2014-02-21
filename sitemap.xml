@@ -2,81 +2,85 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://voice.lawrencesun.info/posts/2013/12/19/set-up-octopress/</loc>
-        <lastmod>2014-01-05T08:10:09+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://voice.lawrencesun.info/posts/2013/12/20/deploy-octopress-to-github-page-and-custom-domain/
         </loc>
-        <lastmod>2014-01-05T08:10:09+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/posts/2013/12/22/blogging-with-octopress/</loc>
-        <lastmod>2014-01-05T08:10:09+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/posts/2013/12/25/cracker-jokes/</loc>
-        <lastmod>2014-01-05T08:10:09+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/posts/2013/12/31/fitbit-flex-review/</loc>
-        <lastmod>2014-01-05T08:10:09+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://voice.lawrencesun.info/posts/2014/01/09/add-weibo-support-to-octopress-blog/
         </loc>
-        <lastmod>2014-01-09T04:29:25+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/posts/2014/01/09/add-about-page/</loc>
-        <lastmod>2014-01-09T05:03:35+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/posts/2014/01/09/my-git-cheet-sheet/</loc>
-        <lastmod>2014-01-09T07:38:08+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://voice.lawrencesun.info/posts/2014/01/15/the-adventure-of-the-last-problem/
         </loc>
-        <lastmod>2014-02-16T23:23:24+08:00</lastmod>
+        <lastmod>2014-02-21T20:55:11+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/posts/2014/01/27/rails-note-1/</loc>
-        <lastmod>2014-02-12T12:21:08+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-2/</loc>
-        <lastmod>2014-02-11T20:21:02+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-adding-categories/</loc>
-        <lastmod>2014-02-11T21:12:53+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-adding-a-like-function/
         </loc>
-        <lastmod>2014-02-12T11:26:12+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/posts/2014/02/14/rails-notes-markdown-support/</loc>
-        <lastmod>2014-02-14T13:12:33+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/posts/2014/02/14/travel-europe-day-0/</loc>
-        <lastmod>2014-02-16T23:21:35+08:00</lastmod>
+        <lastmod>2014-02-21T20:55:32+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/posts/2014/02/15/rails-notes-add-administrator/</loc>
-        <lastmod>2014-02-15T16:54:25+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://voice.lawrencesun.info/posts/2014/02/16/rails-notes-pagination-with-kaminari/
         </loc>
-        <lastmod>2014-02-16T22:53:09+08:00</lastmod>
+        <lastmod>2014-02-21T20:43:04+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://voice.lawrencesun.info/posts/2014/02/21/travel-europe-day-1/</loc>
+        <lastmod>2014-02-21T22:49:30+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/about/</loc>
@@ -84,7 +88,7 @@
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/blog/archives/</loc>
-        <lastmod>2014-02-16T23:23:24+08:00</lastmod>
+        <lastmod>2014-02-21T22:49:30+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/blog/categories/</loc>
@@ -92,7 +96,7 @@
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/</loc>
-        <lastmod>2014-02-16T23:23:24+08:00</lastmod>
+        <lastmod>2014-02-21T22:49:30+08:00</lastmod>
     </url>
     <url>
         <loc>http://voice.lawrencesun.info/robots.txt</loc>
