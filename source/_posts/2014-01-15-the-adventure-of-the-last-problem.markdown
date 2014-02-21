@@ -3,10 +3,10 @@ layout: post
 title: "曼游记之最后一案"
 date: 2014-01-15 11:30:07 +0000
 comments: true
-categories: Travel
+categories: [Travel, 曼游记]
 
-keywords: travel, UK, Cardiff, Swansea
-description: The last trip in UK, two-day visit to South Wales including Cardiff and Swansea. 
+keywords: travel, UK, Cardiff, Swansea, 旅游, 曼游记, 英国, 卡迪夫, 威尔士, 斯旺西
+description: The last trip in UK, two-day visit to South Wales including Cardiff and Swansea. 南威尔士卡迪夫斯旺西两日游. 
 ---
 
 _曼游记_ 历经三年，现在终于接近尾声。可惜我没有什么文笔，把这些旅行写得如此平淡，往往三言两语就想了事，许多有趣独特的经历便就此埋没。等我教育下一代的时候，应该无法像托尔金那样创作一个霍比特人，大概只能拿出手机，发个链接，'An unexpected journey, see details [here][1].'… 若是反响不佳，就说是链接被黑了…

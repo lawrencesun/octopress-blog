@@ -3,10 +3,10 @@ layout: post
 title: "曼游记终极篇之欧洲行 Day 0"
 date: 2014-02-14 22:02:25 +0800
 comments: true
-categories: Travel
+categories: [Travel, 曼游记]
 
-keywords: travel, Europe, holiday, visa
-description: 15-day-trip to Europe, day 0.
+keywords: travel, Europe, holiday, visa, 曼游记, 欧洲游, 旅游, 自由行, 假期
+description: 15-day-trip to Europe, day 0. 欧洲自由行.
 ---
 拖了大半年，终于决定开始动笔。让我如此肆无忌惮的原因是当时在旅途之中，用Evernote记录了一些笔记。可是再拖下去，恐怕这些碎片将无法勾勒出那次奇妙的旅行。
 

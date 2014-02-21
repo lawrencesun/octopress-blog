@@ -3,7 +3,15 @@ layout: default
 single: true
 ---
 
-<article class="post" itemscope itemtype="http://schema.org/BlogPosting">{% include article.html %}</article>
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	{% include article.html %}
+    <br/>
+    <p class="meta">
+    <span class="byline author vcard">Posted by <span class="fn">Sun ▪ </span></span>
+        {% include post/date.html %}{{ time }}
+    <span class="categories"> ▪ {% include post/categories.html %}</span>
+    </p>
+</article>
 {% unless page.sharing == false %}
 	{% include post/sharing.html %}
 {% endunless %}
