@@ -4,7 +4,7 @@
   <title><![CDATA[Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-02-21T23:41:12+08:00</updated>
+  <updated>2014-02-22T11:42:23+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,46 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: Ajaxify Pagination]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/02/22/rails-notes-ajaxify-pagination/"/>
+    <updated>2014-02-22T11:25:16+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/02/22/rails-notes-ajaxify-pagination</id>
+    <content type="html"><![CDATA[<p>After applying <a href="http://voice.lawrencesun.info/posts/2014/02/16/rails-notes-pagination-with-kaminari/">pagination</a> in my app, I would like to ajaxify kaminari paginator. I googled and stackoverflowed this issue, and found the solution, which is quite similar to what I did in <a href="http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-adding-a-like-function/">likeable</a> function.</p>
+
+<!-- more -->
+
+
+<p>First, add <code>remote: true</code> and class id to <code>index.html.erb</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">div</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;posts&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="sx">%= render &#39;shared/posts&#39;, object: @posts %&gt;</span>
+</span><span class='line'><span class="sx">&lt;/div&gt;</span>
+</span><span class='line'><span class="sx">&lt;div id=</span><span class="s2">&quot;paginator&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;%=</span> <span class="n">paginate</span> <span class="vi">@posts</span><span class="p">,</span> <span class="ss">remote</span><span class="p">:</span> <span class="kp">true</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Second, create a new file <code>index.js.erb</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span><span class="p">(</span><span class="s2">&quot;#posts&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">html</span><span class="p">(</span><span class="s2">&quot;&lt;%= escape_javascript render &#39;shared/posts&#39;, object: @posts %&gt;&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="err">$</span><span class="p">(</span><span class="s2">&quot;#paginator&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">html</span><span class="p">(</span><span class="s2">&quot;&lt;%= escape_javascript(paginate(@posts, remote: true).to_s) %&gt;&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Done.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[曼游记终极篇之欧洲行 Day 1]]></title>

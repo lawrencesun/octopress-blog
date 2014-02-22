@@ -5,13 +5,13 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Categories - Lawrence Sun</title>
+	<title>Rails Notes: Ajaxify Pagination - Lawrence Sun</title>
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content=" Octopress [ 5 ] Heroku [ 1 ] Ruby [ 9 ] Sinatra [ 1 ] Web app [ 1 ] Fitbit [ 1 ] Gadgets [ 1 ] Git [ 1 ] Travel [ 3 ] 曼游记 [ 3 ] Rails [ 8 ] ">
+<meta name="description" content="how to ajaxify Kaminari pagination">
 
-
+<meta name="keywords" content="rails, pagination, kaminari, pagination ajax, kaminari ajax pagination">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -20,7 +20,7 @@
 
 	<link href="/atom.xml" rel="alternate" title="Lawrence Sun" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://voice.lawrencesun.info/blog/categories/">
+	<link rel="canonical" href="http://voice.lawrencesun.info/posts/2014/02/22/rails-notes-ajaxify-pagination/">
 	<link href="/favicon.png" rel="shortcut icon">
 	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -99,38 +99,88 @@
 				
 			
 			<div class="mid-col-container">
-				<div id="content" class="inner"><article class="page">
-    
-    <h1 class="title">Categories</h1>
-    
-    <div class="entry-content"><ul>
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	
+	<h1 class="title" itemprop="name">Rails Notes: Ajaxify Pagination</h1>
+	<div class="entry-content" itemprop="articleBody"><p>After applying <a href="/posts/2014/02/16/rails-notes-pagination-with-kaminari/">pagination</a> in my app, I would like to ajaxify kaminari paginator. I googled and stackoverflowed this issue, and found the solution, which is quite similar to what I did in <a href="/posts/2014/02/11/rails-notes-adding-a-like-function/">likeable</a> function.</p>
 
-    <li><a href="/blog/categories/Octopress/">Octopress</a> [ 5 ]</li>
+<!-- more -->
 
-    <li><a href="/blog/categories/Heroku/">Heroku</a> [ 1 ]</li>
 
-    <li><a href="/blog/categories/Ruby/">Ruby</a> [ 9 ]</li>
+<p>First, add <code>remote: true</code> and class id to <code>index.html.erb</code>.</p>
 
-    <li><a href="/blog/categories/Sinatra/">Sinatra</a> [ 1 ]</li>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">div</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;posts&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="sx">%= render &#39;shared/posts&#39;, object: @posts %&gt;</span>
+</span><span class='line'><span class="sx">&lt;/div&gt;</span>
+</span><span class='line'><span class="sx">&lt;div id=</span><span class="s2">&quot;paginator&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;%=</span> <span class="n">paginate</span> <span class="vi">@posts</span><span class="p">,</span> <span class="ss">remote</span><span class="p">:</span> <span class="kp">true</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-    <li><a href="/blog/categories/Web App/">Web app</a> [ 1 ]</li>
 
-    <li><a href="/blog/categories/Fitbit/">Fitbit</a> [ 1 ]</li>
+<p>Second, create a new file <code>index.js.erb</code>.</p>
 
-    <li><a href="/blog/categories/Gadgets/">Gadgets</a> [ 1 ]</li>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span><span class="p">(</span><span class="s2">&quot;#posts&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">html</span><span class="p">(</span><span class="s2">&quot;&lt;%= escape_javascript render &#39;shared/posts&#39;, object: @posts %&gt;&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="err">$</span><span class="p">(</span><span class="s2">&quot;#paginator&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">html</span><span class="p">(</span><span class="s2">&quot;&lt;%= escape_javascript(paginate(@posts, remote: true).to_s) %&gt;&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
-    <li><a href="/blog/categories/Git/">Git</a> [ 1 ]</li>
 
-    <li><a href="/blog/categories/Travel/">Travel</a> [ 3 ]</li>
-
-    <li><a href="/blog/categories/曼游记/">曼游记</a> [ 3 ]</li>
-
-    <li><a href="/blog/categories/Rails/">Rails</a> [ 8 ]</li>
-
-</ul>
-
+<p>Done.</p>
 </div>
+
+
+    <br/>
+    <p class="meta">
+    <span class="byline author vcard">Posted by <span class="fn">Sun ▪ </span></span>
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-22T11:25:16+08:00" data-updated="true" itemprop="datePublished">Feb 22<span>nd</span>, 2014</time>
+    <span class="categories"> ▪ 
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</span>
+    </p>
 </article>
+
+	<div class="share">
+        <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+        
+        
+        <a class="addthis_button_twitter"></a>
+        
+        
+        <a class="addthis_button_sinaweibo"></a>
+        
+        
+        
+        <a class="addthis_button_compact"></a>
+        <a class="addthis_counter addthis_bubble_style"></a>
+        </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid="></script>
+</div>
+
+
 
 
 <section id="comment">
@@ -138,7 +188,6 @@
     <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
 </section>
-
 </div>
 			</div>
 			<footer id="footer" class="inner"><p>
@@ -154,8 +203,8 @@ Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Sha
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://voice.lawrencesun.info/blog/categories/index.html';
-        var disqus_url = 'http://voice.lawrencesun.info/blog/categories/index.html';
+        var disqus_identifier = 'http://voice.lawrencesun.info/posts/2014/02/22/rails-notes-ajaxify-pagination/';
+        var disqus_url = 'http://voice.lawrencesun.info/posts/2014/02/22/rails-notes-ajaxify-pagination/';
         var disqus_script = 'embed.js';
       
     (function () {

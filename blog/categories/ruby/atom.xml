@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-02-21T23:41:12+08:00</updated>
+  <updated>2014-02-22T11:42:23+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,42 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: Ajaxify Pagination]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/02/22/rails-notes-ajaxify-pagination/"/>
+    <updated>2014-02-22T11:25:16+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/02/22/rails-notes-ajaxify-pagination</id>
+    <content type="html"><![CDATA[<p>After applying <a href="/posts/2014/02/16/rails-notes-pagination-with-kaminari/">pagination</a> in my app, I would like to ajaxify kaminari paginator. I googled and stackoverflowed this issue, and found the solution, which is quite similar to what I did in <a href="/posts/2014/02/11/rails-notes-adding-a-like-function/">likeable</a> function.</p>
+
+<!-- more -->
+
+
+<p>First, add <code>remote: true</code> and class id to <code>index.html.erb</code>.</p>
+
+<p>```ruby</p>
+
+<div id="posts">
+    <%= render 'shared/posts', object: @posts %>
+</div>
+
+
+<div id="paginator">
+    <%= paginate @posts, remote: true %>
+</div>
+
+
+<p>```</p>
+
+<p>Second, create a new file <code>index.js.erb</code>.</p>
+
+<p><code>ruby
+$("#posts").html("&lt;%= escape_javascript render 'shared/posts', object: @posts %&gt;");
+$("#paginator").html("&lt;%= escape_javascript(paginate(@posts, remote: true).to_s) %&gt;");
+</code>
+Done.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: Pagination With Kaminari]]></title>
@@ -438,142 +474,6 @@ def total_likes</p>
 </code></pre>
 
 <p>end
-```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Notes: Adding Categories]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-adding-categories/"/>
-    <updated>2014-02-11T20:23:51+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-adding-categories</id>
-    <content type="html"><![CDATA[<p>In the third note, a brief description about adding categories in a blog-like app will be presented. It is a <a href="http://guides.rubyonrails.org/association_basics.html">M-M relationship</a>. We will  apply <code>has_many :through</code> association.</p>
-
-<!-- more -->
-
-
-<p><strong>Migration</strong>:</p>
-
-<p>```ruby
-class CreatePostCategories &lt; ActiveRecord::Migration
-  def up</p>
-
-<pre><code>create_table :post_categories do |t|
-    t.integer :post_id, :category_id
-
-    t.timestamps
-end
-</code></pre>
-
-<p>  end</p>
-
-<p>  def down</p>
-
-<pre><code>drop_table :post_categories
-</code></pre>
-
-<p>  end
-end
-```
-PostCategories will have two foreign keys: :post_id and :category_id</p>
-
-<p><strong>Models</strong>:</p>
-
-<p>```ruby
-class PostCategory &lt; ActiveRecord::Base</p>
-
-<pre><code>belongs_to :post
-belongs_to :category
-</code></pre>
-
-<p>end
-```</p>
-
-<p>```ruby
-class Category &lt; ActiveRecord::Base</p>
-
-<pre><code>has_many :post_categories
-has_many :posts, through: :post_categories
-...
-</code></pre>
-
-<p>end
-```</p>
-
-<p>```ruby
-class Post &lt; ActiveRecord::Base</p>
-
-<pre><code>...
-has_many :post_categories
-has_many :categories, through: :post_categories
-...
-</code></pre>
-
-<p>end
-```</p>
-
-<p><strong>Controller and routes</strong></p>
-
-<p>similar to other resources.</p>
-
-<p><strong>Views</strong></p>
-
-<p>&lsquo;shared/_posts.html.erb&rsquo;
-```ruby
-&lt;% object.reverse.each do |post| %></p>
-
-<pre><code>&lt;p&gt;
-    &lt;span class="badge pull-right"&gt;&lt;%= post.comments.count %&gt;&lt;/span&gt;
-    &lt;%= link_to "#{post.title}", post_path(post) %&gt;&lt;br&gt;
-    &lt;% post.categories.each do |category| %&gt;
-    &lt;%= link_to category.name, category_path(category), class: "label" %&gt;
-  &lt;% end %&gt;
-  &lt;span class="timestamp"&gt;
-        &lt;small&gt;posted by &lt;% unless post.user.blank? %&gt;
-            &lt;%= link_to post.user.username, user_path(post.user) %&gt;
-            &lt;% end %&gt;
-            &lt;%= time_ago_in_words(post.created_at)%&gt; ago 
-        &lt;/small&gt;
-    &lt;/span&gt;
-    &lt;hr&gt;
-&lt;/p&gt;
-</code></pre>
-
-<p>&lt;% end %>
-```</p>
-
-<p>&lsquo;app/views/categories/show.html.erb&rsquo;
-<code>ruby
-...
-&lt;%= render 'shared/posts', object: @category.posts %&gt;
-...
-</code></p>
-
-<p>Add categories selection in _form partial
-```ruby</p>
-
-<div class='control-group'>
-  <%= f.label "选择节点" %>
-  <%= f.select :category_ids, Category.all.collect{|c| [c.name, c.id]}, {}, {multiple: false} %>
-</div>
-
-
-<p>```</p>
-
-<p>Add get_categories method in ApplicationController to show categories in header.
-```ruby
-def get_categories</p>
-
-<pre><code>@categories = Category.all
-</code></pre>
-
-<p>end</p>
-
-<p>before_action :get_categories</p>
-
-<p>&lt;% @categories.each do |cat| %>
-<li>&lt;%= link_to cat.name, category_path(cat) %></li>  <br/>
-&lt;% end %>
 ```</p>
 ]]></content>
   </entry>
