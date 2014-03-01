@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-02-22T11:42:23+08:00</updated>
+  <updated>2014-03-01T11:10:18+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,89 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: Counter Cache]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/03/01/rails-notes-counter-cache/"/>
+    <updated>2014-03-01T10:18:40+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/03/01/rails-notes-counter-cache</id>
+    <content type="html"><![CDATA[<p>By default, posts in my app are sorted by create_at time. I would like to sort them by the number of comments. In order to implement it, we will apply :counter_cache and :scope.</p>
+
+<!-- more -->
+
+
+<p>According to Active Record Association on Rails Guides, @post.comments.size requires making a call to the database to perform a COUNT(*) query. :counter_cache can be used to make finding the number of belonging objects more efficient.</p>
+
+<p>First, run a migration to add the column called comments_count to posts.</p>
+
+<p>```ruby
+class AddCommentsCountToPosts &lt; ActiveRecord::Migration</p>
+
+<pre><code>def self.up
+add_column :posts, :comments_count, :integer, :null =&gt; false, :default =&gt; 0
+
+Post.reset_column_information
+Post.all.each do |p|
+  p.update_attribute :comments_count, p.comments.length
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  def self.down</p>
+
+<pre><code>remove_column :posts, :comments_count
+</code></pre>
+
+<p>  end
+end
+<code>``
+Then add following code to</code>comment.rb`</p>
+
+<p><code>ruby
+belongs_to :post, counter_cache: true
+</code></p>
+
+<p>Then we will use scopes. According to Active Record Querying, scoping allows you to specify commonly-used queries which can be referenced as method calls on the association objects or models.</p>
+
+<p>In our case, define a scope called active on <code>post.rb</code></p>
+
+<p><code>ruby
+scope :active, -&gt; { where("comments_count &gt;= ?", 5) }
+</code></p>
+
+<p>Then add routes to the <code>collection</code>.</p>
+
+<p>```ruby
+resources :posts do</p>
+
+<pre><code>...
+collection do 
+    get 'active'
+end
+...
+</code></pre>
+
+<p>end
+```</p>
+
+<p>it will generate the path /posts/active with GET, route to the active action of PostsController, as well as active_posts_path route helper.</p>
+
+<p>In PostsController, define <code>active</code> action</p>
+
+<p>```ruby
+def active</p>
+
+<pre><code>    @posts = Post.active.order('created_at DESC').page(params[:page])
+    render action: 'index'
+</code></pre>
+
+<p>end
+```</p>
+
+<p>Finally, use @post.comments_count and active_posts_path in views to achieve what we want at the beginning.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: Ajaxify Pagination]]></title>
@@ -297,184 +380,6 @@ end
 
 
 <p><code>&lt;%= markdown(@post.text) %&gt;</code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Notes: Adding a 'Like' Function]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-adding-a-like-function/"/>
-    <updated>2014-02-11T21:16:52+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-adding-a-like-function</id>
-    <content type="html"><![CDATA[<p>Instead of text comments, we can easily state our opinion on the article by clicking a &lsquo;Like&rsquo; button or a &lsquo;Vote&rsquo; arrow. It is not uncommon that this function plays a role of recommendation. Last week, I added a similar function called &lsquo;Likeable&rsquo; to my blog-like app. Here is the key notes.</p>
-
-<!-- more -->
-
-
-<p><strong>Migration and Models</strong></p>
-
-<p>First of all, we <code>rails g migration create_likes</code>.</p>
-
-<p>```ruby
-class CreateLikes &lt; ActiveRecord::Migration
-  def up</p>
-
-<pre><code>create_table :likes do |t|
-    t.boolean :like
-    t.references :likeable, polymorphic: true
-    t.integer :user_id
-    t.timestamps
-end
-</code></pre>
-
-<p>  end</p>
-
-<p>  def down</p>
-
-<pre><code>drop_table :likes
-</code></pre>
-
-<p>  end
-end
-```</p>
-
-<p>Here, like boolean will show the choice of like(true) or unlike(false), :user_id will show who made the choice.</p>
-
-<p><code>t.references :likeable, polymorphic: true</code> will generate two columns: <em>likeable_id</em> and <em>likeable_type</em> (e.g. Post or Comment).</p>
-
-<p>With <em>Polymorphic</em> association, a model can belong to more than one other model, on a single association <a href="http://guides.rubyonrails.org/association_basics.html#polymorphic-associations">[1]</a>. In our case, like model can belong to post model or comment model.</p>
-
-<p>```ruby
-class Like &lt; ActiveRecord::Base</p>
-
-<pre><code>belongs_to :user
-belongs_to :likeable, polymorphic: true.
-</code></pre>
-
-<p>end</p>
-
-<p>class Post &lt; ActiveRecord::Base</p>
-
-<pre><code>has_many :likes, as :likeable
-</code></pre>
-
-<p>end</p>
-
-<p>class Comment &lt; ActiveRecord::Base</p>
-
-<pre><code>has_many :likes, as :likeable
-</code></pre>
-
-<p>end
-```</p>
-
-<p><strong>Routes</strong></p>
-
-<p>We would like to use a member routes here.
-```ruby
-resources :posts do</p>
-
-<pre><code>member do 
-    post 'like'
-end
-resources :comments do
-    member do
-        post 'like'
-    end
-end
-</code></pre>
-
-<p>end
-```</p>
-
-<p>It will recognise &lsquo;/post/post_id/like&rsquo; and &lsquo;/post/post_id/comment/id/like&rsquo; with POST, route to the action of PostsController and CommentsController, create the like_post_path and like_post_comment_path helpers.</p>
-
-<p><strong>Views</strong></p>
-
-<p>&lsquo;app/views/posts/show.html.erb&rsquo;
-```ruby
-<span class="pull-right"></p>
-
-<pre><code>&lt;%= link_to like_post_path(@post, like: true), method: 'post' do %&gt;
-</code></pre>
-
-<p>  <i class="icon-thumbs-up"></i></p>
-
-<pre><code>&lt;%= @post.likes.size %&gt;likes %&gt;
-&lt;% end %&gt;
-</code></pre>
-
-<p></span>
-<code>``
-Here we specify the method POST instead of the default a_tag method GET, by adding</code>method: &lsquo;post&rsquo;`. This will add &lsquo;data_method=&ldquo;post&rdquo;&rsquo; to link tag, which will revoke a javascript in rails that convert the link tag to a form and submit it. We also pass in a params &lsquo;like&rsquo; to be true, which means it will count as a &lsquo;Like&rsquo;.</p>
-
-<p>Now we need some actions.</p>
-
-<p><strong>Action</strong></p>
-
-<p>```ruby
-class PostsController &lt; ApplicationController</p>
-
-<pre><code>before_action :find_post, only:[…, :like]
-before_action :require_user, except:[…]
-…
-
-def like
-    Like.create(likeable: @post, user: current_user, like: params[:like])
-    flash[:success] = "Like Counted!"
-    redirect_to :back
-end
-</code></pre>
-
-<p>```</p>
-
-<p>Here, we will pass params of @post to likeable_id and likeable_type, current_user &rsquo;s id and set &lsquo;true&rsquo; on like boolean.</p>
-
-<p><strong>Ajax</strong></p>
-
-<p>Every time we hit the &lsquo;Thumbs-up&rsquo; button, it will hit the datebase and rebuild the whole page. It&rsquo;s quite expensive. So we will use another rails magic here.</p>
-
-<p>Simply add <code>remote: true</code>: &lsquo;&lt;%= link_to like_post_path(@post, like: true), method: 'post&rsquo;, remote: true do %>&lsquo;. It will become a ajax request when we hit the 'Thumbs-up&rsquo;.</p>
-
-<p>In the meantime, we add response to this request in controller, revise our show.html.erb and add a <code>like.js.erb</code> view template file in app/views/posts, respectively.</p>
-
-<p>```ruby
-def like</p>
-
-<pre><code>    ...
-respond_to do |format|
-    format.html do
-    flash[:success] = "Like Counted!"
-    redirect_to :back
-end
-
-format.js
-end         
-</code></pre>
-
-<p>end
-```</p>
-
-<p><code>ruby
-&lt;span id="post_&lt;%= @post.id %&gt;_likes"&gt;&lt;%= @post.likes.size %&gt;likes&lt;/span&gt;
-</code></p>
-
-<p><code>ruby
-$("#post_&lt;%= @post.id %&gt;_likes").html("&lt;%= @post.likes.size %&gt;likes");
-</code></p>
-
-<p><strong>Expansion</strong></p>
-
-<p>We can also add a &lsquo;Unlike&rsquo; function with a &lsquo;Thumbs-down&rsquo; button.
-Instead of <code>like: true</code> params, we set it to false. In order to show the total likes, we add a method called <code>total_likes</code> in post.rb.</p>
-
-<p>```ruby
-def total_likes</p>
-
-<pre><code>self.likes.where(like: true).size - self.likes.where(like :false).size
-</code></pre>
-
-<p>end
-```</p>
 ]]></content>
   </entry>
   
