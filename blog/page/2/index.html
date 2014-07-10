@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Feb 14th, 2014 Travel, 曼游记 曼游记终极篇之欧洲行 Day 0 拖了大半年，终于决定开始动笔。让我如此肆无忌惮的原因是当时在旅途之中，用Evernote记录了一些笔记。可是再拖下去，恐怕这些碎片将无法勾勒出那次奇妙的旅行。 曼游记里有太多值得回忆的瞬间， &hellip;">
+<meta name="description" content="Feb 15th, 2014 Rails, Ruby Rails Notes: Add Administrator On the land of website/software, there is always an Administrator. The Administrator, like &hellip;">
 
 
 
@@ -107,6 +107,46 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-15T16:02:33+08:00" data-updated="true" itemprop="datePublished">Feb 15<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/02/15/rails-notes-add-administrator/" itemprop="url">Rails Notes: Add Administrator</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>On the land of website/software, there is always an Administrator. The Administrator, like a king, has the right to change the rules, block the news and &lsquo;kill&rsquo; the innocent users whenever he likes.</p>
+
+<blockquote><p>Dieu et mon droit.</p></blockquote>
+
+<p>Today, I claimed to the throne &mdash; became an admin who had the power to delete comments and users.</p>
+
+
+		
+		<a href="/posts/2014/02/15/rails-notes-add-administrator/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -472,93 +512,6 @@ rake new_page[about]
 <li>Edit &ldquo;/about/index.markdown&rdquo; file if you want.</li>
 </ul>
 
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-09T03:39:38+08:00" data-updated="true" itemprop="datePublished">Jan 9<span>th</span>, 2014</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/octopress/'>Octopress</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2014/01/09/add-weibo-support-to-octopress-blog/" itemprop="url">Add Weibo Support to Octopress Blog</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>Since I will go back China very soon, I think adding a <em>Weibo</em> link on the sidebar might be a good move. To be honest, I am not too keen on Weibo. The reason? Information overload.</p>
-
-<ul>
-<li>First, add following code to &ldquo;/source/_includes/header.html&rdquo;</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>{ % if site.weibo_user % }
-</span><span class='line'>  &lt;a class="weibo" href="http://www.weibo.com/ylsun" title="Weibo"&gt;Weibo&lt;/a&gt;
-</span><span class='line'>{ % endif % }</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Second, add following code to &ldquo;/sass/parts/_header.scss&rdquo;</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="o">&amp;</span><span class="nc">.weibo</span><span class="p">{</span>
-</span><span class='line'>  <span class="k">background</span><span class="o">:</span> <span class="n">image</span><span class="o">-</span><span class="sx">url(&#39;social/weibo.png&#39;)</span> <span class="k">center</span> <span class="k">no-repeat</span> <span class="m">#e32529</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="m">#e32529</span><span class="p">;</span>
-</span><span class='line'>  <span class="o">&amp;:</span><span class="n">hover</span><span class="err">{</span>
-</span><span class='line'>      <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="n">darken</span><span class="p">(</span><span class="m">#e32529</span><span class="o">,</span> <span class="m">10</span><span class="o">%</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="err">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Then, add the <a href="https://github.com/lawrencesun/lawrencesun.github.io/tree/source/source/images/social">“weibo.png”</a> to “/source/images/social” dirctory.</li>
-<li>Finally, add following code to &ldquo;_config.yml&rdquo;</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="err">#</span> <span class="nt">Weibo</span>
-</span><span class='line'><span class="nt">weibo_user</span><span class="o">:</span> <span class="nt">ylsun</span> <span class="err">#</span> <span class="err">微博数字</span> <span class="nt">ID</span> <span class="err">或域名</span> <span class="nt">ID</span>
-</span><span class='line'><span class="nt">weibo_share</span><span class="o">:</span> <span class="nt">true</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><sub>Thanks for sharing <a href="http://www.imallen.com/blog/2013/05/12/add-support-for-weibo-and-dribbble-to-greyshade.html">Allen</a> </sub></p>
 
 		
 		
