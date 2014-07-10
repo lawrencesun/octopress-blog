@@ -75,7 +75,7 @@ weibo_share: true
 
 # Twitter
 twitter_user: sunyuliang
-twitter_tweet_button: true
+twitter_tweet_button: false
 
 # Google +1
 google_plus_one: false
