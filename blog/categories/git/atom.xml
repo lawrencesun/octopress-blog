@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-07-11T21:38:30+08:00</updated>
+  <updated>2014-07-15T22:37:05+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,96 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[如何合并多个Git Commit]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/07/15/squash-git-commits/"/>
+    <updated>2014-07-15T22:06:07+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/07/15/squash-git-commits</id>
+    <content type="html"><![CDATA[<p>今天把之前做的一个rails项目升级到Twitter Bootstrap 3.2，结果问题一大堆。主要是class和id名称的改动，以及响应式布局的调整。最后在Heroku部署完成之后，发现原来的“点赞”图标无法正确显示，在stackoverflow翻阅了很多相关问答，和我有同样问题的人不少。但是按照这些方法去尝试，没有一个能有效解决。最终我改用了fonts awesome。</p>
+
+<p>在这个期间，遇到了不少git方面的问题，看来之前还是没有把基础打好。</p>
+
+<p>一个问题是由于不断尝试不同的方法，导致commit过多，非常混乱。于是想把多个commit合并到一起。具体方法如下：</p>
+
+<!-- more -->
+
+
+<p>首先<code>git log</code>查看目前的commit, 假设按照时间先后顺序有 a, b, c, d 三个commit.</p>
+
+<p>现在要把四个合并到一起，使用<code>rebase</code>这个命令。</p>
+
+<p>```ruby
+$ git rebase -i HEAD~4</p>
+
+<p>pick 01d1124 a
+pick 6340aaa b
+pick ebfd367 c
+pick 30e0ccb d</p>
+
+<h1>Rebase 60709da..30e0ccb onto 60709da</h1>
+
+<p>#</p>
+
+<h1>Commands:</h1>
+
+<h1>p, pick = use commit</h1>
+
+<h1>e, edit = use commit, but stop for amending</h1>
+
+<h1>s, squash = use commit, but meld into previous commit</h1>
+
+<p>#</p>
+
+<h1>If you remove a line here THAT COMMIT WILL BE LOST.</h1>
+
+<h1>However, if you remove everything, the rebase will be aborted.</h1>
+
+<p>#
+```
+接着，把前四行进行如下替换：</p>
+
+<p><code>ruby
+pick 01d1124 a
+squash 6340aaa b
+squash ebfd367 c
+squash 30e0ccb d
+</code></p>
+
+<p>Git将会把所有四个commit合并到第一个里面去。保存退出后，会出现：</p>
+
+<p>```ruby</p>
+
+<h1>This is a combination of 4 commits.</h1>
+
+<h1>The first commit&rsquo;s message is:</h1>
+
+<p>a</p>
+
+<h1>This is the 2nd commit message:</h1>
+
+<p>b</p>
+
+<h1>This is the 3rd commit message:</h1>
+
+<p>c</p>
+
+<h1>This is the 4th commit message:</h1>
+
+<p>d
+&hellip;&hellip;
+```
+修改新的commit message后再次保存退出，合并完成。</p>
+
+<p>如果在过程中出现冲突，可以使用<code>git rebase --abort</code>命令。</p>
+
+<p>第二个问题是我在git push时候出现 &lsquo;Everything is up to date'。通过<code>git branch</code>查询发现当前的branch是* (no branch).</p>
+
+<p>出现这种情况，首先<code>git reflog</code>， 找到最新的一个commit，然后创建一个临时branch.</p>
+
+<p><code>git checkout -b temp-branch &lt;commit-id&gt;</code> 之后合并到master。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[My Git Cheet Sheet]]></title>

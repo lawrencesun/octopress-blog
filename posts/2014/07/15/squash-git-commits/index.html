@@ -1,0 +1,313 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>如何合并多个Git commit - Lawrence Sun</title>
+	<meta name="author" content="Lawrence Sun">
+
+	
+<meta name="description" content="squash several git commits into one, no branch">
+
+<meta name="keywords" content="git, commit, squash, rebase">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Lawrence Sun" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://voice.lawrencesun.info/posts/2014/07/15/squash-git-commits/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+	<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'> -->
+
+	<link href='http://fonts.useso.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<script src="http://ajax.useso.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+	<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+
+<link href="http://fonts.useso.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.useso.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("yuliang1987@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+	
+</div>
+<hgroup>
+  <h1><a href="/">Lawrence Sun</a></h1>
+  
+    <h2>Hello World</h2>
+  
+</hgroup>
+
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		<!--
+			<a class="email" href="mailto:yuliang1987@gmail.com" title="Email">Email</a>
+		 -->
+		
+		
+		
+			<a class="twitter" href="http://twitter.com/sunyuliang" title="Twitter">Twitter</a>
+		
+        
+            <a class="weibo" href="http://www.weibo.com/ylsun" title="Weibo">Weibo</a>
+        
+		
+			<a class="github" href="https://github.com/lawrencesun" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	
+	<h1 class="title" itemprop="name">如何合并多个Git Commit</h1>
+	<div class="entry-content" itemprop="articleBody"><p>今天把之前做的一个rails项目升级到Twitter Bootstrap 3.2，结果问题一大堆。主要是class和id名称的改动，以及响应式布局的调整。最后在Heroku部署完成之后，发现原来的“点赞”图标无法正确显示，在stackoverflow翻阅了很多相关问答，和我有同样问题的人不少。但是按照这些方法去尝试，没有一个能有效解决。最终我改用了fonts awesome。</p>
+
+<p>在这个期间，遇到了不少git方面的问题，看来之前还是没有把基础打好。</p>
+
+<p>一个问题是由于不断尝试不同的方法，导致commit过多，非常混乱。于是想把多个commit合并到一起。具体方法如下：</p>
+
+<!-- more -->
+
+
+<p>首先<code>git log</code>查看目前的commit, 假设按照时间先后顺序有 a, b, c, d 三个commit.</p>
+
+<p>现在要把四个合并到一起，使用<code>rebase</code>这个命令。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">git</span> <span class="n">rebase</span> <span class="o">-</span><span class="n">i</span> <span class="no">HEAD</span><span class="o">~</span><span class="mi">4</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">pick</span> <span class="mo">01</span><span class="n">d1124</span> <span class="n">a</span>
+</span><span class='line'><span class="n">pick</span> <span class="mi">6340</span><span class="n">aaa</span> <span class="n">b</span>
+</span><span class='line'><span class="n">pick</span> <span class="n">ebfd367</span> <span class="n">c</span>
+</span><span class='line'><span class="n">pick</span> <span class="mi">30</span><span class="n">e0ccb</span> <span class="n">d</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Rebase 60709da..30e0ccb onto 60709da</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># Commands:</span>
+</span><span class='line'><span class="c1">#  p, pick = use commit</span>
+</span><span class='line'><span class="c1">#  e, edit = use commit, but stop for amending</span>
+</span><span class='line'><span class="c1">#  s, squash = use commit, but meld into previous commit</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># If you remove a line here THAT COMMIT WILL BE LOST.</span>
+</span><span class='line'><span class="c1"># However, if you remove everything, the rebase will be aborted.</span>
+</span><span class='line'><span class="c1">#</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>接着，把前四行进行如下替换：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">pick</span> <span class="mo">01</span><span class="n">d1124</span> <span class="n">a</span>
+</span><span class='line'><span class="n">squash</span> <span class="mi">6340</span><span class="n">aaa</span> <span class="n">b</span>
+</span><span class='line'><span class="n">squash</span> <span class="n">ebfd367</span> <span class="n">c</span>
+</span><span class='line'><span class="n">squash</span> <span class="mi">30</span><span class="n">e0ccb</span> <span class="n">d</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Git将会把所有四个commit合并到第一个里面去。保存退出后，会出现：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># This is a combination of 4 commits.</span>
+</span><span class='line'><span class="c1"># The first commit&#39;s message is:</span>
+</span><span class='line'><span class="n">a</span>
+</span><span class='line'><span class="c1"># This is the 2nd commit message:</span>
+</span><span class='line'><span class="n">b</span>
+</span><span class='line'><span class="c1"># This is the 3rd commit message:</span>
+</span><span class='line'><span class="n">c</span>
+</span><span class='line'><span class="c1"># This is the 4th commit message:</span>
+</span><span class='line'><span class="n">d</span>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>修改新的commit message后再次保存退出，合并完成。</p>
+
+<p>如果在过程中出现冲突，可以使用<code>git rebase --abort</code>命令。</p>
+
+<p>第二个问题是我在git push时候出现 &lsquo;Everything is up to date&#8217;。通过<code>git branch</code>查询发现当前的branch是* (no branch).</p>
+
+<p>出现这种情况，首先<code>git reflog</code>， 找到最新的一个commit，然后创建一个临时branch.</p>
+
+<p><code>git checkout -b temp-branch &lt;commit-id&gt;</code> 之后合并到master。</p>
+</div>
+
+
+    <br/>
+    <p class="meta">
+    <span class="byline author vcard">Posted by <span class="fn">Sun ▪ </span></span>
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-15T22:06:07+08:00" data-updated="true" itemprop="datePublished">Jul 15<span>th</span>, 2014</time>
+    <span class="categories"> ▪ 
+
+
+	<a class='category' href='/blog/categories/git/'>Git</a>
+
+
+</span>
+    </p>
+</article>
+
+	<div class="share">
+        <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+        
+        
+        
+        <a class="addthis_button_sinaweibo"></a>
+        
+        
+        
+        <a class="addthis_button_compact"></a>
+        <a class="addthis_counter addthis_bubble_style"></a>
+        </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - Lawrence Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			
+
+<script type="text/javascript">
+      var disqus_shortname = 'voicelawrencesun';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://voice.lawrencesun.info/posts/2014/07/15/squash-git-commits/';
+        var disqus_url = 'http://voice.lawrencesun.info/posts/2014/07/15/squash-git-commits/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-43779948-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+		</div>
+	</div>
+</body>
+</html>
