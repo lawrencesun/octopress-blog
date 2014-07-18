@@ -4,7 +4,7 @@
   <title><![CDATA[Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-07-15T22:37:05+08:00</updated>
+  <updated>2014-07-18T21:44:49+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,85 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby程序:自动抓取股票财务数据]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/07/18/stock-data-crawler/"/>
+    <updated>2014-07-18T21:03:55+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/07/18/stock-data-crawler</id>
+    <content type="html"><![CDATA[<p>无论是投资还是投机股市，股票的财务状况仍然是不可或缺的参考指标。传统金融网站上的数据往往以个股为单位呈现，导致数据的查询、对比和分析比较困难。如果要进行全局扫描和分析，可能就需要把这些数据一个一个下载后进行处理，这方面的时间成本略高。</p>
+
+<p>前段时间在雪球偶然看到有人用Python做了一个自动获取数据的程序，觉得挺有趣，对大量数据的计算和分析可能有用，所以用了一天左右的时间用Ruby写了一个类似的代码。</p>
+
+<!-- more -->
+
+
+<p>数据来源于网易财经，理论上可以实现所有股票的任意财务数据的抓取，并导入csv文件。例如所有股票的”速动比率“（尽管不懂&hellip;），如下图所示。</p>
+
+<p><img src="http://img0.ph.126.net/E-lgvDQhYHS87p3dkqokeA==/6619508599955660340.png" alt="img" /></p>
+
+<p>核心代码如下:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># 检测网页是否存在</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">valid_url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">req</span> <span class="o">=</span> <span class="ss">Net</span><span class="p">:</span><span class="ss">:HTTP</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">url</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">res</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">request_head</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">return</span> <span class="kp">true</span> <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">code</span> <span class="o">==</span> <span class="s1">&#39;200&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># 抓取数据extract_data</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">extract_data</span><span class="p">(</span><span class="n">stock_num</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1"># 数据来源为网易股票频道，按报告期的主要财务指标，默认显示为6个季度</span>
+</span><span class='line'>  <span class="n">source</span> <span class="o">=</span> <span class="ss">Nokogiri</span><span class="p">:</span><span class="ss">:HTML</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+</span><span class='line'>  <span class="c1"># 获取股票名称</span>
+</span><span class='line'>  <span class="n">name_table</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;//h1[@class=&#39;name&#39;]//a&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nb">name</span> <span class="o">=</span> <span class="n">name_table</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">text</span>
+</span><span class='line'>  <span class="c1"># 搜寻所有属于指定css class的值，返回的是一个Array</span>
+</span><span class='line'>  <span class="n">data_table</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;//table[@class=&#39;table_bg001 border_box fund_analys&#39;]//td&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1"># 查找Array中含有指定文字描述的元素，并返回元素的地址</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># 上一步查找到的元素地址后面的六个元素含有所需数据，将其中的数字部分提取出来</span>
+</span><span class='line'>  <span class="c1"># 并加入到一个新建的Array中去</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># 返回数据</span>
+</span><span class='line'>  <span class="n">s</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>目前的主要问题是运行速度较慢，以后有时间看看能否改进。不管如何，在此数据的基础上做一些计算、对比和分析应该容易不少。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[如何合并多个Git commit]]></title>
@@ -2186,47 +2265,6 @@ create &lsquo;_form.html.erb&rsquo; under /app/views/posts</p>
 
 
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[曼游记之最后一案]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/01/15/the-adventure-of-the-last-problem/"/>
-    <updated>2014-01-15T19:30:07+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/01/15/the-adventure-of-the-last-problem</id>
-    <content type="html"><![CDATA[<p><em>曼游记</em> 历经三年，现在终于接近尾声。可惜我没有什么文笔，把这些旅行写得如此平淡，往往三言两语就想了事，许多有趣独特的经历便就此埋没。等我教育下一代的时候，应该无法像托尔金那样创作一个霍比特人，大概只能拿出手机，发个链接，&#8217;An unexpected journey, see details <a href="http://voice.lawrencesun.info/blog/categories/travel/">here</a>.&lsquo;… 若是反响不佳，就说是链接被黑了…</p>
-
-<p>此番出行决定得比较突然，没做什么准备，前一天晚上订了房间车票，拿起一个单肩包就上路了。照例还是一大早从曼彻斯特出发。火车历时近四个小时，抵达了卡迪夫。因为天气好，加上周六车次相比周日稍微多一点，我便决定立即转车去看海。前往斯旺西的火车只有一节… 在车上小憩片刻，一个小时后便到了，途中还看到了斯旺西的主场。</p>
-
-<!-- more -->
-
-
-<p>走出火车站，什么标记或者地图指示都没，打开水果地图结果连汽车站都搜不到。还是要靠我大谷歌啊，结果我靠，让我在同一个地方绕了两圈。终于找到汽车站了，和一帮老头老太们一起坐车前往Rhossili Bay。公车在狭小的道路上奔驰，路过各种农场，山丘和富人区，来到了威尔士最著名的海滩之一。</p>
-
-<p><img src="https://lh4.googleusercontent.com/-GrFwhaVeS70/UtZ50MzRRqI/AAAAAAAAALI/w99NamGfqD4/w400/h300" title="Rhossili Bay" alt="img" /></p>
-
-<p>今年去了不少海滩，所以就没有下到沙滩，而是沿着山崖上的石子路漫步。这里和北爱尔兰的巨人之路有点相似，山崖一边是宁静的农场和村庄，一边是辽阔的大海。此时正值下午，夕阳西下，月亮也在另一头隐现，美如画卷。像法国蔚蓝海岸那样的，更适合晒晒日光浴，喝喝啤酒，看看美女。而眼前的这个宁静却壮丽的海岸，则更适合漫步其间，慢慢品味。</p>
-
-<p><img src="https://lh4.googleusercontent.com/-DzrLD8RJiLY/UtZ6JI2l4hI/AAAAAAAAALs/FM3qD0IOhW4/w400/h300" title="Sunset" alt="img" /></p>
-
-<p>静静地站在海边看了日落后，匆匆赶上了回斯旺西的公车。由于此时已经入夜，顾不上晚饭就直接回到了卡迪夫。拖着略显疲惫的身躯来到了之前预订的B&amp;B. 房间比我想像的要大不少，保留着些许维多利亚时期风格的家具和装饰。洗完澡躺床上看了电视上放的上个世纪的007，里面还有我大天朝。</p>
-
-<p>早上9点多爬起来，吃了早餐后便退房出门。穿过公园，步行至卡迪夫城堡。说是城堡，主要还是参观城堡前主人的House。虽然这个府邸并不是很大，但是装饰和布局的细节之处还是有些与众不同。比如在塔楼有专门的男士间用来抽烟，房顶和四周的彩窗分别有季节，礼拜和一天的时间更替。顶层开放式阁楼有小型的喷泉，四周是希伯来语，显示出主人的博学多识，据说他认识21种语言，会说其中的10多个。值得一提的是，会客厅在一八八几年就采用了热水循环的中央供暖并且沿用至今，这里还是全英第三家通电的家庭。</p>
-
-<p><img src="https://lh5.googleusercontent.com/-dWOMF4T3Fqc/UtZ4Z8aZV9I/AAAAAAAAAKo/I-GkZKDz8FM/w400/h300" title="Cardiff Castle" alt="img" /></p>
-
-<p>住所旁有一个残破的城堡，站在顶端可以远眺全城，包括不远处的千禧年橄榄球场。城堡四周的城墙在二战期间被改造成防空洞。如同英国大多数城堡一样，衰落的贵族无法承担卡迪夫城堡高额的税费和保养费，选择交归国有。</p>
-
-<p>在商业步行街喝完咖啡，选定了下一个目的地，位于Cardiff Bay 的Doctor Who 体验馆。这个系列的电视剧在英村热播了五十年，而且还在继续制作。BBC Wales 总部也在附近，现在热播的Sherlock也是这个部门制作的。体验包括半个小时左右的互动和展览。出来在附近逛了一圈，比较现代，和曼城的Salford Quay 很像。</p>
-
-<p><img src="https://lh3.googleusercontent.com/-kCzkc403A8Y/UtZ8jbQhpJI/AAAAAAAAAL8/yHVTdcwqiFk/w400/h300" title="Cardiff Bay" alt="img" /></p>
-
-<p>由于天黑得早，没什么地方可去，逛了下商店，就在火车站简单吃点候车。拿铁咖啡还没我做的好…
-南威尔士两日之旅就此结束。</p>
-
-<p><sub>2014.01.12 写于卡迪夫中央火车站&amp;回曼彻斯特火车</sub></p>
-
-<p><sub>P.S. <code>曼游记</code>并未结束，因为去年欧洲之旅的账还没还清。<a href="http://lawrencesun.info/blog/?tag=%E6%9B%BC%E6%B8%B8%E8%AE%B0">Previous Review</a> </sub></p>
 ]]></content>
   </entry>
   

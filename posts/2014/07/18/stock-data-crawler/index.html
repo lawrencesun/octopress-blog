@@ -1,0 +1,287 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Ruby程序:自动抓取股票财务数据 - Lawrence Sun</title>
+	<meta name="author" content="Lawrence Sun">
+
+	
+<meta name="description" content="自动抓取股票财务指标数据">
+
+<meta name="keywords" content="ruby, stock, crawler, 股票数据抓取">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Lawrence Sun" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://voice.lawrencesun.info/posts/2014/07/18/stock-data-crawler/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+	<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'> -->
+
+	<link href='http://fonts.useso.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<script src="http://ajax.useso.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+	<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+
+<link href="http://fonts.useso.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.useso.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("yuliang1987@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+	
+</div>
+<hgroup>
+  <h1><a href="/">Lawrence Sun</a></h1>
+  
+    <h2>Hello World</h2>
+  
+</hgroup>
+
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		<!--
+			<a class="email" href="mailto:yuliang1987@gmail.com" title="Email">Email</a>
+		 -->
+		
+		
+		
+			<a class="twitter" href="http://twitter.com/sunyuliang" title="Twitter">Twitter</a>
+		
+        
+            <a class="weibo" href="http://www.weibo.com/ylsun" title="Weibo">Weibo</a>
+        
+		
+			<a class="github" href="https://github.com/lawrencesun" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	
+	<h1 class="title" itemprop="name">Ruby程序:自动抓取股票财务数据</h1>
+	<div class="entry-content" itemprop="articleBody"><p>无论是投资还是投机股市，股票的财务状况仍然是不可或缺的参考指标。传统金融网站上的数据往往以个股为单位呈现，导致数据的查询、对比和分析比较困难。如果要进行全局扫描和分析，可能就需要把这些数据一个一个下载后进行处理，这方面的时间成本略高。</p>
+
+<p>前段时间在雪球偶然看到有人用Python做了一个自动获取数据的程序，觉得挺有趣，对大量数据的计算和分析可能有用，所以用了一天左右的时间用Ruby写了一个类似的代码。</p>
+
+<!-- more -->
+
+
+<p>数据来源于网易财经，理论上可以实现所有股票的任意财务数据的抓取，并导入csv文件。例如所有股票的”速动比率“（尽管不懂&hellip;），如下图所示。</p>
+
+<p><img src="http://img0.ph.126.net/E-lgvDQhYHS87p3dkqokeA==/6619508599955660340.png" alt="img" /></p>
+
+<p>核心代码如下:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># 检测网页是否存在</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">valid_url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">req</span> <span class="o">=</span> <span class="ss">Net</span><span class="p">:</span><span class="ss">:HTTP</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">url</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">res</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">request_head</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">return</span> <span class="kp">true</span> <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">code</span> <span class="o">==</span> <span class="s1">&#39;200&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># 抓取数据extract_data</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">extract_data</span><span class="p">(</span><span class="n">stock_num</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1"># 数据来源为网易股票频道，按报告期的主要财务指标，默认显示为6个季度</span>
+</span><span class='line'>  <span class="n">source</span> <span class="o">=</span> <span class="ss">Nokogiri</span><span class="p">:</span><span class="ss">:HTML</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+</span><span class='line'>  <span class="c1"># 获取股票名称</span>
+</span><span class='line'>  <span class="n">name_table</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;//h1[@class=&#39;name&#39;]//a&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nb">name</span> <span class="o">=</span> <span class="n">name_table</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">text</span>
+</span><span class='line'>  <span class="c1"># 搜寻所有属于指定css class的值，返回的是一个Array</span>
+</span><span class='line'>  <span class="n">data_table</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;//table[@class=&#39;table_bg001 border_box fund_analys&#39;]//td&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1"># 查找Array中含有指定文字描述的元素，并返回元素的地址</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># 上一步查找到的元素地址后面的六个元素含有所需数据，将其中的数字部分提取出来</span>
+</span><span class='line'>  <span class="c1"># 并加入到一个新建的Array中去</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># 返回数据</span>
+</span><span class='line'>  <span class="n">s</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>目前的主要问题是运行速度较慢，以后有时间看看能否改进。不管如何，在此数据的基础上做一些计算、对比和分析应该容易不少。</p>
+</div>
+
+
+    <br/>
+    <p class="meta">
+    <span class="byline author vcard">Posted by <span class="fn">Sun ▪ </span></span>
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T21:03:55+08:00" data-updated="true" itemprop="datePublished">Jul 18<span>th</span>, 2014</time>
+    <span class="categories"> ▪ 
+
+
+	<a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</span>
+    </p>
+</article>
+
+	<div class="share">
+        <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+        
+        
+        
+        <a class="addthis_button_sinaweibo"></a>
+        
+        
+        
+        <a class="addthis_button_compact"></a>
+        <a class="addthis_counter addthis_bubble_style"></a>
+        </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - Lawrence Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			
+
+<script type="text/javascript">
+      var disqus_shortname = 'voicelawrencesun';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://voice.lawrencesun.info/posts/2014/07/18/stock-data-crawler/';
+        var disqus_url = 'http://voice.lawrencesun.info/posts/2014/07/18/stock-data-crawler/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-43779948-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+		</div>
+	</div>
+</body>
+</html>

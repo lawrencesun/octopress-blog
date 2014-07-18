@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-07-15T22:37:05+08:00</updated>
+  <updated>2014-07-18T21:44:49+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,66 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby程序:自动抓取股票财务数据]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/07/18/stock-data-crawler/"/>
+    <updated>2014-07-18T21:03:55+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/07/18/stock-data-crawler</id>
+    <content type="html"><![CDATA[<p>无论是投资还是投机股市，股票的财务状况仍然是不可或缺的参考指标。传统金融网站上的数据往往以个股为单位呈现，导致数据的查询、对比和分析比较困难。如果要进行全局扫描和分析，可能就需要把这些数据一个一个下载后进行处理，这方面的时间成本略高。</p>
+
+<p>前段时间在雪球偶然看到有人用Python做了一个自动获取数据的程序，觉得挺有趣，对大量数据的计算和分析可能有用，所以用了一天左右的时间用Ruby写了一个类似的代码。</p>
+
+<!-- more -->
+
+
+<p>数据来源于网易财经，理论上可以实现所有股票的任意财务数据的抓取，并导入csv文件。例如所有股票的”速动比率“（尽管不懂&hellip;），如下图所示。</p>
+
+<p><img src="http://img0.ph.126.net/E-lgvDQhYHS87p3dkqokeA==/6619508599955660340.png" alt="img" /></p>
+
+<p>核心代码如下:</p>
+
+<p>```ruby</p>
+
+<h1>检测网页是否存在</h1>
+
+<p>def valid_url(url)</p>
+
+<pre><code>url = URI.parse(url)
+req = Net::HTTP.new(url.host, url.port)
+res = req.request_head(url.path)
+return true if res.code == '200'
+</code></pre>
+
+<p>end</p>
+
+<h1>抓取数据extract_data</h1>
+
+<p>def extract_data(stock_num, index, url)</p>
+
+<pre><code># 数据来源为网易股票频道，按报告期的主要财务指标，默认显示为6个季度
+source = Nokogiri::HTML(open(url))
+# 获取股票名称
+name_table = source.search("//h1[@class='name']//a")
+name = name_table[0].text
+# 搜寻所有属于指定css class的值，返回的是一个Array
+data_table = source.search("//table[@class='table_bg001 border_box fund_analys']//td")
+# 查找Array中含有指定文字描述的元素，并返回元素的地址
+......
+
+# 上一步查找到的元素地址后面的六个元素含有所需数据，将其中的数字部分提取出来
+# 并加入到一个新建的Array中去
+......
+
+# 返回数据
+s
+</code></pre>
+
+<p>end
+```
+目前的主要问题是运行速度较慢，以后有时间看看能否改进。不管如何，在此数据的基础上做一些计算、对比和分析应该容易不少。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: Counter Cache]]></title>
@@ -336,50 +396,6 @@ Another error occurred when I tried to add the delete link on the comments parti
 <p>```</p>
 
 <p>At first, I passed in the &lsquo;comment&rsquo; as $params, and it showed that  the post.id and :id were nil. So I changed the $params to &lsquo;comment.post.id, comment.id&rsquo; and it went well.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Notes: Markdown Support]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/02/14/rails-notes-markdown-support/"/>
-    <updated>2014-02-14T12:40:02+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/02/14/rails-notes-markdown-support</id>
-    <content type="html"><![CDATA[<p>The default output of the content in my app is directly shown as HTML. The problem is even I entered several paragraphs, it will be shown in one. On the other hand, I intend to add markdown support in the beginning. Thanks Google and Github, I found a gem called <a href="https://github.com/vmg/redcarpet">Redcarpet</a>.</p>
-
-<p>First I found a screencast in <a href="1">Railscasts</a>. Unfortunately, this solution was introduced 2 years ago. However, I found an up-to-date one by SimplizIT below the video. Here it is.</p>
-
-<!-- more -->
-
-
-<ul>
-<li><p>Install it by adding <code>gem 'redcarpet'</code> to Gemfile, and run <code>bundle install</code>.</p></li>
-<li><p>Then add the following code to <code>application_helper.rb</code></p></li>
-</ul>
-
-
-<p>```ruby
-def markdown(text)</p>
-
-<pre><code>renderOptions = {hard_wrap: true, filter_html: true}
-</code></pre>
-
-<p>  markdownOptions = {autolink: true, fenced_code_blocks: true, no_intra_emphasis: true, strikethrough: true}</p>
-
-<pre><code>markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(renderOptions), markdownOptions)
-</code></pre>
-
-<p>  markdown.render(text).html_safe
-end
-```</p>
-
-<p><sub>here, we can customise the markdown extension and html output by changing the renderOptions and markdownOptions. The full option shows <a href="1">here</a>.</sub></p>
-
-<ul>
-<li>Apply &lsquo;markdown&rsquo; function in the view template.</li>
-</ul>
-
-
-<p><code>&lt;%= markdown(@post.text) %&gt;</code></p>
 ]]></content>
   </entry>
   
