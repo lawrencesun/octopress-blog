@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-07-18T21:44:49+08:00</updated>
+  <updated>2014-07-19T18:40:55+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -27,7 +27,7 @@
 
 <p>数据来源于网易财经，理论上可以实现所有股票的任意财务数据的抓取，并导入csv文件。例如所有股票的”速动比率“（尽管不懂&hellip;），如下图所示。</p>
 
-<p><img src="http://img0.ph.126.net/E-lgvDQhYHS87p3dkqokeA==/6619508599955660340.png" alt="img" /></p>
+<p><img src="https://lh6.googleusercontent.com/-kE3w3S0vS_0/U8pK6OB_l0I/AAAAAAAAAsw/cAY1SvsE8mg/w400-h360-no/data.png" alt="img" /></p>
 
 <p>核心代码如下:</p>
 
