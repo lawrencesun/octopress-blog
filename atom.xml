@@ -4,7 +4,7 @@
   <title><![CDATA[Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-07-19T18:40:55+08:00</updated>
+  <updated>2014-08-03T22:56:40+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,165 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: How to 'Like' once and 'Unlike' in Rails]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/08/03/rails-notes-unlike-function/"/>
+    <updated>2014-08-03T21:35:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/08/03/rails-notes-unlike-function</id>
+    <content type="html"><![CDATA[<p>Few months ago, I added a <a href="http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-adding-a-like-function/">&lsquo;Like&rsquo; function</a> to my rails project. It&rsquo;s a lovely function, but has some problems left. One is that users could like a single post/comment as much as they can, the other one is that users are not able to unlike.</p>
+
+<p>Thus, I tried to improve the likeable function this weekend. First thing I came up with my head was to add a uniqueness validation.</p>
+
+<!-- more -->
+
+
+<p>Here is the code I added in <code>like.rb</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">validates_uniqueness_of</span> <span class="ss">:user_id</span><span class="p">,</span> <span class="ss">scope</span><span class="p">:</span> <span class="o">[</span><span class="ss">:likeable_id</span><span class="p">,</span> <span class="ss">:likeable_type</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It worked. &lsquo;User&rsquo; could not cheat any more, well, up to a point. But if users want to their mind later on, they are not allowed to do so.</p>
+
+<p>Regarding the second issue, I decided to handle it this way.</p>
+
+<p>Let&rsquo;s assume there is a user called Mr.R. R liked a post, the params[:like] set to true. We would like to provide a link so that R could send another POST with the params[:like] = false. If R haven&rsquo;t make the choice or unliked it before, then a link to POST with the params[:like] = true is available.</p>
+
+<p>First of all, I changed the like method in <code>posts_controller</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">like</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">post_liked</span>
+</span><span class='line'>      <span class="vi">@like</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="ss">like</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:like</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>      <span class="no">Like</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">likeable</span><span class="p">:</span> <span class="vi">@post</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="n">current_user</span><span class="p">,</span> <span class="ss">like</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:like</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
+</span><span class='line'>      <span class="nb">format</span><span class="o">.</span><span class="n">html</span> <span class="k">do</span>
+</span><span class='line'>          <span class="n">flash</span><span class="o">[</span><span class="ss">:success</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Like Updated!&quot;</span>
+</span><span class='line'>          <span class="n">redirect_to</span> <span class="ss">:back</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="nb">format</span><span class="o">.</span><span class="n">js</span>
+</span><span class='line'>  <span class="k">end</span>  
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="kp">private</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">post_liked</span>
+</span><span class='line'>  <span class="n">liked?</span><span class="p">(</span><span class="vi">@post</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here, if R has already liked/unliked the post, and then changed his mind, we would update the <code>like</code> attribute rather than creating another data.</p>
+
+<p>There are two methods in <code>application_controller</code>, which are available to views and posts/comments controllers.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">liked?</span><span class="p">(</span><span class="n">type</span><span class="p">)</span>
+</span><span class='line'>  <span class="vi">@like</span> <span class="o">=</span> <span class="no">Like</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="ss">likeable</span><span class="p">:</span> <span class="n">type</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="n">current_user</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">liked</span><span class="p">(</span><span class="n">type</span><span class="p">)</span>
+</span><span class='line'>  <span class="vi">@like</span> <span class="o">=</span> <span class="no">Like</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="ss">likeable</span><span class="p">:</span> <span class="n">type</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="n">current_user</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="vi">@like</span>
+</span><span class='line'>    <span class="k">return</span> <span class="vi">@like</span><span class="o">.</span><span class="n">like</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kp">false</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then I adjusted <code>show.html.erb</code>in the view. As discussed before, I provided the oppsite like/unlike button to users&#8217; former dicision.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">span</span> <span class="nb">id</span><span class="o">=</span> <span class="s2">&quot;post_like&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;pull-right&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="sx">% if </span><span class="n">signed_in?</span> <span class="o">&amp;&amp;</span> <span class="n">liked</span><span class="p">(</span><span class="vi">@post</span><span class="p">)</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">         &lt;%= link_to like_post_path(@post, like: false), method: &#39;post&#39;, remote: true do %&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="n">span</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;user_like_&lt;%= @post.id %&gt;&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;like&quot;</span><span class="o">&gt;&lt;</span><span class="n">i</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;fa fa-thumbs-o-up&quot;</span><span class="o">&gt;&lt;</span><span class="sr">/i&gt;&lt;/s</span><span class="n">pan</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="sx">% end %&gt; </span>
+</span><span class='line'><span class="sx">     &lt;% else %&gt;</span>             
+</span><span class='line'>      <span class="o">&lt;</span><span class="sx">%= link_to like_post_path(@post, like: true), method: &#39;post&#39;, remote: true do %&gt;</span>
+</span><span class='line'><span class="sx">         &lt;span id=</span><span class="s2">&quot;user_like_&lt;%= @post.id %&gt;&quot;</span><span class="o">&gt;&lt;</span><span class="n">i</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;fa fa-thumbs-o-up&quot;</span><span class="o">&gt;&lt;</span><span class="sr">/i&gt;&lt;/s</span><span class="n">pan</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="sx">% end %&gt;</span>
+</span><span class='line'><span class="sx">     &lt;% end %&gt;</span>
+</span><span class='line'> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'> <span class="o">&lt;</span><span class="sr">/span&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Finally, I changed the <code>like.js.erb</code> file in order to present the difference between like and unlike, as well as the user&rsquo;s new dicision.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="sx">% if </span><span class="n">liked</span><span class="p">(</span><span class="vi">@post</span><span class="p">)</span><span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">     $(&quot;#user_like_&lt;%= @post.id %&gt;</span><span class="s2">&quot;).addClass(&quot;</span><span class="n">like</span><span class="s2">&quot;);</span>
+</span><span class='line'><span class="s2">&lt;% else %&gt;</span>
+</span><span class='line'><span class="s2">     $(&quot;</span><span class="c1">#user_like_&lt;%= @post.id %&gt;&quot;).removeClass(&quot;like&quot;);</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sx">% end %&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sx">$(&quot;#post_like&quot;).load(&quot;&lt;%= @post.id %&gt;</span> <span class="c1">#post_like&quot;)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The comments like/unlike function is similar.</p>
+
+<p>This improvement killed me a lot time this weekend, but thankfully, it worked at last. However, there must be a much easier &amp; clean way to do it.</p>
+
+<p>By the way, I had updated my app to bootstrap 3.2, a more resposive-friendly version. It was an nightmare to change the style, like css class/id name etc. I also used fontawesome icons instead of the old ones. The app looks just fine.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ruby程序:自动抓取股票财务数据]]></title>
@@ -1814,457 +1973,6 @@ add &lt;% unless comment.body.blank? %> &hellip;. &lt;% end %> in _comments part
 The reason is that initializing the entire params hash is extremely dangerous—it arranges to pass to User.new all data submitted by a user. In particular, suppose that, in addition to the current attributes, the User model included an admin attribute used to identify administrative users of the site. The way to set such an attribute to true is to pass the value admin=’1’ as part of params[:user], a task that is easy to accomplish using a command-line HTTP client such as curl. The result would be that, by passing in the entire params hash to User.new, we would allow any user of the site to gain administrative access by including admin=’1’ in the web request.</p>
 
 <p>&lt;%= render &lsquo;shared/posts&rsquo; , objects: @posts%> to reduce duplication</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Notes 1]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/01/27/rails-note-1/"/>
-    <updated>2014-01-27T09:32:52+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/01/27/rails-note-1</id>
-    <content type="html"><![CDATA[<p>After reading <a href="http://ruby.railstutorial.org"><em>Ruby on Rails Tutorial</em></a> &mdash;without a sound approach to the testing part, I am still confused. Before that I read the first chapter of <a href="http://guides.rubyonrails.org"><em>Rails Guides</em></a>, watched some courses about HTML and CSS on <a href="http://zfer.us/9yIBW"><em>Code School</em></a>. So it&rsquo;s better than the first time when I gived up halfway.</p>
-
-<p>I decided to start a project similar to the sample_app for practice. It will be a blog-like web app, focusing on the startup news and stories in Chinese.</p>
-
-<p>I will take some notes here throughout the whole progress.</p>
-
-<!-- more -->
-
-
-<ul>
-<li><strong>Migrations</strong></li>
-</ul>
-
-
-<p>run <code>rails generate migration CreatePosts title:string text:text</code> to create a blank migration</p>
-
-<p>create tables and run <code>rake db:migrate</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreatePosts</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Migration</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">up</span>
-</span><span class='line'>      <span class="n">create_table</span> <span class="ss">:posts</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
-</span><span class='line'>          <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:title</span>
-</span><span class='line'>          <span class="n">t</span><span class="o">.</span><span class="n">text</span> <span class="ss">:text</span>
-</span><span class='line'>          <span class="n">t</span><span class="o">.</span><span class="n">timestamps</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">down</span>
-</span><span class='line'>      <span class="n">drop_table</span> <span class="ss">:posts</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>naming: <code>PostCategory.tableize</code></p>
-
-<ul>
-<li><strong>Models</strong></li>
-</ul>
-
-
-<p>create &lsquo;post.rb&rsquo; under /app/models, some valiations and 1-M relationship.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:comments</span>
-</span><span class='line'>  <span class="n">validates</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">presence</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span>
-</span><span class='line'>                                      <span class="ss">uniqueness</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span>
-</span><span class='line'>                                      <span class="ss">length</span><span class="p">:</span> <span class="p">{</span> <span class="ss">minimum</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
-</span><span class='line'>  <span class="n">validates</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">presence</span><span class="p">:</span> <span class="kp">true</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>create &lsquo;category.rb&rsquo; and &lsquo;post_categories.rb&rsquo; to establish a M-M relationship</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Category</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:post_categories</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:posts</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:post_categories</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">presence</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">uniqueness</span><span class="p">:</span> <span class="kp">true</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:post_categories</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:categories</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:post_categories</span>
-</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">PostCategory</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:post</span>
-</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:category</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>run <code>rails console</code> to check</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">first</span>
-</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">categories</span>
-</span><span class='line'><span class="n">cat</span> <span class="o">=</span> <span class="no">Category</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;news&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">categories</span> <span class="o">&lt;&lt;</span> <span class="n">cat</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><strong>Routes</strong></li>
-</ul>
-
-
-<p>nested routes:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">resources</span> <span class="ss">:posts</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">resources</span> <span class="ss">:comments</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>run <code>rake routes</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>         <span class="no">Prefix</span> <span class="no">Verb</span>             <span class="no">URI</span> <span class="no">Pattern</span>                             <span class="no">Controller</span><span class="c1">#Action</span>
-</span><span class='line'><span class="n">post_comments</span> <span class="no">GET</span>    <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>          <span class="n">comments</span><span class="c1">#index</span>
-</span><span class='line'>              <span class="no">POST</span>   <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>          <span class="n">comments</span><span class="c1">#create</span>
-</span><span class='line'> <span class="n">new_post_comment</span> <span class="no">GET</span>    <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="o">/</span><span class="kp">new</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">comments</span><span class="c1">#new</span>
-</span><span class='line'><span class="n">edit_post_comment</span> <span class="no">GET</span>    <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="o">/</span><span class="ss">:id</span><span class="o">/</span><span class="n">edit</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span> <span class="n">comments</span><span class="c1">#edit</span>
-</span><span class='line'> <span class="n">post_comment</span> <span class="no">GET</span>    <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="o">/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">comments</span><span class="c1">#show</span>
-</span><span class='line'>              <span class="no">PATCH</span>  <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="o">/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">comments</span><span class="c1">#update</span>
-</span><span class='line'>              <span class="no">PUT</span>    <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="o">/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">comments</span><span class="c1">#update</span>
-</span><span class='line'>              <span class="no">DELETE</span> <span class="sr">/posts/</span><span class="ss">:post_id</span><span class="o">/</span><span class="n">comments</span><span class="o">/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>      <span class="n">comments</span><span class="c1">#destroy</span>
-</span><span class='line'>        <span class="n">posts</span> <span class="no">GET</span>    <span class="sr">/posts(.:format)                            posts#index</span>
-</span><span class='line'><span class="sr">              POST   /</span><span class="n">posts</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                            <span class="n">posts</span><span class="c1">#create</span>
-</span><span class='line'>     <span class="n">new_post</span> <span class="no">GET</span>    <span class="sr">/posts/ne</span><span class="n">w</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                        <span class="n">posts</span><span class="c1">#new</span>
-</span><span class='line'>    <span class="n">edit_post</span> <span class="no">GET</span>    <span class="sr">/posts/</span><span class="ss">:id</span><span class="o">/</span><span class="n">edit</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                   <span class="n">posts</span><span class="c1">#edit</span>
-</span><span class='line'>         <span class="n">post</span> <span class="no">GET</span>    <span class="sr">/posts/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                        <span class="n">posts</span><span class="c1">#show</span>
-</span><span class='line'>              <span class="no">PATCH</span>  <span class="sr">/posts/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                        <span class="n">posts</span><span class="c1">#update</span>
-</span><span class='line'>              <span class="no">PUT</span>    <span class="sr">/posts/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                        <span class="n">posts</span><span class="c1">#update</span>
-</span><span class='line'>              <span class="no">DELETE</span> <span class="sr">/posts/</span><span class="ss">:id</span><span class="p">(</span><span class="o">.</span><span class="ss">:format</span><span class="p">)</span>                        <span class="n">posts</span><span class="c1">#destroy</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Example link to usage</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="sx">%= link_to &#39;All posts&#39;, posts_path %&gt;</span>
-</span><span class='line'><span class="sx">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;New post&#39;</span><span class="p">,</span> <span class="n">new_post_path</span> <span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx">&lt;%= link_to &#39;Edit post&#39;, edit_post_path(@post) %&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="sx">%= link_to &#39;Show post&#39;, post_path(@post)%&gt; # or @post</span>
-</span><span class='line'><span class="sx">&lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;Delete post&#39;</span><span class="p">,</span> <span class="vi">@post</span><span class="p">,</span> <span class="nb">method</span><span class="p">:</span> <span class="ss">:delete</span><span class="p">,</span> <span class="ss">data</span><span class="p">:</span> <span class="p">{</span> <span class="ss">confirm</span><span class="p">:</span> <span class="s1">&#39;Sure&#39;</span><span class="sc">?}</span> <span class="o">%&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><strong>Controller</strong></li>
-</ul>
-
-
-<p>create &lsquo;posts_controller.rb&rsquo; under /app/controllers</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">PostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
-</span><span class='line'>  <span class="n">before_action</span> <span class="ss">:find_post</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span><span class="o">[</span><span class="ss">:show</span><span class="p">,</span> <span class="ss">:edit</span><span class="p">,</span> <span class="ss">:update</span><span class="p">,</span> <span class="ss">:destroy</span><span class="o">]</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="k">def</span> <span class="nf">index</span>
-</span><span class='line'>      <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">all</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">show</span>
-</span><span class='line'>      <span class="vi">@comment</span> <span class="o">=</span> <span class="no">Comment</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">new</span>
-</span><span class='line'>      <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
-</span><span class='line'>      <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">post_params</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="k">if</span> <span class="vi">@post</span><span class="o">.</span><span class="n">save</span>
-</span><span class='line'>          <span class="n">flash</span><span class="o">[</span><span class="ss">:success</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;发布成功&quot;</span>
-</span><span class='line'>          <span class="n">redirect_to</span> <span class="vi">@post</span>
-</span><span class='line'>      <span class="k">else</span>
-</span><span class='line'>          <span class="n">render</span> <span class="s1">&#39;new&#39;</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">edit</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">update</span>
-</span><span class='line'>      <span class="k">if</span> <span class="vi">@post</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:post</span><span class="o">].</span><span class="n">permit</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:text</span><span class="p">))</span>
-</span><span class='line'>          <span class="n">flash</span><span class="o">[</span><span class="ss">:success</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;更新成功&quot;</span>
-</span><span class='line'>          <span class="n">redirect_to</span> <span class="vi">@post</span>
-</span><span class='line'>      <span class="k">else</span>
-</span><span class='line'>          <span class="n">render</span> <span class="s1">&#39;edit&#39;</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">destroy</span>
-</span><span class='line'>      <span class="vi">@post</span><span class="o">.</span><span class="n">destroy</span>
-</span><span class='line'>      <span class="n">redirect_to</span> <span class="vi">@post</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kp">private</span>
-</span><span class='line'>      <span class="k">def</span> <span class="nf">find_post</span>
-</span><span class='line'>          <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="k">def</span> <span class="nf">post_params</span>
-</span><span class='line'>          <span class="n">params</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="ss">:post</span><span class="p">)</span><span class="o">.</span><span class="n">permit</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:text</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><strong>Views</strong></li>
-</ul>
-
-
-<p>View Partials
-create &lsquo;_form.html.erb&rsquo; under /app/views/posts</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># model backed form</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;well&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="sx">%= form_for @post do |f| %&gt;</span>
-</span><span class='line'><span class="sx">     &lt;%=</span> <span class="n">render</span> <span class="s1">&#39;shared/error&#39;</span><span class="p">,</span> <span class="ss">object</span><span class="p">:</span> <span class="vi">@post</span> <span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx">     </span>
-</span><span class='line'><span class="sx">     &lt;div class=&quot;control-group&quot;&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="sx">%= f.label &quot;标题&quot; %&gt;</span>
-</span><span class='line'><span class="sx">     &lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">text_field</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s2">&quot;input-block-level&quot;</span> <span class="sx">%&gt; #full-width</span>
-</span><span class='line'><span class="sx">     &lt;/div&gt;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;control-group&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="sx">%= f.label &quot;内容&quot; %&gt;</span>
-</span><span class='line'><span class="sx">     &lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">text_area</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">rows</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s2">&quot;input-block-level&quot;</span> <span class="sx">%&gt; </span>
-</span><span class='line'><span class="sx">     &lt;/div&gt;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="o">&lt;</span><span class="sx">%= f.submit(@post.new_record? ? &quot;发布&quot; : &quot;更新&quot;, class: &quot;btn btn-primary&quot;) %&gt;</span>
-</span><span class='line'><span class="sx"> &lt;% end %&gt;</span>
-</span><span class='line'><span class="sx"> &lt;%=</span> <span class="n">link_to</span> <span class="s1">&#39;取消&#39;</span><span class="p">,</span> <span class="n">posts_path</span><span class="p">(</span><span class="vi">@post</span><span class="p">)</span> <span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx">&lt;/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&lsquo;show.html.erb&rsquo; under /app/views/posts</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;container&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;span9&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'>
-</span><span class='line'>          <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;well&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>              <span class="o">&lt;</span><span class="sx">% if </span><span class="vi">@post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">any?</span> <span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx">                 &lt;% @post.comments.each do |c| %&gt;</span>
-</span><span class='line'>                      <span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;&lt;</span><span class="sx">%= c.body %&gt;&lt;/p&gt;</span>
-</span><span class='line'><span class="sx">                 &lt;% end %&gt;</span>
-</span><span class='line'><span class="sx">             &lt;% end %&gt;</span>
-</span><span class='line'><span class="sx">             &lt;hr&gt;</span>
-</span><span class='line'><span class="sx">             &lt;%=</span> <span class="n">form_for</span> <span class="o">[</span><span class="vi">@post</span><span class="p">,</span> <span class="vi">@comment</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx">                 &lt;%= render &#39;shared/error&#39;, object: @comment %&gt;</span>
-</span><span class='line'>                  <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;control-group&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>                      <span class="o">&lt;</span><span class="sx">%= f.text_area :body, rows: 5, class: &quot;input-block-level&quot; %&gt;</span>
-</span><span class='line'><span class="sx">                 &lt;/div&gt;</span>
-</span><span class='line'><span class="sx">                 &lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">submit</span> <span class="s1">&#39;发表评论&#39;</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s2">&quot;btn btn-primary&quot;</span><span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx">             &lt;% end %&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="sr">/div&gt;</span>
-</span><span class='line'><span class="sr">     &lt;/</span><span class="n">div</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;span3&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="sr">/div&gt;</span>
-</span><span class='line'><span class="sr"> &lt;/</span><span class="n">div</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="sr">/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>non-model backed form:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="sx">%= form_tag :title %&gt;</span>
-</span><span class='line'><span class="sx"> &lt;%=</span> <span class="n">lable_tag</span> <span class="ss">:title</span><span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx"> &lt;%= text_field_tag :title%&gt;</span>
-</span><span class='line'>  <span class="p">,,,</span>
-</span><span class='line'>  <span class="o">&lt;%=</span><span class="n">submit_tag</span> <span class="s1">&#39;create post&#39;</span><span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx">&lt;%end %&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
 ]]></content>
   </entry>
   

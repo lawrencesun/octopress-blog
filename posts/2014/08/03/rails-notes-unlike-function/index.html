@@ -1,0 +1,367 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Rails Notes: How to 'Like' once and 'Unlike' in Rails - Lawrence Sun</title>
+	<meta name="author" content="Lawrence Sun">
+
+	
+<meta name="description" content="How to limited users to "Like" once and "Unlike" in Ruby on Rails.">
+
+<meta name="keywords" content="ruby, rails, likeable, jquery">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Lawrence Sun" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://voice.lawrencesun.info/posts/2014/08/03/rails-notes-unlike-function/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+	<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'> -->
+
+	<link href='http://fonts.useso.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<script src="http://ajax.useso.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+	<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+
+<link href="http://fonts.useso.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.useso.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("yuliang1987@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+	
+</div>
+<hgroup>
+  <h1><a href="/">Lawrence Sun</a></h1>
+  
+    <h2>Hello World</h2>
+  
+</hgroup>
+
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		<!--
+			<a class="email" href="mailto:yuliang1987@gmail.com" title="Email">Email</a>
+		 -->
+		
+		
+		
+			<a class="twitter" href="http://twitter.com/sunyuliang" title="Twitter">Twitter</a>
+		
+        
+            <a class="weibo" href="http://www.weibo.com/ylsun" title="Weibo">Weibo</a>
+        
+		
+			<a class="github" href="https://github.com/lawrencesun" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	
+	<h1 class="title" itemprop="name">Rails Notes: How to 'Like' Once and 'Unlike' in Rails</h1>
+	<div class="entry-content" itemprop="articleBody"><p>Few months ago, I added a <a href="/posts/2014/02/11/rails-notes-adding-a-like-function/">&lsquo;Like&rsquo; function</a> to my rails project. It&rsquo;s a lovely function, but has some problems left. One is that users could like a single post/comment as much as they can, the other one is that users are not able to unlike.</p>
+
+<p>Thus, I tried to improve the likeable function this weekend. First thing I came up with my head was to add a uniqueness validation.</p>
+
+<!-- more -->
+
+
+<p>Here is the code I added in <code>like.rb</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">validates_uniqueness_of</span> <span class="ss">:user_id</span><span class="p">,</span> <span class="ss">scope</span><span class="p">:</span> <span class="o">[</span><span class="ss">:likeable_id</span><span class="p">,</span> <span class="ss">:likeable_type</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It worked. &lsquo;User&rsquo; could not cheat any more, well, up to a point. But if users want to their mind later on, they are not allowed to do so.</p>
+
+<p>Regarding the second issue, I decided to handle it this way.</p>
+
+<p>Let&rsquo;s assume there is a user called Mr.R. R liked a post, the params[:like] set to true. We would like to provide a link so that R could send another POST with the params[:like] = false. If R haven&rsquo;t make the choice or unliked it before, then a link to POST with the params[:like] = true is available.</p>
+
+<p>First of all, I changed the like method in <code>posts_controller</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">like</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">post_liked</span>
+</span><span class='line'>      <span class="vi">@like</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="ss">like</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:like</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>      <span class="no">Like</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">likeable</span><span class="p">:</span> <span class="vi">@post</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="n">current_user</span><span class="p">,</span> <span class="ss">like</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:like</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
+</span><span class='line'>      <span class="nb">format</span><span class="o">.</span><span class="n">html</span> <span class="k">do</span>
+</span><span class='line'>          <span class="n">flash</span><span class="o">[</span><span class="ss">:success</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Like Updated!&quot;</span>
+</span><span class='line'>          <span class="n">redirect_to</span> <span class="ss">:back</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="nb">format</span><span class="o">.</span><span class="n">js</span>
+</span><span class='line'>  <span class="k">end</span>  
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="kp">private</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">post_liked</span>
+</span><span class='line'>  <span class="n">liked?</span><span class="p">(</span><span class="vi">@post</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here, if R has already liked/unliked the post, and then changed his mind, we would update the <code>like</code> attribute rather than creating another data.</p>
+
+<p>There are two methods in <code>application_controller</code>, which are available to views and posts/comments controllers.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">liked?</span><span class="p">(</span><span class="n">type</span><span class="p">)</span>
+</span><span class='line'>  <span class="vi">@like</span> <span class="o">=</span> <span class="no">Like</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="ss">likeable</span><span class="p">:</span> <span class="n">type</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="n">current_user</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">liked</span><span class="p">(</span><span class="n">type</span><span class="p">)</span>
+</span><span class='line'>  <span class="vi">@like</span> <span class="o">=</span> <span class="no">Like</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="ss">likeable</span><span class="p">:</span> <span class="n">type</span><span class="p">,</span> <span class="ss">user</span><span class="p">:</span> <span class="n">current_user</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="vi">@like</span>
+</span><span class='line'>    <span class="k">return</span> <span class="vi">@like</span><span class="o">.</span><span class="n">like</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kp">false</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then I adjusted <code>show.html.erb</code>in the view. As discussed before, I provided the oppsite like/unlike button to users&#8217; former dicision.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">span</span> <span class="nb">id</span><span class="o">=</span> <span class="s2">&quot;post_like&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;pull-right&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="sx">% if </span><span class="n">signed_in?</span> <span class="o">&amp;&amp;</span> <span class="n">liked</span><span class="p">(</span><span class="vi">@post</span><span class="p">)</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">         &lt;%= link_to like_post_path(@post, like: false), method: &#39;post&#39;, remote: true do %&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="n">span</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;user_like_&lt;%= @post.id %&gt;&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;like&quot;</span><span class="o">&gt;&lt;</span><span class="n">i</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;fa fa-thumbs-o-up&quot;</span><span class="o">&gt;&lt;</span><span class="sr">/i&gt;&lt;/s</span><span class="n">pan</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="sx">% end %&gt; </span>
+</span><span class='line'><span class="sx">     &lt;% else %&gt;</span>             
+</span><span class='line'>      <span class="o">&lt;</span><span class="sx">%= link_to like_post_path(@post, like: true), method: &#39;post&#39;, remote: true do %&gt;</span>
+</span><span class='line'><span class="sx">         &lt;span id=</span><span class="s2">&quot;user_like_&lt;%= @post.id %&gt;&quot;</span><span class="o">&gt;&lt;</span><span class="n">i</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;fa fa-thumbs-o-up&quot;</span><span class="o">&gt;&lt;</span><span class="sr">/i&gt;&lt;/s</span><span class="n">pan</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="sx">% end %&gt;</span>
+</span><span class='line'><span class="sx">     &lt;% end %&gt;</span>
+</span><span class='line'> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'> <span class="o">&lt;</span><span class="sr">/span&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Finally, I changed the <code>like.js.erb</code> file in order to present the difference between like and unlike, as well as the user&rsquo;s new dicision.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="sx">% if </span><span class="n">liked</span><span class="p">(</span><span class="vi">@post</span><span class="p">)</span><span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">     $(&quot;#user_like_&lt;%= @post.id %&gt;</span><span class="s2">&quot;).addClass(&quot;</span><span class="n">like</span><span class="s2">&quot;);</span>
+</span><span class='line'><span class="s2">&lt;% else %&gt;</span>
+</span><span class='line'><span class="s2">     $(&quot;</span><span class="c1">#user_like_&lt;%= @post.id %&gt;&quot;).removeClass(&quot;like&quot;);</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sx">% end %&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sx">$(&quot;#post_like&quot;).load(&quot;&lt;%= @post.id %&gt;</span> <span class="c1">#post_like&quot;)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The comments like/unlike function is similar.</p>
+
+<p>This improvement killed me a lot time this weekend, but thankfully, it worked at last. However, there must be a much easier &amp; clean way to do it.</p>
+
+<p>By the way, I had updated my app to bootstrap 3.2, a more resposive-friendly version. It was an nightmare to change the style, like css class/id name etc. I also used fontawesome icons instead of the old ones. The app looks just fine.</p>
+</div>
+
+
+    <br/>
+    <p class="meta">
+    <span class="byline author vcard">Posted by <span class="fn">Sun ▪ </span></span>
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-03T21:35:00+08:00" data-updated="true" itemprop="datePublished">Aug 3<span>rd</span>, 2014</time>
+    <span class="categories"> ▪ 
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</span>
+    </p>
+</article>
+
+	<div class="share">
+        <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+        
+        
+        
+        <a class="addthis_button_sinaweibo"></a>
+        
+        
+        
+        <a class="addthis_button_compact"></a>
+        <a class="addthis_counter addthis_bubble_style"></a>
+        </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - Lawrence Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			
+
+<script type="text/javascript">
+      var disqus_shortname = 'voicelawrencesun';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://voice.lawrencesun.info/posts/2014/08/03/rails-notes-unlike-function/';
+        var disqus_url = 'http://voice.lawrencesun.info/posts/2014/08/03/rails-notes-unlike-function/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-43779948-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+		</div>
+	</div>
+</body>
+</html>
