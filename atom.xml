@@ -4,7 +4,7 @@
   <title><![CDATA[Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-08-03T22:56:40+08:00</updated>
+  <updated>2014-08-13T22:52:37+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,387 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: Remember Me and Reset Password]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/08/12/rails-notes-remember-me-and-reset-password/"/>
+    <updated>2014-08-12T16:14:58+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/08/12/rails-notes-remember-me-and-reset-password</id>
+    <content type="html"><![CDATA[<p><strong>1. Remember Me</strong></p>
+
+<p>We used sessions to store user&rsquo;s id in order to let them sign in just once. However, when users close browser, the session cookie is deleted. So we would like to replace it with a permanent one. Besides, if we store and expose user&rsquo;s id, it could be dangerous.</p>
+
+<p>Therefore, we will generate and store a unique token for each user. First, create a new column to store the token.</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rails g migration add_remember_token_to_users remember_token:string
+</span><span class='line'>$ rake db:migrate</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then write a method to generate remember_token before creating a new user in models/user.rb</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="n">before_create</span> <span class="p">{</span> <span class="n">generate_token</span><span class="p">(</span><span class="ss">:remember_token</span><span class="p">)}</span>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">generate_token</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">begin</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">[</span><span class="n">column</span><span class="o">]</span> <span class="o">=</span> <span class="no">SecureRandom</span><span class="o">.</span><span class="n">urlsafe_base64</span>
+</span><span class='line'>  <span class="k">end</span> <span class="k">while</span> <span class="no">User</span><span class="o">.</span><span class="n">exists?</span><span class="p">(</span><span class="n">column</span> <span class="o">=&gt;</span> <span class="nb">self</span><span class="o">[</span><span class="n">column</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add a checkbox in views/sessions/new.html.erb for user to let them choose if they want us to remember.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;checkbox&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;label&gt;</span>
+</span><span class='line'>      <span class="err">&lt;</span>%= check_box_tag :remember_me, 1, params[:remember_me] %&gt;
+</span><span class='line'>      <span class="err">&lt;</span>%= t(&#39;remember me&#39;) %&gt;
+</span><span class='line'>  <span class="nt">&lt;/label&gt;&lt;br&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Modify the SessionsController so that we store remember_token in cookies when user signed in.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>  <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by_username</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:username</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">user</span> <span class="o">&amp;&amp;</span> <span class="n">user</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:password</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">params</span><span class="o">[</span><span class="ss">:remember_me</span><span class="o">]</span>
+</span><span class='line'>          <span class="n">cookies</span><span class="o">.</span><span class="n">permanent</span><span class="o">[</span><span class="ss">:remember_token</span><span class="o">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">remember_token</span>
+</span><span class='line'>      <span class="k">else</span>
+</span><span class='line'>          <span class="n">cookies</span><span class="o">[</span><span class="ss">:remember_token</span><span class="o">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">remember_token</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="n">flash</span><span class="o">[</span><span class="ss">:success</span><span class="o">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">(</span><span class="s1">&#39;flash.session.create.success&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, </span><span class="si">#{</span><span class="n">params</span><span class="o">[</span><span class="ss">:username</span><span class="o">]</span><span class="si">}</span><span class="s2">.&quot;</span>
+</span><span class='line'>      <span class="n">redirect_to</span> <span class="n">root_path</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>      <span class="n">flash</span><span class="o">.</span><span class="n">now</span><span class="o">[</span><span class="ss">:error</span><span class="o">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">(</span><span class="s1">&#39;flash.session.create.error&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">render</span> <span class="s1">&#39;new&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Modify the current_user method in application.rb so it reads the remember_token from cookies rather than the user.id from the session.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">current_user</span>
+</span><span class='line'>  <span class="vi">@current_user</span> <span class="o">||=</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by_remember_token</span><span class="p">(</span><span class="n">cookies</span><span class="o">[</span><span class="ss">:remember_token</span><span class="o">]</span><span class="p">)</span> <span class="k">if</span> <span class="n">cookies</span><span class="o">[</span><span class="ss">:remember_token</span><span class="o">]</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, we want to fill the remember_token column for existing users. Write a file called rebuild_remember_token.rake in lib/tasks and run <code>rake user:rebuild_remember_token</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">namespace</span> <span class="ss">:user</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">desc</span> <span class="s2">&quot;Rebuild Remember-Tokens&quot;</span>
+</span><span class='line'>  <span class="n">task</span> <span class="ss">:rebuild_remember_token</span> <span class="o">=&gt;</span> <span class="ss">:environment</span> <span class="k">do</span>
+</span><span class='line'>    <span class="no">User</span><span class="o">.</span><span class="n">transaction</span> <span class="k">do</span>
+</span><span class='line'>      <span class="no">User</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">u</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">u</span><span class="o">.</span><span class="n">update_attribute</span> <span class="ss">:remember_token</span><span class="p">,</span> <span class="no">SecureRandom</span><span class="o">.</span><span class="n">urlsafe_base64</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>2. Password Reset</strong></p>
+
+<p>We would like to allow users to reset their password when they forget. First, we will generate the route: <code>resources :password_resets</code>.</p>
+
+<p>Then add a link in the signin page(views/sessions/new.html.erb).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">label</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="sx">%= check_box_tag :remember_me, 1, params[:remember_me] %&gt;</span>
+</span><span class='line'><span class="sx">     &lt;%=</span> <span class="n">t</span><span class="p">(</span><span class="s1">&#39;.remember_me&#39;</span><span class="p">)</span> <span class="sx">%&gt; | &lt;%= link_to t(&#39;.forgotten_password&#39;), new_password_reset_path %&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="sr">/label&gt;&lt;br/</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sr">/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create a password_resets_controller.rb file and a new.html.erb file in views/password_resets.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">PasswordResetsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">def</span> <span class="nf">new</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>      <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by_email</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="vi">@user</span>
+</span><span class='line'>          <span class="vi">@user</span><span class="o">.</span><span class="n">send_password_reset</span>
+</span><span class='line'>          <span class="n">flash</span><span class="o">[</span><span class="ss">:success</span><span class="o">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">(</span><span class="s1">&#39;flash.reset.email.success&#39;</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">redirect_to</span> <span class="n">root_path</span>
+</span><span class='line'>      <span class="k">else</span>
+</span><span class='line'>          <span class="n">flash</span><span class="o">.</span><span class="n">now</span><span class="o">[</span><span class="ss">:error</span><span class="o">]</span> <span class="o">=</span>  <span class="n">t</span><span class="p">(</span><span class="s1">&#39;flash.reset.email.error&#39;</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">render</span> <span class="s1">&#39;new&#39;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;col-md-6 col-md-offset-3&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;well&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="n">h4</span><span class="o">&gt;&lt;</span><span class="sx">%= t(&#39;.password_reset&#39;) %&gt;&lt;/h4&gt;</span>
+</span><span class='line'><span class="sx">         &lt;hr/&gt;</span>
+</span><span class='line'><span class="sx">         &lt;%=</span> <span class="n">form_tag</span> <span class="n">password_resets_path</span><span class="p">,</span> <span class="nb">method</span><span class="p">:</span> <span class="s1">&#39;post&#39;</span> <span class="k">do</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">         &lt;div class=&quot;form-group&quot;&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="sx">%= label_tag :email %&gt;&lt;br/&gt;</span>
+</span><span class='line'><span class="sx">         &lt;%=</span> <span class="n">text_field_tag</span> <span class="ss">:email</span><span class="p">,</span> <span class="n">params</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">         &lt;/div&gt;</span>
+</span><span class='line'>          <span class="o">&lt;%=</span> <span class="n">submit_tag</span> <span class="n">t</span><span class="p">(</span><span class="s1">&#39;.password_reset&#39;</span><span class="p">),</span> <span class="ss">class</span><span class="p">:</span> <span class="s2">&quot;btn btn-primary&quot;</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">         &lt;% end %&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="sr">/div&gt;</span>
+</span><span class='line'><span class="sr"> &lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sr">/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then we will add columns to store the a token for the reset request and the expire time of it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">rails</span> <span class="n">g</span> <span class="n">migration</span> <span class="n">add_password_reset_to_users</span> <span class="n">password_reset_token</span><span class="ss">:string</span> <span class="n">password_reset_sent_at</span><span class="ss">:datetime</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When the user is found by the email, we will generate a token and send a reset email using send_password_reset method in /models/user.rb</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">send_password_reset</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">update_column</span><span class="p">(</span><span class="ss">:password_reset_token</span><span class="p">,</span> <span class="no">SecureRandom</span><span class="o">.</span><span class="n">urlsafe_base64</span><span class="p">)</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">update_column</span><span class="p">(</span><span class="ss">:password_reset_sent_at</span><span class="p">,</span> <span class="no">Time</span><span class="o">.</span><span class="n">zone</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+</span><span class='line'>  <span class="no">UserMailer</span><span class="o">.</span><span class="n">password_reset</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span><span class="o">.</span><span class="n">deliver</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create the UserMailer and email template in /views/user_mailer/password_reset_text.erb</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">rails</span> <span class="n">g</span> <span class="n">mailer</span> <span class="n">user_mailer</span> <span class="n">password_reset</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">UserMailer</span> <span class="o">&lt;</span> <span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">default</span> <span class="ss">from</span><span class="p">:</span> <span class="s2">&quot;from@example.com&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">password_reset</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="n">user</span>
+</span><span class='line'>    <span class="n">mail</span> <span class="ss">to</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">,</span> <span class="ss">subject</span><span class="p">:</span> <span class="s2">&quot;Password Reset&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">To</span> <span class="n">reset</span> <span class="n">your</span> <span class="n">password</span> <span class="n">click</span> <span class="n">the</span> <span class="no">URL</span> <span class="n">below</span><span class="o">.</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;%=</span> <span class="n">edit_password_reset_url</span><span class="p">(</span><span class="vi">@user</span><span class="o">.</span><span class="n">password_reset_token</span><span class="p">)</span> <span class="o">%&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">If</span> <span class="n">you</span> <span class="n">did</span> <span class="ow">not</span> <span class="n">request</span> <span class="n">your</span> <span class="n">password</span> <span class="n">to</span> <span class="n">be</span> <span class="n">reset</span> <span class="n">please</span> <span class="n">ignore</span> <span class="n">this</span> <span class="n">email</span> <span class="ow">and</span> <span class="n">your</span> <span class="n">password</span> <span class="n">will</span> <span class="n">stay</span> <span class="n">as</span> <span class="n">it</span> <span class="n">is</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We will need to alter enviroment configuration in /config/environment/development.rb to get URLs working. Similar line in production.rb with the live domain name.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Auth</span><span class="p">:</span><span class="ss">:Application</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">action_mailer</span><span class="o">.</span><span class="n">default_url_options</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">:host</span> <span class="o">=&gt;</span> <span class="s2">&quot;localhost:3000&quot;</span> <span class="p">}</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The URL includes the token as the id parameter, which we will use it in edit action. Create a form for users to reset password in edit.html.erb</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">edit</span>
+</span><span class='line'>  <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by_password_reset_token!</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">h4</span><span class="o">&gt;&lt;</span><span class="sx">%= t(&#39;.password_reset&#39;) %&gt;&lt;/h4&gt;&lt;hr/&gt;</span>
+</span><span class='line'><span class="sx">&lt;%=</span> <span class="n">render</span> <span class="s1">&#39;shared/error&#39;</span><span class="p">,</span> <span class="ss">object</span><span class="p">:</span> <span class="vi">@user</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">&lt;%= form_for @user, url: password_reset_path(params[:id]) do |f| %&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;form-group&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="sx">%= f.label :password, t(&#39;password&#39;) %&gt;</span>
+</span><span class='line'><span class="sx">     &lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">password_field</span> <span class="ss">:password</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span><span class="s2">&quot;form-control&quot;</span><span class="p">,</span> <span class="ss">placeholder</span><span class="p">:</span> <span class="s2">&quot;At least 6 digits&quot;</span><span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx"> &lt;/div&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;form-group&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="sx">%= f.label :password_confirmation, t(&#39;password_confirmation&#39;) %&gt;</span>
+</span><span class='line'><span class="sx">     &lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">password_field</span> <span class="ss">:password_confirmation</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span><span class="s2">&quot;form-control&quot;</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx"> &lt;/div&gt;</span>
+</span><span class='line'>  <span class="o">&lt;%=</span> <span class="n">submit_tag</span> <span class="n">t</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">),</span> <span class="ss">class</span><span class="p">:</span> <span class="s2">&quot;btn btn-primary&quot;</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">&lt;% end %&gt;</span>   
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we use form_for in this form as we’re modifying a resource. Because of this we have to explicitly set the :url parameter so that the form isn’t POSTed to the UsersController. Instead it is sent to the PasswordResetsController’s update action, passing in the reset token as the id.</p>
+
+<p>Finally, we will write the update action.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">update</span>
+</span><span class='line'>  <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by_password_reset_token!</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="vi">@user</span><span class="o">.</span><span class="n">password_reset_sent_at</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">.</span><span class="n">hours</span><span class="o">.</span><span class="n">ago</span>
+</span><span class='line'>      <span class="n">flash</span><span class="o">[</span><span class="ss">:error</span><span class="o">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">(</span><span class="s1">&#39;flash.reset.error&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">redirect_to</span> <span class="n">new_password_reset_path</span>
+</span><span class='line'>  <span class="k">elsif</span> <span class="vi">@user</span><span class="o">.</span><span class="n">update_attributes</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">permit!</span><span class="o">[</span><span class="ss">:user</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@user</span><span class="o">.</span><span class="n">update_attribute</span><span class="p">(</span><span class="ss">:password_reset_token</span><span class="p">,</span> <span class="kp">nil</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">flash</span><span class="o">[</span><span class="ss">:success</span><span class="o">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">(</span><span class="s1">&#39;flash.reset.success&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">redirect_to</span> <span class="n">signin_path</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>    <span class="n">render</span> <span class="s1">&#39;edit&#39;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><sub>Reference: <a href="http://railscasts.com/episodes/274-remember-me-reset-password?view=asciicast">Railscasts</a></sub></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: How to 'Like' once and 'Unlike' in Rails]]></title>
@@ -1665,314 +2046,6 @@ Instead of <code>like: true</code> params, we set it to false. In order to show 
 
 
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Notes 2]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-2/"/>
-    <updated>2014-02-11T13:28:40+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/02/11/rails-notes-2</id>
-    <content type="html"><![CDATA[<p>Last week, I built a blog prototype based on the twitter-like app in Rails Tutorial. Here is the 2nd note.</p>
-
-<!-- more -->
-
-
-<p><strong>Email validation</strong></p>
-
-<p>Create a database index on the email column, and require that the index be unique.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AddIndexToUsersEmail</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Migration</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
-</span><span class='line'>    <span class="n">add_index</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">unique</span><span class="p">:</span> <span class="kp">true</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Add validation &lsquo;app/models/user.rb&rsquo;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">before_save</span> <span class="p">{</span> <span class="nb">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">downcase</span> <span class="p">}</span>
-</span><span class='line'><span class="n">validates</span> <span class="ss">:username</span><span class="p">,</span> <span class="ss">presence</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">uniqueness</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">length</span><span class="p">:</span>   <span class="p">{</span> <span class="ss">maximum</span><span class="p">:</span> <span class="mi">15</span> <span class="p">}</span>
-</span><span class='line'><span class="no">VALID_EMAIL_REGEX</span> <span class="o">=</span> <span class="sr">/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i</span>
-</span><span class='line'><span class="n">validates</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">presence</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="p">{</span> <span class="ss">with</span><span class="p">:</span> <span class="no">VALID_EMAIL_REGEX</span> <span class="p">},</span>
-</span><span class='line'>                                      <span class="ss">uniqueness</span><span class="p">:</span> <span class="p">{</span> <span class="n">case_sensitive</span><span class="p">:</span> <span class="kp">false</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>User authentication</strong></p>
-
-<p>Apply a gem called <code>bcrypt-ruby</code>. Presence validations for the password and its confirmation are automatically added by <code>has_secure_password</code>. Call method <code>authenticate</code> to confirm and   get user.</p>
-
-<p>Generate migration and <code>add_column :users, :password_digest, :string</code> to the table.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rails</span> <span class="n">g</span> <span class="n">migration</span> <span class="n">add_password_digest_to_users</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Sign in user</strong></p>
-
-<p>create a non-model backed controller <code>sessions</code>. A session is a semi-permanent connection between two computers, such as a client computer running a web browser and a server running Rails. Sessions resource will use a cookie, which is a small piece of text placed on the user’s browser.</p>
-
-<p>non-model backed form for sign-in, using form_tag
-alternatively, using form_for(:session, url: sessions_path)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="sx">%= form_tag &#39;/signin&#39;, method: &#39;post&#39; do %&gt;</span>
-</span><span class='line'><span class="sx"> &lt;%=</span> <span class="n">label_tag</span> <span class="ss">:username</span><span class="p">,</span> <span class="s2">&quot;用户名&quot;</span> <span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx"> &lt;%= text_field_tag :username %&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="sx">%= label_tag :password, &quot;密码&quot; %&gt;</span>
-</span><span class='line'><span class="sx">     &lt;%=</span> <span class="n">password_field_tag</span> <span class="ss">:password</span> <span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx"> &lt;br/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;%=</span> <span class="n">submit_tag</span> <span class="s2">&quot;登录&quot;</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s2">&quot;btn btn-primary&quot;</span> <span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx">&lt;% end %&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>signin page above for <em>new</em> sessions, signing in will <em>create</em> a session, and signing out will <em>destroy</em> it</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">create</span>
-</span><span class='line'>  <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by_username</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:username</span><span class="o">]</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">if</span> <span class="n">user</span> <span class="o">&amp;&amp;</span> <span class="n">user</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:session</span><span class="o">][</span><span class="ss">:password</span><span class="o">]</span><span class="p">)</span>
-</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">destroy</span>
-</span><span class='line'>  <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span> <span class="o">=</span> <span class="kp">nil</span>
-</span><span class='line'>      <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>routes:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">get</span>   <span class="s1">&#39;/signup&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;users#new&#39;</span>
-</span><span class='line'><span class="n">get</span>        <span class="s1">&#39;/signin&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;sessions#new&#39;</span>
-</span><span class='line'><span class="n">post</span>   <span class="s1">&#39;/signin&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;sessions#create&#39;</span>
-</span><span class='line'><span class="n">get</span> <span class="s1">&#39;/signout&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;sessions#destroy&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Current_user</strong></p>
-
-<p>define current_user in ApplicationController and add <code>helper_method :current_user, :sign_in?, …</code> to make it available to view templates. Alternatively, we can add methods in ApplicationHelper, and add<code>include SessionsHelper</code> in ApplicationController to make it available in controller.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">current_user</span>
-</span><span class='line'>  <span class="vi">@current_user</span> <span class="o">||=</span> <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span><span class="p">)</span> <span class="k">if</span> <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">signed_in?</span>
-</span><span class='line'>  <span class="o">!!</span><span class="n">current_user</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">require_user</span>
-</span><span class='line'>  <span class="k">unless</span> <span class="n">signed_in?</span>
-</span><span class='line'>      <span class="n">flash</span><span class="o">[</span><span class="ss">:error</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;请登录.&quot;</span>
-</span><span class='line'>      <span class="n">redirect_to</span> <span class="s1">&#39;/signin&#39;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&ldquo;||=&rdquo; assigning to a variable if it’s nil but otherwise leaving it alone. <em>memorization</em>: calls the find_by method the first time current_user is called, but on subsequent invocations returns @current_user without hitting the database.</p>
-
-<p>sign in user upon sign up:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">if</span> <span class="vi">@user</span><span class="o">.</span><span class="n">save</span>
-</span><span class='line'>  <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span> <span class="o">=</span> <span class="vi">@user</span><span class="o">.</span><span class="n">id</span>
-</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>add_user_id_to_post</code> and assign user_id to new post</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">create</span>
-</span><span class='line'>  <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">post_params</span><span class="p">)</span>
-</span><span class='line'>  <span class="vi">@post</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">current_user</span>
-</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Update user</strong></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">update</span>
-</span><span class='line'>  <span class="k">if</span> <span class="vi">@user</span><span class="o">.</span><span class="n">update_attributes</span><span class="p">(</span><span class="n">user_params</span><span class="p">)</span>
-</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="vi">@user</span><span class="o">.</span><span class="n">new_record?</span> <span class="p">?</span> <span class="s2">&quot;注册&quot;</span> <span class="p">:</span> <span class="s2">&quot;更新&quot;</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s2">&quot;btn btn-primary&quot;</span><span class="p">)</span> <span class="o">%&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Add gravatar</strong></p>
-
-<p>add in &lsquo;app/helper/user_helper.rb&rsquo; and call &lt;%= gravatar_for @user %></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">UsersHelper</span>
-</span><span class='line'>  <span class="c1"># Returns the Gravatar (http://gravatar.com/) for the given user.</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">gravatar_for</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">gravatar_id</span> <span class="o">=</span> <span class="ss">Digest</span><span class="p">:</span><span class="ss">:MD5</span><span class="o">::</span><span class="n">hexdigest</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="o">.</span><span class="n">downcase</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">gravatar_url</span> <span class="o">=</span> <span class="s2">&quot;https://secure.gravatar.com/avatar/</span><span class="si">#{</span><span class="n">gravatar_id</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'>    <span class="n">image_tag</span><span class="p">(</span><span class="n">gravatar_url</span><span class="p">,</span> <span class="ss">alt</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s2">&quot;gravatar&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>add some styles</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="c">/* gravatar */</span>
-</span><span class='line'><span class="nc">.gravatar-sm</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">margin-right</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">height</span><span class="o">:</span><span class="m">48px</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">width</span><span class="o">:</span><span class="m">48px</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nc">.gravatar-normal</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">height</span><span class="o">:</span><span class="m">64px</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">width</span><span class="o">:</span><span class="m">64px</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Require the same user</strong></p>
-
-<p>&lsquo;app/controllers/application_controller.rb&rsquo;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">correct_user?</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-</span><span class='line'>  <span class="n">user</span> <span class="o">==</span> <span class="n">current_user</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&lsquo;app/controllers/users_controller.rb&rsquo;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">before_action</span> <span class="ss">:correct_user</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span><span class="o">[</span><span class="ss">:edit</span><span class="p">,</span> <span class="ss">:update</span><span class="o">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">correct_user</span>
-</span><span class='line'>  <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
-</span><span class='line'>  <span class="n">redirect_to</span> <span class="n">root_path</span> <span class="k">unless</span> <span class="n">correct_user?</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Change date format</strong></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">ApplicationHelper</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">display_date</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
-</span><span class='line'>      <span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%d/%m/%Y&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Others</strong></p>
-
-<p>apart from @import bootstrap in app/assets/stylesheets/custom.css.scss
-//= require bootstrap in app/assets/javascripts/application.js</p>
-
-<p>flash.now #disappear as soon as there is an additional request.</p>
-
-<p>issue:
-when I submit blank comment, it leads to error. this is because I run the _comments.html.erb before render the error message.</p>
-
-<p>solution:
-add &lt;% unless comment.body.blank? %> &hellip;. &lt;% end %> in _comments partial.</p>
-
-<p>Strong parameters:
-The reason is that initializing the entire params hash is extremely dangerous—it arranges to pass to User.new all data submitted by a user. In particular, suppose that, in addition to the current attributes, the User model included an admin attribute used to identify administrative users of the site. The way to set such an attribute to true is to pass the value admin=’1’ as part of params[:user], a task that is easy to accomplish using a command-line HTTP client such as curl. The result would be that, by passing in the entire params hash to User.new, we would allow any user of the site to gain administrative access by including admin=’1’ in the web request.</p>
-
-<p>&lt;%= render &lsquo;shared/posts&rsquo; , objects: @posts%> to reduce duplication</p>
 ]]></content>
   </entry>
   
