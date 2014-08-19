@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: WeChat | Lawrence Sun]]></title>
+  <link href="http://voice.lawrencesun.info/blog/categories/wechat/atom.xml" rel="self"/>
+  <link href="http://voice.lawrencesun.info/"/>
+  <updated>2014-08-19T23:40:13+08:00</updated>
+  <id>http://voice.lawrencesun.info/</id>
+  <author>
+    <name><![CDATA[Lawrence Sun]]></name>
+    <email><![CDATA[yuliang1987@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[如何免费搭建WordPress博客并连接微信公众账号]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/08/19/how-to-build-wp-blog-and-connect-weixin/"/>
+    <updated>2014-08-19T23:31:08+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/08/19/how-to-build-wp-blog-and-connect-weixin</id>
+    <content type="html"><![CDATA[<p>WordPress由于便捷的安装，丰富的插件，一直受到广大站长的喜爱。我的第一个独立博客也是用WordPress搭建，尽管后来改用Octopress平台了。</p>
+
+<p>微信公众平台的影响力日益扩大，作为尝试，我也申请了一个账号(插播广告：欢迎扫描屏幕下方二维码关注本账号&hellip;只要998&hellip;)。</p>
+
+<p>同时作为一个爱折腾的人，自然要开启微信的开发者模式。作为没有验证的订阅号，开发者暂时只能做一些信息接收和回复操作。</p>
+
+<p>即使开发的权限不多，但是结合WordPress博客后也可以实现不少功能，比如发送"最新"，返回博客的最新文章等等。当然首先，你得有个博客。</p>
+
+<!--more-->
+
+
+<p><a href="http://sae.sina.com.cn/">SAE</a>是新浪提供的云计算服务，支持PHP和JAVA，而且资费相比阿里云什么的要便宜很多，用来搭建WordPress非常合适。</p>
+
+<p>现在注册并且实名认证还送2500左右的云豆，对于数据库小、流量低的站点来说，可以免费用上个大半年。</p>
+
+<p>下面讲讲大致流程。</p>
+
+<p><strong>SAE WordPress 安装</strong></p>
+
+<p>注册SAE之后，如果有建立WordPress站点的经验可以手动安装。或者和我一样选择easy模式，选择“导入应用”，将最新的<a href="wp4cloud.sinaapp.com">安装包</a>链接填到基于URL安装，然后填写应用名称等进行安装。</p>
+
+<p>接下来就是进入你设定的地址xxx.sinaapp.com进行管理员注册等。</p>
+
+<p>嗯，有默认的markdown插件真幸福。</p>
+
+<p><strong>安装主题或插件</strong></p>
+
+<p>SAE不支持直接搜索安装主题和插件，只能通过SVN(我靠，这又是啥&hellip;)来进行上传。SVN的使用方法请看SAE<a href="http://sae.sina.com.cn/doc/tutorial/helloworld.html">官方文档</a>&hellip;</p>
+
+<p>从WP官网或其他途径下载主题或插件，放在本地的wp-content/themes or plugins的文件夹里，然后svn add &amp; commit提交到服务器。接着就可以进入WP后台安装了。</p>
+
+<p><strong>博客优化</strong></p>
+
+<p>主要是速度方面的。我暂时对以下两个方面进行了优化。</p>
+
+<ul>
+<li>gzip</li>
+</ul>
+
+
+<p>对页面进行压缩。进入SAE应用管理，在AppConfig里选择页面压缩，把所有的文件类型都添加进去。使用站长工具进行检测，运用后大约压缩了50%.</p>
+
+<ul>
+<li>fonts</li>
+</ul>
+
+
+<p>由于众所周知的原因，国内访问不了谷歌，然后包括WP在内的绝大多数平台或框架都采用了谷歌的公共库和字库，这会导致严重延时。好在360提供了<a href="libs.useso.com">镜像</a>以方便国内开发者使用。</p>
+
+<p>需要更新的文件有：</p>
+
+<ol>
+<li>wp-includes/script-loader.php</li>
+<li>wp-includes/js/tinymce/themes/advanced/skins/wp_theme/dialog.css</li>
+<li>wp-content/themes/你的主题名/functions.php</li>
+</ol>
+
+
+<p>使用编辑器将上述文件中的‘googleapis.com’全部替换成‘useso.com’。</p>
+
+<p><strong>连接微信接口</strong></p>
+
+<p>我最初采用的方式是创立一个新的应用，用来接收和返回微信信息，同时通过链接的方式引导到博客。但是因为我是只能勉强写"Hello World"的小白，PHP这货基本不懂，只能套用简单的SDK进行修改。</p>
+
+<p>后来我选择放弃建造轮子，倚靠前人的肩膀，怒装<a href="http://www.houqun.me/bbs/forum.php?gid=1">weixinpress</a>插件&hellip; 安装之后在WP后台可以轻松添加修改自定义回复。</p>
+
+<p>然后微信的URL填写'xxx.sinaapp.com/?weixin'，设置token一致，就OK了。</p>
+
+<p>接下来如有时间，我会考虑小打小闹，在此基础上添加些其他的功能。小黄鸡，神经猫什么的就算了吧&hellip;</p>
+
+<p>欢迎关注下方微信公众账号进行测试或交流：</p>
+
+<p><img src="http://cyztalk-wordpress.stor.sinaapp.com/uploads/2014/08/qrcode-150x150.jpg" alt="img" /></p>
+]]></content>
+  </entry>
+  
+</feed>
