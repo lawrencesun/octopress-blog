@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Git | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-09-18T20:28:55+08:00</updated>
+  <updated>2014-09-21T19:46:55+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,26 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to Upgrade Git]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/09/21/how-to-upgrade-git/"/>
+    <updated>2014-09-21T17:25:08+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/09/21/how-to-upgrade-git</id>
+    <content type="html"><![CDATA[<p>When I intended to install ImageMagick via homebrew, and found some issues by runing <code>brew doctor</code>. One was telling me that the git was out of date.</p>
+
+<p>When installing Git for Mac OS via XCode, it points Git to usr/bin/git.
+run <code>which git</code> to check out the directory.</p>
+
+<p>If we want to keep git up to date, we could install/upgrade git using homebrew.</p>
+
+<p>Add the line in ~/.bash_profile</p>
+
+<p><code>export PATH="/usr/local/bin:$PATH"</code></p>
+
+<p>Then run <code>brew install git</code> and <code>brew update git</code>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[如何合并多个Git Commit]]></title>

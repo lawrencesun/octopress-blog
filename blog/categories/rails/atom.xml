@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-09-18T20:28:55+08:00</updated>
+  <updated>2014-09-21T19:46:55+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,88 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: Upload Avatar Using Paperclip]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/09/21/rails-notes-upload-avatar-using-paperclip/"/>
+    <updated>2014-09-21T17:28:49+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/09/21/rails-notes-upload-avatar-using-paperclip</id>
+    <content type="html"><![CDATA[<p>In my previous rails apps, I used gravatar_for method to link the gravatar to users. In a recent app, I wanted to add cover photos to the books and allow users to upload the images.</p>
+
+<p>So I decided to use paperclip after seeing one of the <a href="http://railscasts.com/episodes/134-paperclip">episode</a> of railscast. Instead of applying the plugin, I installed paperclip gem.</p>
+
+<p>Add <code>gem "paperclip", "~&gt; 4.2"</code> to Gemfile and run <code>bundle install</code>.</p>
+
+<p>Then add photo columns to the existing books table.</p>
+
+<!-- more -->
+
+
+<p><code>rails g migration AddPhotosToBooks</code></p>
+
+<p>Migration:</p>
+
+<p>```ruby
+class AddAvatarColumnsToUsers &lt; ActiveRecord::Migration
+  def up</p>
+
+<pre><code>add_attachment :books, :photo
+</code></pre>
+
+<p>  end</p>
+
+<p>  def down</p>
+
+<pre><code>remove_attachment :books, :photo
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>This will insert four columns into books table: photo_file_name, photo_file_size, photo_content_type, photo_updated_at.</p>
+
+<p>Add the following lines to Book Model:</p>
+
+<p>```ruby
+has_attached_file :photo, :styles => { :medium => &ldquo;300x300>&rdquo;, :thumb => &ldquo;100x100>&rdquo; }, :default_url => &ldquo;missing.png&rdquo;,</p>
+
+<pre><code>    :url =&gt; "/assets/books/:id/:style/:basename.:extension",
+:path =&gt; ":rails_root/public/assets/books/:id/:style/:basename.:extension"
+validates_attachment :photo, 
+</code></pre>
+
+<p>  :content_type => { :content_type => [&ldquo;image/jpeg&rdquo;, &ldquo;image/jpg&rdquo;, &ldquo;image/gif&rdquo;, &ldquo;image/png&rdquo;] },
+  :size => { :less_than => 5.megabytes }
+```</p>
+
+<p>Forms to be updated:</p>
+
+<p>```ruby</p>
+
+<div class="form-group">
+    <%= f.label "cover" %>
+    <%= f.file_field :photo %>
+</div>
+
+
+<p>```</p>
+
+<p>And the updated book&rsquo;s show view with the uploaded photo.</p>
+
+<p><code>ruby
+&lt;%= image_tag @book.photo.url(:medium) %&gt;
+</code></p>
+
+<p>Besides, in order to run paperclip, ImageMagick is required. We can simply install it by homebrew.</p>
+
+<p><code>brew install imagemagick</code></p>
+
+<p>However, when I installed homebrew, several issues came out.</p>
+
+<p>It was a long story, briefly speeking, I ran <code>brew doctor</code> and tried to solve the warning issues by searching the net. Basiclly, I updated Git and Command Line Tool and reinstall the homebrew.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: Remember Me and Reset Password]]></title>
@@ -201,7 +283,7 @@ $ rails g mailer user_mailer password_reset
 
 <p>```ruby
 class UserMailer &lt; ActionMailer::Base
-  default from: &ldquo;<a href="&#109;&#97;&#105;&#108;&#x74;&#111;&#x3a;&#x66;&#x72;&#111;&#x6d;&#64;&#101;&#120;&#x61;&#109;&#x70;&#108;&#x65;&#x2e;&#99;&#x6f;&#109;">&#x66;&#x72;&#x6f;&#x6d;&#64;&#x65;&#x78;&#x61;&#x6d;&#x70;&#108;&#x65;&#46;&#99;&#111;&#109;</a>&rdquo;</p>
+  default from: &ldquo;<a href="&#109;&#97;&#105;&#108;&#x74;&#111;&#x3a;&#102;&#114;&#111;&#109;&#64;&#x65;&#x78;&#x61;&#109;&#x70;&#108;&#101;&#x2e;&#x63;&#x6f;&#x6d;">&#x66;&#x72;&#111;&#x6d;&#64;&#x65;&#120;&#x61;&#x6d;&#112;&#x6c;&#x65;&#x2e;&#99;&#111;&#109;</a>&rdquo;</p>
 
 <p>  def password_reset(user)</p>
 
@@ -540,106 +622,6 @@ $("#posts").html("&lt;%= escape_javascript render 'shared/posts', object: @posts
 $("#paginator").html("&lt;%= escape_javascript(paginate(@posts, remote: true).to_s) %&gt;");
 </code>
 Done.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Notes: Pagination With Kaminari]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/02/16/rails-notes-pagination-with-kaminari/"/>
-    <updated>2014-02-16T22:13:47+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/02/16/rails-notes-pagination-with-kaminari</id>
-    <content type="html"><![CDATA[<p>With hundreds and thousands of posts on website, we would like to insert some breaks. The first choice for pagination in Rails is will_paginate. However, I find a better one called <a href="https://github.com/amatsuda/kaminari">Kaminari</a>.</p>
-
-<!-- more -->
-
-
-<p><strong>Controllers and Views</strong></p>
-
-<p>First, add &lsquo;kaminari&rsquo; to &lsquo;Gemfile&rsquo; and run <code>bundle install</code></p>
-
-<p>Second, we apply the scope called <code>page</code> and <code>per</code> in our Controller.</p>
-
-<p><code>@posts = Post.all.page(params[:page]).per(15)</code></p>
-
-<p>that will show 15 posts per each page.</p>
-
-<p>Then, we call <code>paginate</code> helper in our views.</p>
-
-<p><code>&lt;%= paginate @posts %&gt;</code></p>
-
-<p><strong>Configure the default value</strong></p>
-
-<p>run <code>rails g kaminari:config</code> and change the file <code>kaminari_config.rb</code> in config/initializers</p>
-
-<p><code>ruby
-Kaminari.configure do |config|
-  config.default_per_page = 15
-  # config.max_per_page = nil
-  config.window = 2
-  config.outer_window = 1
-  # config.left = 0
-  # config.right = 0
-  # config.page_method_name = :page
-  # config.param_name = :page
-end
-</code></p>
-
-<p><strong>I18N and labels</strong></p>
-
-<p>We can change the default labels in config/locales.</p>
-
-<p>```ruby
-en:
-  views:</p>
-
-<pre><code>pagination:
-  first: "&amp;laquo; First"
-  last: "Last &amp;raquo;"
-  previous: "&amp;lsaquo; Prev"
-  next: "Next &amp;rsaquo;"
-  truncate: "..."
-</code></pre>
-
-<p>```</p>
-
-<p><strong>Configure the default view</strong></p>
-
-<p>run <code>rails g kaminari:views default</code> and change the files in app/views/kaminari</p>
-
-<p>e.g. I delete the first and last label in _pagination.html.erb and change the style to bootstrap according to the theme provided by the Kaminari.</p>
-
-<p><strong>Issue</strong></p>
-
-<p>I followed the instruction on Railscasts and the wiki of Kaminari. But my case seemed more complicated. I set three posts per page as default for test, but found that the posts presented in a strange array.</p>
-
-<p>PostsController:
-```ruby
-def index</p>
-
-<pre><code>...
-@posts = Post.all.page(params[:page])
-...
-</code></pre>
-
-<p>end
-```</p>
-
-<p>index.html.erb:
-<code>ruby
-&lt;%= render 'shared/posts' , object: @posts%&gt;
-&lt;%= paginate @posts %&gt;
-</code></p>
-
-<p>_posts.html.erb:
-<code>ruby
-&lt;% object.reverse.each do |post| %&gt;
-</code></p>
-
-<p>The problem was that 3 posts each time was passed into the partial and was implemented the reverse scope. So I deleted the <code>reverse</code> scope and changed the line in the controller like this:</p>
-
-<p><code>ruby
-@posts = @posts.order('created_at DESC').page(params[:page])
-</code></p>
 ]]></content>
   </entry>
   
