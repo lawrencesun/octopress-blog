@@ -1,12 +1,18 @@
 ---
 layout: page
-title: "Lawrence Sun (孙瑜亮)"
+title: "Yuliang Sun (Lawrence)"
 date: 2014-01-08 20:39
 comments: true
 sharing: true
 footer: true
 ---
+80后，勉强能写“Hello World”的小白
 
+平时刷刷微博，写写博客，看看电影
+
+偶尔挣扎下代码，挪动下身躯
+
+偶尔前往陌生世界撒野
 
 __Education__
 
@@ -18,7 +24,7 @@ __Education__
 
 __Experience__
 
-* Junior Web Developer, Tsing IT Limited, Manchester (2012 - 2014)
+* Junior Web Design, Tsing IT Limited, Manchester (2012 - 2014)
 
 * Event First Aid Volunteer, British Red Cross, Manchester (2010 - 2012)
 
