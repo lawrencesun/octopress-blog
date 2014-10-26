@@ -5,11 +5,13 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Categories - Lawrence Sun</title>
+	<title>Rails Notes: Heroku environment configuration problem - Lawrence Sun</title>
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Octopress [ 5 ] Heroku [ 1 ] Ruby [ 13 ] Sinatra [ 1 ] Web app [ 1 ] Fitbit [ 1 ] Gadgets [ 1 ] Git [ 3 ] Travel [ 10 ] 曼游记 [ 10 ] Rails [ 13 ] &hellip;">
+<meta name="description" content="Rails Notes: Heroku Environment Configuration Problem When I tried to deploy one of my rails app on Heroku, the following problem occured. 1
+2
+can't &hellip;">
 
 
 
@@ -20,7 +22,7 @@
 
 	<link href="/atom.xml" rel="alternate" title="Lawrence Sun" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://voice.lawrencesun.info/blog/categories/">
+	<link rel="canonical" href="http://voice.lawrencesun.info/posts/2014/10/26/rails-notes-heroku-environment-configuration-problem/">
 	<link href="/favicon.png" rel="shortcut icon">
 	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -105,44 +107,69 @@
 				
 			
 			<div class="mid-col-container">
-				<div id="content" class="inner"><article class="page">
-    
-    <h1 class="title">Categories</h1>
-    
-    <div class="entry-content"><ul>
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	
+	<h1 class="title" itemprop="name">Rails Notes: Heroku Environment Configuration Problem</h1>
+	<div class="entry-content" itemprop="articleBody"><p>When I tried to deploy one of my rails app on Heroku, the following problem occured.</p>
 
-    <li><a href="/blog/categories/Octopress/">Octopress</a> [ 5 ]</li>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>can't convert nil into String 
+</span><span class='line'>/app/config/initializers/devise.rb:13:in `+'</span></code></pre></td></tr></table></div></figure>
 
-    <li><a href="/blog/categories/Heroku/">Heroku</a> [ 1 ]</li>
 
-    <li><a href="/blog/categories/Ruby/">Ruby</a> [ 13 ]</li>
+<p>The reason was that I set DOMAIN_NAME etc. inside secret.yml and this file was git ignored since I wanted to keep credentials private. So Heroku couldn&rsquo;t find these configuration values.</p>
 
-    <li><a href="/blog/categories/Sinatra/">Sinatra</a> [ 1 ]</li>
+<p>Using figaro gem seems a good way to fix this. But I didn&rsquo;t want to add another gem and create a new yml file.</p>
 
-    <li><a href="/blog/categories/Web App/">Web app</a> [ 1 ]</li>
+<p>What I did was set Heroku environment variables directly and it worked:</p>
 
-    <li><a href="/blog/categories/Fitbit/">Fitbit</a> [ 1 ]</li>
-
-    <li><a href="/blog/categories/Gadgets/">Gadgets</a> [ 1 ]</li>
-
-    <li><a href="/blog/categories/Git/">Git</a> [ 3 ]</li>
-
-    <li><a href="/blog/categories/Travel/">Travel</a> [ 10 ]</li>
-
-    <li><a href="/blog/categories/曼游记/">曼游记</a> [ 10 ]</li>
-
-    <li><a href="/blog/categories/Rails/">Rails</a> [ 13 ]</li>
-
-    <li><a href="/blog/categories/Bitcoin/">Bitcoin</a> [ 1 ]</li>
-
-    <li><a href="/blog/categories/随笔/">随笔</a> [ 3 ]</li>
-
-    <li><a href="/blog/categories/WeChat/">Wechat</a> [ 1 ]</li>
-
-</ul>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ heroku config:add GMAIL_USERNAME='myname@gmail.com' GMAIL_PASSWORD='mypassword'
+</span><span class='line'>$ heroku config:add DOMAIN_NAME='example.com'</span></code></pre></td></tr></table></div></figure>
 
 </div>
+
+
+    <br/>
+    <p class="meta">
+    <span class="byline author vcard">Posted by <span class="fn">Sun ▪ </span></span>
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-26T12:06:49+08:00" data-updated="true" itemprop="datePublished">Oct 26<span>th</span>, 2014</time>
+    <span class="categories"> ▪ 
+
+</span>
+    </p>
 </article>
+
+	<div class="share">
+        <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+        
+        
+        
+        <a class="addthis_button_sinaweibo"></a>
+        
+        
+        
+        <a class="addthis_button_compact"></a>
+        <a class="addthis_counter addthis_bubble_style"></a>
+        </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid="></script>
+</div>
+
+
 
 
 <section id="comment">
@@ -150,7 +177,6 @@
     <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
 </section>
-
 </div>
 			</div>
 			<footer id="footer" class="inner"><p>
@@ -166,8 +192,8 @@ Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Sha
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://voice.lawrencesun.info/blog/categories/index.html';
-        var disqus_url = 'http://voice.lawrencesun.info/blog/categories/index.html';
+        var disqus_identifier = 'http://voice.lawrencesun.info/posts/2014/10/26/rails-notes-heroku-environment-configuration-problem/';
+        var disqus_url = 'http://voice.lawrencesun.info/posts/2014/10/26/rails-notes-heroku-environment-configuration-problem/';
         var disqus_script = 'embed.js';
       
     (function () {

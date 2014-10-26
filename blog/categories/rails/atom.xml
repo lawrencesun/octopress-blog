@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-09-21T19:46:55+08:00</updated>
+  <updated>2014-10-26T12:16:05+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: Make Dropdown Work on Heroku]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/10/26/rails-notes-make-dropdown-work-on-heroku/"/>
+    <updated>2014-10-26T12:07:57+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/10/26/rails-notes-make-dropdown-work-on-heroku</id>
+    <content type="html"><![CDATA[<p>After I deployed a app on Heroku, I found that the Bootstap dropdown menu didn&rsquo;t work on Heroku. It was working in my local development environment.</p>
+
+<p>So I searched the answers from stackoverflow. It seemed that it was a common problem.</p>
+
+<p>I had tried to reorder the //=jquery and //=bootstrap and reorder back again and again. I also ran asset precompile method. However, it still didn&rsquo;t work in my situation.</p>
+
+<p>Then I compared an app I wrote before, and I found that there might be the conflict between &lsquo;bootstrap&rsquo; and &lsquo;bootstrap-spockets&rsquo;. The dropdown menu worked if either of them were removed. So I removed &lsquo;bootstrap&rsquo; finally. I am not sure if it will cause any further problems but so far it&rsquo;s fine.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: Upload Avatar Using Paperclip]]></title>
@@ -283,7 +298,7 @@ $ rails g mailer user_mailer password_reset
 
 <p>```ruby
 class UserMailer &lt; ActionMailer::Base
-  default from: &ldquo;<a href="&#109;&#97;&#105;&#108;&#x74;&#111;&#x3a;&#102;&#114;&#111;&#109;&#64;&#x65;&#x78;&#x61;&#109;&#x70;&#108;&#101;&#x2e;&#x63;&#x6f;&#x6d;">&#x66;&#x72;&#111;&#x6d;&#64;&#x65;&#120;&#x61;&#x6d;&#112;&#x6c;&#x65;&#x2e;&#99;&#111;&#109;</a>&rdquo;</p>
+  default from: &ldquo;<a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#58;&#x66;&#x72;&#111;&#x6d;&#64;&#101;&#x78;&#97;&#x6d;&#x70;&#108;&#101;&#x2e;&#99;&#x6f;&#x6d;">&#x66;&#114;&#111;&#x6d;&#x40;&#x65;&#x78;&#x61;&#109;&#x70;&#x6c;&#101;&#46;&#99;&#111;&#x6d;</a>&rdquo;</p>
 
 <p>  def password_reset(user)</p>
 
@@ -586,42 +601,6 @@ def active</p>
 ```</p>
 
 <p>Finally, use @post.comments_count and active_posts_path in views to achieve what we want at the beginning.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Notes: Ajaxify Pagination]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/02/22/rails-notes-ajaxify-pagination/"/>
-    <updated>2014-02-22T11:25:16+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/02/22/rails-notes-ajaxify-pagination</id>
-    <content type="html"><![CDATA[<p>After applying <a href="/posts/2014/02/16/rails-notes-pagination-with-kaminari/">pagination</a> in my app, I would like to ajaxify kaminari paginator. I googled and stackoverflowed this issue, and found the solution, which is quite similar to what I did in <a href="/posts/2014/02/11/rails-notes-adding-a-like-function/">likeable</a> function.</p>
-
-<!-- more -->
-
-
-<p>First, add <code>remote: true</code> and class id to <code>index.html.erb</code>.</p>
-
-<p>```ruby</p>
-
-<div id="posts">
-    <%= render 'shared/posts', object: @posts %>
-</div>
-
-
-<div id="paginator">
-    <%= paginate @posts, remote: true %>
-</div>
-
-
-<p>```</p>
-
-<p>Second, create a new file <code>index.js.erb</code>.</p>
-
-<p><code>ruby
-$("#posts").html("&lt;%= escape_javascript render 'shared/posts', object: @posts %&gt;");
-$("#paginator").html("&lt;%= escape_javascript(paginate(@posts, remote: true).to_s) %&gt;");
-</code>
-Done.</p>
 ]]></content>
   </entry>
   
