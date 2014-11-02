@@ -124,6 +124,100 @@
   
 
 
+<time datetime="2014-11-02T20:37:35+08:00" data-updated="true" itemprop="datePublished">Nov 2<span>nd</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/11/02/railsnotes-storage-paperclip-images/" itemprop="url">Rails Notes: 利用七牛云储存Paperclip图片</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>之前使用<a href="http://voice.lawrencesun.info/posts/2014/09/21/rails-notes-upload-avatar-using-paperclip/">Paperclip来实现Rails应用上传图片的功能</a>, 但是在部署到Heroku时会有无法储存的问题, 每次push都会删除之前上传的图片。</p>
+
+<p>这是因为Heroku不支持动态上传文件, 很多人碰到这种情况, Stackoverflow上推荐的解决方案是使用Amazon S3, 但是这个服务需要信用卡注册, 另外只能免费使用一年。</p>
+
+<p>这无疑会提高试错和测试阶段的成本。经过另一番搜索, 发现<a href="https://portal.qiniu.com/signup?code=3lnzd178edmqa">七牛云</a>储存可以用来实现图片的储存和调用。</p>
+
+<p>首先需要调用<a href="https://github.com/lidaobing/paperclip-qiniu">paperclip-qiniu</a>的gem, 并对之前使用paperclip的相关文件进行修改。</p>
+
+<p>修改paperclip的初始化内容, <code>config/initializers/paperclip.rb</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Paperclip</span><span class="p">:</span><span class="ss">:Attachment</span><span class="o">.</span><span class="n">default_options</span><span class="o">[</span><span class="ss">:storage</span><span class="o">]</span> <span class="o">=</span> <span class="ss">:qiniu</span>
+</span><span class='line'><span class="ss">Paperclip</span><span class="p">:</span><span class="ss">:Attachment</span><span class="o">.</span><span class="n">default_options</span><span class="o">[</span><span class="ss">:qiniu_credentials</span><span class="o">]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="ss">:access_key</span> <span class="o">=&gt;</span> <span class="s1">&#39;youraccesskey&#39;</span><span class="p">,</span>
+</span><span class='line'>  <span class="ss">:secret_key</span> <span class="o">=&gt;</span> <span class="s1">&#39;yoursecretkey&#39;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="ss">Paperclip</span><span class="p">:</span><span class="ss">:Attachment</span><span class="o">.</span><span class="n">default_options</span><span class="o">[</span><span class="ss">:bucket</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;topics-1024&#39;</span>
+</span><span class='line'><span class="ss">Paperclip</span><span class="p">:</span><span class="ss">:Attachment</span><span class="o">.</span><span class="n">default_options</span><span class="o">[</span><span class="ss">:use_timestamp</span><span class="o">]</span> <span class="o">=</span> <span class="kp">false</span>
+</span><span class='line'><span class="ss">Paperclip</span><span class="p">:</span><span class="ss">:Attachment</span><span class="o">.</span><span class="n">default_options</span><span class="o">[</span><span class="ss">:qiniu_host</span><span class="o">]</span> <span class="o">=</span>
+</span><span class='line'>  <span class="s1">&#39;http://yourhostname.qiniudn.com&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里access_key, secret_key, qiniu_host分别是七牛云储存的相关信息。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">has_attached_file</span> <span class="ss">:photo</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:default_url</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://xxx.com/bookmissing.jpg&#39;</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:path</span> <span class="o">=&gt;</span> <span class="s2">&quot;:class/:attachment/:id/:basename.:extension&quot;</span>
+</span><span class='line'><span class="n">validates_attachment_content_type</span> <span class="ss">:photo</span><span class="p">,</span> <span class="ss">:content_type</span> <span class="o">=&gt;</span> <span class="sr">/\Aimage\/.*\Z/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中default_url是默认图片, 可以事先上传至七牛。</p>
+
+<p>path是图片储存和调用的地址, 可以根据需要来更改。例如:</p>
+
+<p><code>http://yourhost-qiniudn.com/books/photos/1/name.jpg</code></p>
+
+<p>接下来需要在view中调用:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="sx">%= qiniu_image_tag @movie.photo.url, :thumbnail =</span><span class="o">&gt;</span> <span class="s1">&#39;212x316!&#39;</span><span class="p">,</span> <span class="ss">:quality</span> <span class="o">=&gt;</span> <span class="mi">80</span> <span class="o">%&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里可以自定义一些选项, 比如thumbnail, gravity, crop, quality等, 具体可以参考七牛云的<a href="http://docs.qiniutek.com/v3/api/foimg/#imageView">高级图像处理接口</a>文档。</p>
+
+<p>至此，实现了paperclip上传图片的存储和调用。</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
 <time datetime="2014-10-26T12:07:57+08:00" data-updated="true" itemprop="datePublished">Oct 26<span>th</span>, 2014</time></div>
 		<div class="tags">
 
@@ -491,46 +585,6 @@ run <code>which git</code> to check out the directory.</p>
 
 		
 		<a href="/posts/2014/08/19/how-to-build-wp-blog-and-connect-weixin/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-12T16:14:58+08:00" data-updated="true" itemprop="datePublished">Aug 12<span>th</span>, 2014</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2014/08/12/rails-notes-remember-me-and-reset-password/" itemprop="url">Rails Notes: Remember Me and Reset Password</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><strong>1. Remember Me</strong></p>
-
-<p>We used sessions to store user&rsquo;s id in order to let them sign in just once. However, when users close browser, the session cookie is deleted. So we would like to replace it with a permanent one. Besides, if we store and expose user&rsquo;s id, it could be dangerous.</p>
-
-<p>Therefore, we will generate and store a unique token for each user. First, create a new column to store the token.</p>
-
-
-		
-		<a href="/posts/2014/08/12/rails-notes-remember-me-and-reset-password/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>

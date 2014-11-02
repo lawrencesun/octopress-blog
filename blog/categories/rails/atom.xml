@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-10-26T12:20:26+08:00</updated>
+  <updated>2014-11-02T21:16:02+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,60 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: 利用七牛云储存Paperclip图片]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/11/02/railsnotes-storage-paperclip-images/"/>
+    <updated>2014-11-02T20:37:35+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/11/02/railsnotes-storage-paperclip-images</id>
+    <content type="html"><![CDATA[<p>之前使用<a href="http://voice.lawrencesun.info/posts/2014/09/21/rails-notes-upload-avatar-using-paperclip/">Paperclip来实现Rails应用上传图片的功能</a>, 但是在部署到Heroku时会有无法储存的问题, 每次push都会删除之前上传的图片。</p>
+
+<p>这是因为Heroku不支持动态上传文件, 很多人碰到这种情况, Stackoverflow上推荐的解决方案是使用Amazon S3, 但是这个服务需要信用卡注册, 另外只能免费使用一年。</p>
+
+<p>这无疑会提高试错和测试阶段的成本。经过另一番搜索, 发现<a href="https://portal.qiniu.com/signup?code=3lnzd178edmqa">七牛云</a>储存可以用来实现图片的储存和调用。</p>
+
+<p>首先需要调用<a href="https://github.com/lidaobing/paperclip-qiniu">paperclip-qiniu</a>的gem, 并对之前使用paperclip的相关文件进行修改。</p>
+
+<p>修改paperclip的初始化内容, <code>config/initializers/paperclip.rb</code>:</p>
+
+<p><code>ruby
+Paperclip::Attachment.default_options[:storage] = :qiniu
+Paperclip::Attachment.default_options[:qiniu_credentials] = {
+  :access_key =&gt; 'youraccesskey',
+  :secret_key =&gt; 'yoursecretkey'
+}
+Paperclip::Attachment.default_options[:bucket] = 'topics-1024'
+Paperclip::Attachment.default_options[:use_timestamp] = false
+Paperclip::Attachment.default_options[:qiniu_host] =
+  'http://yourhostname.qiniudn.com'
+</code>
+这里access_key, secret_key, qiniu_host分别是七牛云储存的相关信息。</p>
+
+<p>```ruby
+has_attached_file :photo,</p>
+
+<pre><code>    :default_url =&gt; 'http://xxx.com/bookmissing.jpg',
+:path =&gt; ":class/:attachment/:id/:basename.:extension"
+</code></pre>
+
+<p>validates_attachment_content_type :photo, :content_type => /\Aimage\/.*\Z/
+```
+其中default_url是默认图片, 可以事先上传至七牛。</p>
+
+<p>path是图片储存和调用的地址, 可以根据需要来更改。例如:</p>
+
+<p><code>http://yourhost-qiniudn.com/books/photos/1/name.jpg</code></p>
+
+<p>接下来需要在view中调用:</p>
+
+<p><code>ruby
+&lt;%= qiniu_image_tag @movie.photo.url, :thumbnail =&gt; '212x316!', :quality =&gt; 80 %&gt;
+</code>
+这里可以自定义一些选项, 比如thumbnail, gravity, crop, quality等, 具体可以参考七牛云的<a href="http://docs.qiniutek.com/v3/api/foimg/#imageView">高级图像处理接口</a>文档。</p>
+
+<p>至此，实现了paperclip上传图片的存储和调用。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: Make Dropdown Work on Heroku]]></title>
@@ -322,7 +376,7 @@ $ rails g mailer user_mailer password_reset
 
 <p>```ruby
 class UserMailer &lt; ActionMailer::Base
-  default from: &ldquo;<a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#102;&#x72;&#x6f;&#109;&#x40;&#101;&#120;&#x61;&#x6d;&#x70;&#108;&#x65;&#x2e;&#99;&#111;&#x6d;">&#102;&#114;&#111;&#x6d;&#64;&#101;&#x78;&#97;&#109;&#x70;&#x6c;&#x65;&#x2e;&#x63;&#x6f;&#x6d;</a>&rdquo;</p>
+  default from: &ldquo;<a href="&#109;&#97;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#102;&#x72;&#111;&#109;&#64;&#101;&#120;&#x61;&#109;&#112;&#x6c;&#x65;&#x2e;&#x63;&#111;&#109;">&#x66;&#114;&#111;&#x6d;&#64;&#x65;&#120;&#97;&#x6d;&#112;&#108;&#101;&#x2e;&#x63;&#111;&#x6d;</a>&rdquo;</p>
 
 <p>  def password_reset(user)</p>
 
@@ -416,132 +470,6 @@ end
 ```</p>
 
 <p><sub>Reference: <a href="http://railscasts.com/episodes/274-remember-me-reset-password?view=asciicast">Railscasts</a></sub></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Notes: How to 'Like' Once and 'Unlike' in Rails]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/08/03/rails-notes-unlike-function/"/>
-    <updated>2014-08-03T21:35:00+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/08/03/rails-notes-unlike-function</id>
-    <content type="html"><![CDATA[<p>Few months ago, I added a <a href="/posts/2014/02/11/rails-notes-adding-a-like-function/">&lsquo;Like&rsquo; function</a> to my rails project. It&rsquo;s a lovely function, but has some problems left. One is that users could like a single post/comment as much as they can, the other one is that users are not able to unlike.</p>
-
-<p>Thus, I tried to improve the likeable function this weekend. First thing I came up with my head was to add a uniqueness validation.</p>
-
-<!-- more -->
-
-
-<p>Here is the code I added in <code>like.rb</code>.</p>
-
-<p><code>ruby
-validates_uniqueness_of :user_id, scope: [:likeable_id, :likeable_type]
-</code></p>
-
-<p>It worked. &lsquo;User&rsquo; could not cheat any more, well, up to a point. But if users want to their mind later on, they are not allowed to do so.</p>
-
-<p>Regarding the second issue, I decided to handle it this way.</p>
-
-<p>Let&rsquo;s assume there is a user called Mr.R. R liked a post, the params[:like] set to true. We would like to provide a link so that R could send another POST with the params[:like] = false. If R haven&rsquo;t make the choice or unliked it before, then a link to POST with the params[:like] = true is available.</p>
-
-<p>First of all, I changed the like method in <code>posts_controller</code>.</p>
-
-<p>```ruby
-def like</p>
-
-<pre><code>if post_liked 
-    @like.update(like: params[:like])
-else 
-    Like.create(likeable: @post, user: current_user, like: params[:like])
-end
-respond_to do |format|
-    format.html do
-        flash[:success] = "Like Updated!"
-        redirect_to :back
-    end
-    format.js
-end 
-</code></pre>
-
-<p>end</p>
-
-<p>private</p>
-
-<p>def post_liked</p>
-
-<pre><code>liked?(@post)
-</code></pre>
-
-<p>end
-```</p>
-
-<p>Here, if R has already liked/unliked the post, and then changed his mind, we would update the <code>like</code> attribute rather than creating another data.</p>
-
-<p>There are two methods in <code>application_controller</code>, which are available to views and posts/comments controllers.</p>
-
-<p>```ruby
-def liked?(type)
-  @like = Like.find_by(likeable: type, user: current_user)
-end</p>
-
-<p>def liked(type)
-  @like = Like.find_by(likeable: type, user: current_user)
-  if @like</p>
-
-<pre><code>return @like.like
-</code></pre>
-
-<p>  else</p>
-
-<pre><code>return false
-</code></pre>
-
-<p>  end
-end
-```</p>
-
-<p>Then I adjusted <code>show.html.erb</code>in the view. As discussed before, I provided the oppsite like/unlike button to users' former dicision.</p>
-
-<p>```ruby
-<span id= "post_like" class="pull-right"></p>
-
-<pre><code>&lt;% if signed_in? &amp;&amp; liked(@post) %&gt;
-    &lt;%= link_to like_post_path(@post, like: false), method: 'post', remote: true do %&gt;
-        &lt;span id="user_like_&lt;%= @post.id %&gt;" class="like"&gt;&lt;i class="fa fa-thumbs-o-up"&gt;&lt;/i&gt;&lt;/span&gt;
-    &lt;% end %&gt;   
-&lt;% else %&gt;              
-    &lt;%= link_to like_post_path(@post, like: true), method: 'post', remote: true do %&gt;
-        &lt;span id="user_like_&lt;%= @post.id %&gt;"&gt;&lt;i class="fa fa-thumbs-o-up"&gt;&lt;/i&gt;&lt;/span&gt;
-    &lt;% end %&gt;
-&lt;% end %&gt;
-</code></pre>
-
-<p> &hellip;
- </span>
-```</p>
-
-<p>Finally, I changed the <code>like.js.erb</code> file in order to present the difference between like and unlike, as well as the user&rsquo;s new dicision.</p>
-
-<p>```ruby
-&lt;% if liked(@post)%></p>
-
-<pre><code>$("#user_like_&lt;%= @post.id %&gt;").addClass("like");
-</code></pre>
-
-<p>&lt;% else %></p>
-
-<pre><code>$("#user_like_&lt;%= @post.id %&gt;").removeClass("like");
-</code></pre>
-
-<p>&lt;% end %></p>
-
-<p>$(&ldquo;#post_like&rdquo;).load(&ldquo;&lt;%= @post.id %> #post_like&rdquo;)
-```</p>
-
-<p>The comments like/unlike function is similar.</p>
-
-<p>This improvement killed me a lot time this weekend, but thankfully, it worked at last. However, there must be a much easier &amp; clean way to do it.</p>
-
-<p>By the way, I had updated my app to bootstrap 3.2, a more resposive-friendly version. It was an nightmare to change the style, like css class/id name etc. I also used fontawesome icons instead of the old ones. The app looks just fine.</p>
 ]]></content>
   </entry>
   
