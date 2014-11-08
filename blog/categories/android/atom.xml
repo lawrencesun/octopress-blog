@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-11-08T15:21:12+08:00</updated>
+  <updated>2014-11-08T17:34:22+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -25,6 +25,9 @@
 <p>However, I was not quite followed the instructions on Android Developer Online <a href="http://developer.android.com/guide/topics/ui/controls/togglebutton.html)">Doc</a>. Besides, some problems like &lsquo;variables are not resolved&rsquo; occurred.</p>
 
 <p>After searching for the solution on <a href="http://stackoverflow.com/questions/18335239/android-toggle-button-custom-look">Stackoverflow</a> and finding <a href="http://liangruijun.blog.51cto.com/3061169/655014">example</a> apps, I finally managed to achieve what I want.</p>
+
+<!-- more -->
+
 
 <p>First a toggle button in layout.</p>
 

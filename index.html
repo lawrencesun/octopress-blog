@@ -124,6 +124,48 @@
   
 
 
+<time datetime="2014-11-08T17:19:09+08:00" data-updated="true" itemprop="datePublished">Nov 8<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/11/08/rails-notes-link-to-commentable/" itemprop="url">Rails Notes: Link to Commentable</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>Few days ago I created a polymorphic comment model based on <a href="http://railscasts.com/episodes/154-polymorphic-association">Railscasts</a>.</p>
+
+<p>Today I wanted to show the lastest comments on homepage and link each comment body to their &lsquo;parents&rsquo; like a book or a movie.</p>
+
+<p>The link path was a bit tricky and finally I figured it out.</p>
+
+<p>What you need here is this particular comment&rsquo;s commentable type like &lsquo;book&rsquo; or &lsquo;movie&rsquo;, as well as the commentable id, so it will leads you to the show page and the url should like &lsquo;book/id&rsquo;.</p>
+
+
+		
+		<a href="/posts/2014/11/08/rails-notes-link-to-commentable/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
 <time datetime="2014-11-08T14:57:11+08:00" data-updated="true" itemprop="datePublished">Nov 8<span>th</span>, 2014</time></div>
 		<div class="tags">
 
@@ -144,106 +186,9 @@
 
 <p>After searching for the solution on <a href="http://stackoverflow.com/questions/18335239/android-toggle-button-custom-look">Stackoverflow</a> and finding <a href="http://liangruijun.blog.51cto.com/3061169/655014">example</a> apps, I finally managed to achieve what I want.</p>
 
-<p>First a toggle button in layout.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">&lt;</span><span class="n">ToggleButton</span>
-</span><span class='line'>  <span class="nl">android:</span><span class="n">id</span><span class="o">=</span><span class="s">&quot;@+id/toggleButton1&quot;</span>
-</span><span class='line'>  <span class="o">...</span>
-</span><span class='line'>  <span class="nl">android:</span><span class="n">textOn</span><span class="o">=</span><span class="s">&quot;&quot;</span>
-</span><span class='line'>  <span class="nl">android:</span><span class="n">textOff</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="o">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Add ToggleButton function in MainActivity.java.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">android.widget.CompoundButton</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">android.widget.CompoundButton.OnCheckedChangeListener</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">android.widget.LinearLayout</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">android.widget.ImageView</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">android.widget.ToggleButton</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">extends</span> <span class="n">ActionBarActivity</span> <span class="o">{</span>
-</span><span class='line'>  <span class="kd">private</span> <span class="n">ImageView</span> <span class="n">imageView</span><span class="o">;</span>
-</span><span class='line'>  <span class="kd">private</span> <span class="n">ToggleButton</span> <span class="n">toggleButton</span><span class="o">;</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="nd">@Override</span>
-</span><span class='line'>  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_main</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">imageView</span> <span class="o">=</span> <span class="o">(</span><span class="n">ImageView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">imageView1</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">toggleButton</span> <span class="o">=</span> <span class="o">(</span><span class="n">ToggleButton</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">toggleButton1</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">toggleButton</span><span class="o">.</span><span class="na">setOnCheckedChangeListener</span><span class="o">(</span><span class="k">new</span> <span class="n">OnCheckedChangeListener</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>          <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCheckedChanged</span><span class="o">(</span><span class="n">CompoundButton</span> <span class="n">buttonView</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">isChecked</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>              <span class="n">toggleButton</span><span class="o">.</span><span class="na">setChecked</span><span class="o">(</span><span class="n">isChecked</span><span class="o">);</span>
-</span><span class='line'>                <span class="n">imageView</span><span class="o">.</span><span class="na">setImageResource</span><span class="o">(</span><span class="n">isChecked</span><span class="o">?</span><span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">hznight</span><span class="o">:</span><span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">hzday</span><span class="o">);</span>
-</span><span class='line'>          <span class="o">}</span>
-</span><span class='line'>        <span class="o">});</span>
-</span><span class='line'>  <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Generate a new file called &lsquo;ic_toggle&rsquo; in drawable folder and customize toggle button in layout.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
-</span><span class='line'><span class="nt">&lt;selector</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;item</span> <span class="na">android:drawable=</span><span class="s">&quot;@drawable/night&quot;</span> <span class="na">android:state_checked=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;item</span> <span class="na">android:drawable=</span><span class="s">&quot;@drawable/day&quot;</span> <span class="na">android:state_checked=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'><span class="nt">&lt;/selector&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;ToggleButton</span>
-</span><span class='line'>  <span class="err">...</span>
-</span><span class='line'>  <span class="na">android:background=</span><span class="s">&quot;@drawable/ic_toggle&quot;</span>
-</span><span class='line'>  <span class="na">android:textOn=</span><span class="s">&quot;&quot;</span>
-</span><span class='line'>  <span class="na">android:textOff=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
 
 		
-		
+		<a href="/posts/2014/11/08/how-to-use-android-toggle-button/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>
@@ -281,63 +226,9 @@
 
 <p>这无疑会提高试错和测试阶段的成本。经过另一番搜索, 发现<a href="https://portal.qiniu.com/signup?code=3lnzd178edmqa">七牛云</a>储存可以用来实现图片的储存和调用。</p>
 
-<p>首先需要调用<a href="https://github.com/lidaobing/paperclip-qiniu">paperclip-qiniu</a>的gem, 并对之前使用paperclip的相关文件进行修改。</p>
-
-<p>修改paperclip的初始化内容, <code>config/initializers/paperclip.rb</code>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Paperclip</span><span class="p">:</span><span class="ss">:Attachment</span><span class="o">.</span><span class="n">default_options</span><span class="o">[</span><span class="ss">:storage</span><span class="o">]</span> <span class="o">=</span> <span class="ss">:qiniu</span>
-</span><span class='line'><span class="ss">Paperclip</span><span class="p">:</span><span class="ss">:Attachment</span><span class="o">.</span><span class="n">default_options</span><span class="o">[</span><span class="ss">:qiniu_credentials</span><span class="o">]</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>  <span class="ss">:access_key</span> <span class="o">=&gt;</span> <span class="s1">&#39;youraccesskey&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="ss">:secret_key</span> <span class="o">=&gt;</span> <span class="s1">&#39;yoursecretkey&#39;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="ss">Paperclip</span><span class="p">:</span><span class="ss">:Attachment</span><span class="o">.</span><span class="n">default_options</span><span class="o">[</span><span class="ss">:bucket</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;topics-1024&#39;</span>
-</span><span class='line'><span class="ss">Paperclip</span><span class="p">:</span><span class="ss">:Attachment</span><span class="o">.</span><span class="n">default_options</span><span class="o">[</span><span class="ss">:use_timestamp</span><span class="o">]</span> <span class="o">=</span> <span class="kp">false</span>
-</span><span class='line'><span class="ss">Paperclip</span><span class="p">:</span><span class="ss">:Attachment</span><span class="o">.</span><span class="n">default_options</span><span class="o">[</span><span class="ss">:qiniu_host</span><span class="o">]</span> <span class="o">=</span>
-</span><span class='line'>  <span class="s1">&#39;http://yourhostname.qiniudn.com&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这里access_key, secret_key, qiniu_host分别是七牛云储存的相关信息。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">has_attached_file</span> <span class="ss">:photo</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:default_url</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://xxx.com/bookmissing.jpg&#39;</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:path</span> <span class="o">=&gt;</span> <span class="s2">&quot;:class/:attachment/:id/:basename.:extension&quot;</span>
-</span><span class='line'><span class="n">validates_attachment_content_type</span> <span class="ss">:photo</span><span class="p">,</span> <span class="ss">:content_type</span> <span class="o">=&gt;</span> <span class="sr">/\Aimage\/.*\Z/</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>其中default_url是默认图片, 可以事先上传至七牛。</p>
-
-<p>path是图片储存和调用的地址, 可以根据需要来更改。例如:</p>
-
-<p><code>http://yourhost-qiniudn.com/books/photos/1/name.jpg</code></p>
-
-<p>接下来需要在view中调用:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="sx">%= qiniu_image_tag @movie.photo.url, :thumbnail =</span><span class="o">&gt;</span> <span class="s1">&#39;212x316!&#39;</span><span class="p">,</span> <span class="ss">:quality</span> <span class="o">=&gt;</span> <span class="mi">80</span> <span class="o">%&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这里可以自定义一些选项, 比如thumbnail, gravity, crop, quality等, 具体可以参考七牛云的<a href="http://docs.qiniutek.com/v3/api/foimg/#imageView">高级图像处理接口</a>文档。</p>
-
-<p>至此，实现了paperclip上传图片的存储和调用。</p>
 
 		
-		
+		<a href="/posts/2014/11/02/railsnotes-storage-paperclip-images/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>
@@ -420,18 +311,9 @@
 
 <p>The reason was that I set DOMAIN_NAME etc. inside secret.yml and this file was git ignored since I wanted to keep credentials private. So Heroku couldn&rsquo;t find these configuration values.</p>
 
-<p>Using figaro gem seems a good way to fix this. But I didn&rsquo;t want to add another gem and create a new yml file.</p>
-
-<p>What I did was set Heroku environment variables directly and it worked:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ heroku config:add GMAIL_USERNAME='myname@gmail.com' GMAIL_PASSWORD='mypassword'
-</span><span class='line'>$ heroku config:add DOMAIN_NAME='example.com'</span></code></pre></td></tr></table></div></figure>
-
 
 		
-		
+		<a href="/posts/2014/10/26/rails-notes-heroku-environment-configuration-problem/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>
@@ -640,48 +522,6 @@ run <code>which git</code> to check out the directory.</p>
 
 		
 		<a href="/posts/2014/09/13/travel-europe-day-7/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-22T15:04:49+08:00" data-updated="true" itemprop="datePublished">Aug 22<span>nd</span>, 2014</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/travel/'>Travel</a>, <a class='category' href='/blog/categories/man-you-ji/'>曼游记</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2014/08/22/travel-europe-day-6/" itemprop="url">曼游记终极篇之欧洲行 Day 6</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>早饭过后，我再次问房东确认“谢谢”怎么说，然后和他道别，对他说&#8221;Grazie!&ldquo;并付了小费。我对这个暂时的落脚处有了些许家的感觉。在颠簸的旅途中能有人每早向你问好并端来咖啡和牛角包，是一件非常幸福的事。离开佛罗伦萨后，我将继续北上。</p>
-
-<p>在前往火车站的途中，我买了邮票，再次感叹意大利香烟店的无所不售。离火车发车时间还有一个小时，因为站内基本没有座位，我只好席地而坐，补完昨天的游记。不同于前几天的慢车，我在上车前发现之前reserse的高铁车票上是有座位号的。</p>
-
-<p>列车以大约150公里/小时的速度一路向意大利的西北角奔去。两个小时后，我终于抵达了梦寐以求的威尼斯。这座水上之城举世闻名，游客络绎不绝。</p>
-
-<p>因为贡多拉的价格昂贵，我选择了48小时的公交卡。但是我还是决定先走着去住处，先睹为快。事实证明，我这个决定，非常的&hellip; 失败。这里的小巷比之罗马，佛罗伦萨显得更加狭小，而且蜿蜒曲折，走几步就要过桥，有时还会走进死胡同。</p>
-
-
-		
-		<a href="/posts/2014/08/22/travel-europe-day-6/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>

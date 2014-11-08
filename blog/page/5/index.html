@@ -9,7 +9,8 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Dec 20th, 2013 Octopress Deploying Octopress to Github Pages and Custom Domain After Set up Octopress blog, I tried to deploying it to my own &hellip;">
+<meta name="description" content="Dec 22nd, 2013 Octopress Blogging With Octopress &#8211; Posts, Comments and SEO Run the following code to generate a new post: 1
+rake new_post[& &hellip;">
 
 
 
@@ -107,6 +108,61 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-22T01:34:23+08:00" data-updated="true" itemprop="datePublished">Dec 22<span>nd</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>Octopress</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/12/22/blogging-with-octopress/" itemprop="url">Blogging With Octopress &#8211; Posts, Comments and SEO</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>Run the following code to generate a new post:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rake</span> <span class="n">new_post</span><span class="o">[</span><span class="s2">&quot;new post&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Octopress uses <a href="http://daringfireball.net/projects/markdown/">Markdown</a>, which&rsquo;s clean and simple as writing a text. I am still learning how to use it well.</p>
+
+<p>In order to get better SEO optimizations, add <em>keywords</em> and <em>description</em> at the beginning of each post after <em>catagories</em>.</p>
+
+<p>Octopress also allows us to add google analytics. Simply add Analytics ID in _config.yml file and add included</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="p">{</span><span class="o">%</span> <span class="kp">include</span> <span class="n">google_analytics</span><span class="o">.</span><span class="n">html</span> <span class="o">%</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>in _includes/custom/after_footer.html.</p>
+
+<p>If you want to add comments after each post like me, add Disqus shortname in _config.yml file and set URL, username etc. in Disqus Setting.</p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
