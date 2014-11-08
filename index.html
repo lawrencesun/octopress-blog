@@ -124,6 +124,145 @@
   
 
 
+<time datetime="2014-11-08T14:57:11+08:00" data-updated="true" itemprop="datePublished">Nov 8<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/android/'>Android</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/11/08/how-to-use-android-toggle-button/" itemprop="url">How to Use Android Toggle Button</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>I am taking an online android course on Coursera. The first assignment is to build a app which could properly present text and image.</p>
+
+<p>Apart from what I learned from the first three lectures, I also tried to add something interesting. I wanted to show two photos in the same place and allowed users to switching between them. So I chosed Toggle Button.</p>
+
+<p>However, I was not quite followed the instructions on Android Developer Online <a href="http://developer.android.com/guide/topics/ui/controls/togglebutton.html)">Doc</a>. Besides, some problems like &lsquo;variables are not resolved&rsquo; occurred.</p>
+
+<p>After searching for the solution on <a href="http://stackoverflow.com/questions/18335239/android-toggle-button-custom-look">Stackoverflow</a> and finding <a href="http://liangruijun.blog.51cto.com/3061169/655014">example</a> apps, I finally managed to achieve what I want.</p>
+
+<p>First a toggle button in layout.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">&lt;</span><span class="n">ToggleButton</span>
+</span><span class='line'>  <span class="nl">android:</span><span class="n">id</span><span class="o">=</span><span class="s">&quot;@+id/toggleButton1&quot;</span>
+</span><span class='line'>  <span class="o">...</span>
+</span><span class='line'>  <span class="nl">android:</span><span class="n">textOn</span><span class="o">=</span><span class="s">&quot;&quot;</span>
+</span><span class='line'>  <span class="nl">android:</span><span class="n">textOff</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add ToggleButton function in MainActivity.java.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">android.widget.CompoundButton</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">android.widget.CompoundButton.OnCheckedChangeListener</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">android.widget.LinearLayout</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">android.widget.ImageView</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">android.widget.ToggleButton</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">extends</span> <span class="n">ActionBarActivity</span> <span class="o">{</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="n">ImageView</span> <span class="n">imageView</span><span class="o">;</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="n">ToggleButton</span> <span class="n">toggleButton</span><span class="o">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="nd">@Override</span>
+</span><span class='line'>  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_main</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">imageView</span> <span class="o">=</span> <span class="o">(</span><span class="n">ImageView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">imageView1</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">toggleButton</span> <span class="o">=</span> <span class="o">(</span><span class="n">ToggleButton</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">toggleButton1</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">toggleButton</span><span class="o">.</span><span class="na">setOnCheckedChangeListener</span><span class="o">(</span><span class="k">new</span> <span class="n">OnCheckedChangeListener</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>          <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCheckedChanged</span><span class="o">(</span><span class="n">CompoundButton</span> <span class="n">buttonView</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">isChecked</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">toggleButton</span><span class="o">.</span><span class="na">setChecked</span><span class="o">(</span><span class="n">isChecked</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">imageView</span><span class="o">.</span><span class="na">setImageResource</span><span class="o">(</span><span class="n">isChecked</span><span class="o">?</span><span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">hznight</span><span class="o">:</span><span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">hzday</span><span class="o">);</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>        <span class="o">});</span>
+</span><span class='line'>  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Generate a new file called &lsquo;ic_toggle&rsquo; in drawable folder and customize toggle button in layout.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+</span><span class='line'><span class="nt">&lt;selector</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;item</span> <span class="na">android:drawable=</span><span class="s">&quot;@drawable/night&quot;</span> <span class="na">android:state_checked=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;item</span> <span class="na">android:drawable=</span><span class="s">&quot;@drawable/day&quot;</span> <span class="na">android:state_checked=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/selector&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;ToggleButton</span>
+</span><span class='line'>  <span class="err">...</span>
+</span><span class='line'>  <span class="na">android:background=</span><span class="s">&quot;@drawable/ic_toggle&quot;</span>
+</span><span class='line'>  <span class="na">android:textOn=</span><span class="s">&quot;&quot;</span>
+</span><span class='line'>  <span class="na">android:textOff=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
 <time datetime="2014-11-02T20:37:35+08:00" data-updated="true" itemprop="datePublished">Nov 2<span>nd</span>, 2014</time></div>
 		<div class="tags">
 
@@ -543,48 +682,6 @@ run <code>which git</code> to check out the directory.</p>
 
 		
 		<a href="/posts/2014/08/22/travel-europe-day-6/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-19T23:31:08+08:00" data-updated="true" itemprop="datePublished">Aug 19<span>th</span>, 2014</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/wechat/'>WeChat</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2014/08/19/how-to-build-wp-blog-and-connect-weixin/" itemprop="url">如何免费搭建WordPress博客并连接微信公众账号</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>WordPress由于便捷的安装，丰富的插件，一直受到广大站长的喜爱。我的第一个独立博客也是用WordPress搭建，尽管后来改用Octopress平台了。</p>
-
-<p>微信公众平台的影响力日益扩大，作为尝试，我也申请了一个账号(插播广告：欢迎扫描屏幕下方二维码关注本账号&hellip;只要998&hellip;)。</p>
-
-<p>同时作为一个爱折腾的人，自然要开启微信的开发者模式。作为没有验证的订阅号，开发者暂时只能做一些信息接收和回复操作。</p>
-
-<p>即使开发的权限不多，但是结合WordPress博客后也可以实现不少功能，比如发送&#8221;最新&#8221;，返回博客的最新文章等等。当然首先，你得有个博客。</p>
-
-
-		
-		<a href="/posts/2014/08/19/how-to-build-wp-blog-and-connect-weixin/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>

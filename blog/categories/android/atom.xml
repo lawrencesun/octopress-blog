@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Android | Lawrence Sun]]></title>
+  <link href="http://voice.lawrencesun.info/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://voice.lawrencesun.info/"/>
+  <updated>2014-11-08T15:21:12+08:00</updated>
+  <id>http://voice.lawrencesun.info/</id>
+  <author>
+    <name><![CDATA[Lawrence Sun]]></name>
+    <email><![CDATA[yuliang1987@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to Use Android Toggle Button]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/11/08/how-to-use-android-toggle-button/"/>
+    <updated>2014-11-08T14:57:11+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/11/08/how-to-use-android-toggle-button</id>
+    <content type="html"><![CDATA[<p>I am taking an online android course on Coursera. The first assignment is to build a app which could properly present text and image.</p>
+
+<p>Apart from what I learned from the first three lectures, I also tried to add something interesting. I wanted to show two photos in the same place and allowed users to switching between them. So I chosed Toggle Button.</p>
+
+<p>However, I was not quite followed the instructions on Android Developer Online <a href="http://developer.android.com/guide/topics/ui/controls/togglebutton.html)">Doc</a>. Besides, some problems like &lsquo;variables are not resolved&rsquo; occurred.</p>
+
+<p>After searching for the solution on <a href="http://stackoverflow.com/questions/18335239/android-toggle-button-custom-look">Stackoverflow</a> and finding <a href="http://liangruijun.blog.51cto.com/3061169/655014">example</a> apps, I finally managed to achieve what I want.</p>
+
+<p>First a toggle button in layout.</p>
+
+<p><code>java
+&lt;ToggleButton
+  android:id="@+id/toggleButton1"
+  ...
+  android:textOn=""
+  android:textOff="" /&gt;
+</code></p>
+
+<p>Add ToggleButton function in MainActivity.java.</p>
+
+<p>```java
+import android.widget.CompoundButton;<br/>
+import android.widget.CompoundButton.OnCheckedChangeListener;<br/>
+import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.ToggleButton;</p>
+
+<p>public class MainActivity extends ActionBarActivity {</p>
+
+<pre><code>private ImageView imageView;     
+</code></pre>
+
+<p>  private ToggleButton toggleButton;</p>
+
+<pre><code>@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    imageView = (ImageView) findViewById(R.id.imageView1); 
+    toggleButton = (ToggleButton) findViewById(R.id.toggleButton1);   
+    toggleButton.setOnCheckedChangeListener(new OnCheckedChangeListener() { 
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            toggleButton.setChecked(isChecked);
+            imageView.setImageResource(isChecked?R.drawable.hznight:R.drawable.hzday);
+        }
+    });
+}
+</code></pre>
+
+<p>```
+Generate a new file called &lsquo;ic_toggle&rsquo; in drawable folder and customize toggle button in layout.</p>
+
+<p><code>xml
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;selector xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+  &lt;item android:drawable="@drawable/night" android:state_checked="true"/&gt;
+  &lt;item android:drawable="@drawable/day" android:state_checked="false"/&gt;
+&lt;/selector&gt;
+</code></p>
+
+<p><code>
+&lt;ToggleButton
+  ...
+  android:background="@drawable/ic_toggle"
+  android:textOn=""
+  android:textOff="" /&gt;
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>
