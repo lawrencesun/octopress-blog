@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-11-08T17:34:22+08:00</updated>
+  <updated>2014-11-09T09:11:29+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,40 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: At Someone]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/11/09/rails-notes-at-someone/"/>
+    <updated>2014-11-09T08:52:19+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/11/09/rails-notes-at-someone</id>
+    <content type="html"><![CDATA[<p>The &lsquo;@&rsquo; function is used widely on web apps.</p>
+
+<p>Here I use a jquery plugin called <a href="https://github.com/ichord/At.js">atwho</a>. First download jquery.atwho.js, jquery.caret.js, jquery.atwho.css. Then add these files to app/assets.</p>
+
+<p>Add <code>//= require jquery.atwho</code> to app/assets/javascripts/application.js and add <code>*= require jquery.atwho</code> to app/assets/stylesheets/application.css.scss.</p>
+
+<p>Then use it to at users when replying a comment. Following <a href="http://happycasts.net/episodes/76">happycasts</a>, bind the textarea like this:</p>
+
+<p>```
+$(function(){
+  var commenter = [];</p>
+
+<pre><code>var commenter_exist= [];
+$('.comment-user').each(function() {
+if($.inArray($(this).text(), commenter_exist) &lt; 0){
+  commenter.push($(this).text());
+  commenter_exist.push($(this).text());
+}
+});
+</code></pre>
+
+<p>  $(&lsquo;textarea&rsquo;).atwho({at:&ldquo;@&rdquo;, &lsquo;data&rsquo;:commenter});
+});
+```</p>
+
+<p>One problem I found was this atwho funciont didn&rsquo;t work until refreshed this page. When I deleted turoblink, it worked fine. So Finally I solved it by using a gem called <a href="https://github.com/kossnocorp/jquery.turbolinks">jquery.turbolinks</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: Link to Commentable]]></title>
@@ -147,88 +181,6 @@ The reason was that I set DOMAIN_NAME etc. inside secret.yml and this file was g
 $ heroku config:add GMAIL_USERNAME='myname@gmail.com' GMAIL_PASSWORD='mypassword'
 $ heroku config:add DOMAIN_NAME='example.com'
 </code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Notes: Upload Avatar Using Paperclip]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/09/21/rails-notes-upload-avatar-using-paperclip/"/>
-    <updated>2014-09-21T17:28:49+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/09/21/rails-notes-upload-avatar-using-paperclip</id>
-    <content type="html"><![CDATA[<p>In my previous rails apps, I used gravatar_for method to link the gravatar to users. In a recent app, I wanted to add cover photos to the books and allow users to upload the images.</p>
-
-<p>So I decided to use paperclip after seeing one of the <a href="http://railscasts.com/episodes/134-paperclip">episode</a> of railscast. Instead of applying the plugin, I installed paperclip gem.</p>
-
-<p>Add <code>gem "paperclip", "~&gt; 4.2"</code> to Gemfile and run <code>bundle install</code>.</p>
-
-<p>Then add photo columns to the existing books table.</p>
-
-<!-- more -->
-
-
-<p><code>rails g migration AddPhotosToBooks</code></p>
-
-<p>Migration:</p>
-
-<p>```ruby
-class AddAvatarColumnsToUsers &lt; ActiveRecord::Migration
-  def up</p>
-
-<pre><code>add_attachment :books, :photo
-</code></pre>
-
-<p>  end</p>
-
-<p>  def down</p>
-
-<pre><code>remove_attachment :books, :photo
-</code></pre>
-
-<p>  end
-end
-```</p>
-
-<p>This will insert four columns into books table: photo_file_name, photo_file_size, photo_content_type, photo_updated_at.</p>
-
-<p>Add the following lines to Book Model:</p>
-
-<p>```ruby
-has_attached_file :photo, :styles => { :medium => &ldquo;300x300>&rdquo;, :thumb => &ldquo;100x100>&rdquo; }, :default_url => &ldquo;missing.png&rdquo;,</p>
-
-<pre><code>    :url =&gt; "/assets/books/:id/:style/:basename.:extension",
-:path =&gt; ":rails_root/public/assets/books/:id/:style/:basename.:extension"
-validates_attachment :photo, 
-</code></pre>
-
-<p>  :content_type => { :content_type => [&ldquo;image/jpeg&rdquo;, &ldquo;image/jpg&rdquo;, &ldquo;image/gif&rdquo;, &ldquo;image/png&rdquo;] },
-  :size => { :less_than => 5.megabytes }
-```</p>
-
-<p>Forms to be updated:</p>
-
-<p>```ruby</p>
-
-<div class="form-group">
-    <%= f.label "cover" %>
-    <%= f.file_field :photo %>
-</div>
-
-
-<p>```</p>
-
-<p>And the updated book&rsquo;s show view with the uploaded photo.</p>
-
-<p><code>ruby
-&lt;%= image_tag @book.photo.url(:medium) %&gt;
-</code></p>
-
-<p>Besides, in order to run paperclip, ImageMagick is required. We can simply install it by homebrew.</p>
-
-<p><code>brew install imagemagick</code></p>
-
-<p>However, when I installed homebrew, several issues came out.</p>
-
-<p>It was a long story, briefly speeking, I ran <code>brew doctor</code> and tried to solve the warning issues by searching the net. Basiclly, I updated Git and Command Line Tool and reinstall the homebrew.</p>
 ]]></content>
   </entry>
   
