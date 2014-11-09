@@ -4,7 +4,7 @@
   <title><![CDATA[Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-11-09T09:11:29+08:00</updated>
+  <updated>2014-11-09T14:52:11+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -14,15 +14,20 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Rails Notes: At someone]]></title>
+    <title type="html"><![CDATA[Rails Notes: At or Reply to Someone]]></title>
     <link href="http://voice.lawrencesun.info/posts/2014/11/09/rails-notes-at-someone/"/>
     <updated>2014-11-09T08:52:19+08:00</updated>
     <id>http://voice.lawrencesun.info/posts/2014/11/09/rails-notes-at-someone</id>
-    <content type="html"><![CDATA[<p>The &lsquo;@&rsquo; function is used widely on web apps.</p>
+    <content type="html"><![CDATA[<p><strong>1. At</strong></p>
+
+<p>The &lsquo;@&rsquo; function is used widely on web apps.</p>
 
 <p>Here I use a jquery plugin called <a href="https://github.com/ichord/At.js">atwho</a>. First download jquery.atwho.js, jquery.caret.js, jquery.atwho.css. Then add these files to app/assets.</p>
 
 <p>Add <code>//= require jquery.atwho</code> to app/assets/javascripts/application.js and add <code>*= require jquery.atwho</code> to app/assets/stylesheets/application.css.scss.</p>
+
+<!-- more -->
+
 
 <p>Then use it to at users when replying a comment. Following <a href="http://happycasts.net/episodes/76">happycasts</a>, bind the textarea like this:</p>
 
@@ -51,6 +56,36 @@
 
 
 <p>One problem I found was this atwho funciont didn&rsquo;t work until refreshed this page. When I deleted turoblink, it worked fine. So Finally I solved it by using a gem called <a href="https://github.com/kossnocorp/jquery.turbolinks">jquery.turbolinks</a>.</p>
+
+<p><strong>2. Reply</strong></p>
+
+<p>Sometimes we would like to reply to other&rsquo;s comment. When we click reply button, we want to &lsquo;@&rsquo; this comment&rsquo;s author.</p>
+
+<p>Thanks to <a href="https://github.com/chloerei/campo">Campo</a> app, I added reply function to my own rails app.</p>
+
+<p>Add following parts to comments view.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;a class="btn", data-reply-to="@&lt;%= comment.user.name %&gt; " &gt;
+</span><span class='line'>  &lt;i class="fa fa-reply"&gt;&lt;/i&gt;
+</span><span class='line'>&lt;/a&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then include a coffee javascript file. Remember to set corrosponding class/id in the html file.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$(document).on 'click', '.comments [data-reply-to]', -&gt;
+</span><span class='line'>  textarea = $('#new_comment textarea')
+</span><span class='line'>  textarea.focus()
+</span><span class='line'>  textarea.val(textarea.val() + $(this).data('reply-to'))</span></code></pre></td></tr></table></div></figure>
+
+
+
 ]]></content>
   </entry>
   

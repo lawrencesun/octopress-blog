@@ -134,44 +134,19 @@
 </div>
 		
 	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2014/11/09/rails-notes-at-someone/" itemprop="url">Rails Notes: At Someone</a></h1>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/11/09/rails-notes-at-someone/" itemprop="url">Rails Notes: At or Reply to Someone</a></h1>
 	<div class="entry-content" itemprop="articleBody">
-		<p>The &lsquo;@&rsquo; function is used widely on web apps.</p>
+		<p><strong>1. At</strong></p>
+
+<p>The &lsquo;@&rsquo; function is used widely on web apps.</p>
 
 <p>Here I use a jquery plugin called <a href="https://github.com/ichord/At.js">atwho</a>. First download jquery.atwho.js, jquery.caret.js, jquery.atwho.css. Then add these files to app/assets.</p>
 
 <p>Add <code>//= require jquery.atwho</code> to app/assets/javascripts/application.js and add <code>*= require jquery.atwho</code> to app/assets/stylesheets/application.css.scss.</p>
 
-<p>Then use it to at users when replying a comment. Following <a href="http://happycasts.net/episodes/76">happycasts</a>, bind the textarea like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$(function(){
-</span><span class='line'>  var commenter = [];
-</span><span class='line'>  var commenter_exist= [];
-</span><span class='line'>  $('.comment-user').each(function() {
-</span><span class='line'>      if($.inArray($(this).text(), commenter_exist) &lt; 0){
-</span><span class='line'>      commenter.push($(this).text());
-</span><span class='line'>      commenter_exist.push($(this).text());
-</span><span class='line'>    }
-</span><span class='line'>  });
-</span><span class='line'>  $('textarea').atwho({at:"@", 'data':commenter});
-</span><span class='line'>});</span></code></pre></td></tr></table></div></figure>
-
-
-<p>One problem I found was this atwho funciont didn&rsquo;t work until refreshed this page. When I deleted turoblink, it worked fine. So Finally I solved it by using a gem called <a href="https://github.com/kossnocorp/jquery.turbolinks">jquery.turbolinks</a>.</p>
 
 		
-		
+		<a href="/posts/2014/11/09/rails-notes-at-someone/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>
