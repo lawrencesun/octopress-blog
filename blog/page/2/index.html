@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Sep 21st, 2014 Git How to Upgrade Git When I intended to install ImageMagick via homebrew, and found some issues by runing brew doctor. One was &hellip;">
+<meta name="description" content="Sep 21st, 2014 Rails Rails Notes: Upload Avatar Using Paperclip In my previous rails apps, I used gravatar_for method to link the gravatar to users &hellip;">
 
 
 
@@ -107,6 +107,48 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-21T17:28:49+08:00" data-updated="true" itemprop="datePublished">Sep 21<span>st</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/09/21/rails-notes-upload-avatar-using-paperclip/" itemprop="url">Rails Notes: Upload Avatar Using Paperclip</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>In my previous rails apps, I used gravatar_for method to link the gravatar to users. In a recent app, I wanted to add cover photos to the books and allow users to upload the images.</p>
+
+<p>So I decided to use paperclip after seeing one of the <a href="http://railscasts.com/episodes/134-paperclip">episode</a> of railscast. Instead of applying the plugin, I installed paperclip gem.</p>
+
+<p>Add <code>gem "paperclip", "~&gt; 4.2"</code> to Gemfile and run <code>bundle install</code>.</p>
+
+<p>Then add photo columns to the existing books table.</p>
+
+
+		
+		<a href="/posts/2014/09/21/rails-notes-upload-avatar-using-paperclip/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -470,46 +512,6 @@ run <code>which git</code> to check out the directory.</p>
 
 		
 		<a href="/posts/2014/07/18/stock-data-crawler/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-15T22:06:07+08:00" data-updated="true" itemprop="datePublished">Jul 15<span>th</span>, 2014</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/git/'>Git</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2014/07/15/squash-git-commits/" itemprop="url">如何合并多个Git Commit</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>今天把之前做的一个rails项目升级到Twitter Bootstrap 3.2，结果问题一大堆。主要是class和id名称的改动，以及响应式布局的调整。最后在Heroku部署完成之后，发现原来的“点赞”图标无法正确显示，在stackoverflow翻阅了很多相关问答，和我有同样问题的人不少。但是按照这些方法去尝试，没有一个能有效解决。最终我改用了fonts awesome。</p>
-
-<p>在这个期间，遇到了不少git方面的问题，看来之前还是没有把基础打好。</p>
-
-<p>一个问题是由于不断尝试不同的方法，导致commit过多，非常混乱。于是想把多个commit合并到一起。具体方法如下：</p>
-
-
-		
-		<a href="/posts/2014/07/15/squash-git-commits/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>

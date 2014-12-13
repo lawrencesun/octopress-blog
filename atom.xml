@@ -4,7 +4,7 @@
   <title><![CDATA[Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-11-29T22:19:03+08:00</updated>
+  <updated>2014-12-13T10:06:44+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,128 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: Authorization using Pundit]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/12/13/rails-notes-authorization-using-pundit/"/>
+    <updated>2014-12-13T09:39:39+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/12/13/rails-notes-authorization-using-pundit</id>
+    <content type="html"><![CDATA[<p>Authentitcation identifies a user, and authorization controls what a user can do. The most famous gem used for authorization in rails is <a href="railscasts.com/episodes/192-authorization-with-cancan">CanCan</a>, which is developed by Ryan Bates. However, this gem was no longer maintained. <a href="https://github.com/CanCanCommunity/cancancan">CanCanCan</a> and <a href="https://github.com/elabs/pundit">Pundit</a> are alternative gems we could use. Here I choosed Pundit.</p>
+
+<p>First, implement user roles. Define roles in User Model by using enum and add a new column to user table.</p>
+
+<!-- more -->
+
+
+<p><code>enum role: [:guest, :vip, :admin]</code></p>
+
+<p><code>rails g migration AddRoleToUsers role:integer</code></p>
+
+<p>Set the default user as guest.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">AddRoleToUsers</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">up</span>
+</span><span class='line'>      <span class="n">add_column</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">:role</span><span class="p">,</span> <span class="ss">:integer</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">down</span>
+</span><span class='line'>      <span class="n">remove_column</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">:role</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next, <code>gem "pundit"</code> into Gemfile and run bundle install.</p>
+
+<p>Run <code>rails g pundit:install</code> to generate a default policy in app/policies/application_policy.rb</p>
+
+<p>Then create own policy, for example, a Post Policy.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">PostPolicy</span> <span class="o">&lt;</span> <span class="no">ApplicationPolicy</span>
+</span><span class='line'>  <span class="kp">attr_reader</span> <span class="ss">:current_user</span><span class="p">,</span> <span class="ss">:post</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">current_user</span><span class="p">,</span> <span class="n">post</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@current_user</span> <span class="o">=</span> <span class="n">current_user</span>
+</span><span class='line'>    <span class="vi">@post</span> <span class="o">=</span> <span class="n">post</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">update?</span>
+</span><span class='line'>    <span class="vi">@current_user</span><span class="o">.</span><span class="n">admin?</span> <span class="ow">or</span> <span class="vi">@post</span><span class="o">.</span><span class="n">user</span> <span class="o">==</span> <span class="vi">@current_user</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">destroy?</span>
+</span><span class='line'>      <span class="vi">@current_user</span><span class="o">.</span><span class="n">admin?</span> <span class="ow">or</span> <span class="vi">@post</span><span class="o">.</span><span class="n">user</span> <span class="o">==</span> <span class="vi">@current_user</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So if current user is not the author of this post or admin, then he is not allowed to update or destroy the post.</p>
+
+<p>After that, add <code>autorize @post</code> to update and destroy action in Post Controller.</p>
+
+<p>In Post show page, if current user do not have the permission, he will not see the edit and delete button.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="sx">% if </span><span class="n">policy</span><span class="p">(</span><span class="vi">@post</span><span class="p">)</span><span class="o">.</span><span class="n">update?</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx"> ...</span>
+</span><span class='line'><span class="sx">&lt;% end %&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, add following code to Application Controller, so that we include Pundit and show the customized alert.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="kp">include</span> <span class="no">Pundit</span>
+</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="n">rescue_from</span> <span class="ss">Pundit</span><span class="p">:</span><span class="ss">:NotAuthorizedError</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="ss">:user_not_authorized</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kp">private</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">user_not_authorized</span>
+</span><span class='line'>    <span class="n">redirect_to</span> <span class="ss">:back</span><span class="p">,</span> <span class="ss">:alert</span> <span class="o">=&gt;</span> <span class="s2">&quot;You don&#39;t have permission to those resources.&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: Deeply Nested Resources]]></title>
@@ -1546,111 +1668,6 @@ run <code>which git</code> to check out the directory.</p>
 
 
 <p>目前的主要问题是运行速度较慢，以后有时间看看能否改进。不管如何，在此数据的基础上做一些计算、对比和分析应该容易不少。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[如何合并多个Git commit]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/07/15/squash-git-commits/"/>
-    <updated>2014-07-15T22:06:07+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/07/15/squash-git-commits</id>
-    <content type="html"><![CDATA[<p>今天把之前做的一个rails项目升级到Twitter Bootstrap 3.2，结果问题一大堆。主要是class和id名称的改动，以及响应式布局的调整。最后在Heroku部署完成之后，发现原来的“点赞”图标无法正确显示，在stackoverflow翻阅了很多相关问答，和我有同样问题的人不少。但是按照这些方法去尝试，没有一个能有效解决。最终我改用了fonts awesome。</p>
-
-<p>在这个期间，遇到了不少git方面的问题，看来之前还是没有把基础打好。</p>
-
-<p>一个问题是由于不断尝试不同的方法，导致commit过多，非常混乱。于是想把多个commit合并到一起。具体方法如下：</p>
-
-<!-- more -->
-
-
-<p>首先<code>git log</code>查看目前的commit, 假设按照时间先后顺序有 a, b, c, d 三个commit.</p>
-
-<p>现在要把四个合并到一起，使用<code>rebase</code>这个命令。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">git</span> <span class="n">rebase</span> <span class="o">-</span><span class="n">i</span> <span class="no">HEAD</span><span class="o">~</span><span class="mi">4</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">pick</span> <span class="mo">01</span><span class="n">d1124</span> <span class="n">a</span>
-</span><span class='line'><span class="n">pick</span> <span class="mi">6340</span><span class="n">aaa</span> <span class="n">b</span>
-</span><span class='line'><span class="n">pick</span> <span class="n">ebfd367</span> <span class="n">c</span>
-</span><span class='line'><span class="n">pick</span> <span class="mi">30</span><span class="n">e0ccb</span> <span class="n">d</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># Rebase 60709da..30e0ccb onto 60709da</span>
-</span><span class='line'><span class="c1">#</span>
-</span><span class='line'><span class="c1"># Commands:</span>
-</span><span class='line'><span class="c1">#  p, pick = use commit</span>
-</span><span class='line'><span class="c1">#  e, edit = use commit, but stop for amending</span>
-</span><span class='line'><span class="c1">#  s, squash = use commit, but meld into previous commit</span>
-</span><span class='line'><span class="c1">#</span>
-</span><span class='line'><span class="c1"># If you remove a line here THAT COMMIT WILL BE LOST.</span>
-</span><span class='line'><span class="c1"># However, if you remove everything, the rebase will be aborted.</span>
-</span><span class='line'><span class="c1">#</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>接着，把前四行进行如下替换：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">pick</span> <span class="mo">01</span><span class="n">d1124</span> <span class="n">a</span>
-</span><span class='line'><span class="n">squash</span> <span class="mi">6340</span><span class="n">aaa</span> <span class="n">b</span>
-</span><span class='line'><span class="n">squash</span> <span class="n">ebfd367</span> <span class="n">c</span>
-</span><span class='line'><span class="n">squash</span> <span class="mi">30</span><span class="n">e0ccb</span> <span class="n">d</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Git将会把所有四个commit合并到第一个里面去。保存退出后，会出现：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># This is a combination of 4 commits.</span>
-</span><span class='line'><span class="c1"># The first commit&#39;s message is:</span>
-</span><span class='line'><span class="n">a</span>
-</span><span class='line'><span class="c1"># This is the 2nd commit message:</span>
-</span><span class='line'><span class="n">b</span>
-</span><span class='line'><span class="c1"># This is the 3rd commit message:</span>
-</span><span class='line'><span class="n">c</span>
-</span><span class='line'><span class="c1"># This is the 4th commit message:</span>
-</span><span class='line'><span class="n">d</span>
-</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>修改新的commit message后再次保存退出，合并完成。</p>
-
-<p>如果在过程中出现冲突，可以使用<code>git rebase --abort</code>命令。</p>
-
-<p>第二个问题是我在git push时候出现 &lsquo;Everything is up to date&#8217;。通过<code>git branch</code>查询发现当前的branch是* (no branch).</p>
-
-<p>出现这种情况，首先<code>git reflog</code>， 找到最新的一个commit，然后创建一个临时branch.</p>
-
-<p><code>git checkout -b temp-branch &lt;commit-id&gt;</code> 之后合并到master。</p>
 ]]></content>
   </entry>
   

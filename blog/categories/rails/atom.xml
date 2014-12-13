@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-11-29T22:19:03+08:00</updated>
+  <updated>2014-12-13T10:06:44+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,113 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Notes: Authorization Using Pundit]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2014/12/13/rails-notes-authorization-using-pundit/"/>
+    <updated>2014-12-13T09:39:39+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2014/12/13/rails-notes-authorization-using-pundit</id>
+    <content type="html"><![CDATA[<p>Authentitcation identifies a user, and authorization controls what a user can do. The most famous gem used for authorization in rails is <a href="railscasts.com/episodes/192-authorization-with-cancan">CanCan</a>, which is developed by Ryan Bates. However, this gem was no longer maintained. <a href="https://github.com/CanCanCommunity/cancancan">CanCanCan</a> and <a href="https://github.com/elabs/pundit">Pundit</a> are alternative gems we could use. Here I choosed Pundit.</p>
+
+<p>First, implement user roles. Define roles in User Model by using enum and add a new column to user table.</p>
+
+<!-- more -->
+
+
+<p><code>enum role: [:guest, :vip, :admin]</code></p>
+
+<p><code>rails g migration AddRoleToUsers role:integer</code></p>
+
+<p>Set the default user as guest.</p>
+
+<p>```ruby
+class AddRoleToUsers &lt; ActiveRecord::Migration
+  def self.up</p>
+
+<pre><code>add_column :users, :role, :integer, default: 0
+</code></pre>
+
+<p>  end</p>
+
+<p>  def self.down</p>
+
+<pre><code>remove_column :users, :role
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>Next, <code>gem "pundit"</code> into Gemfile and run bundle install.</p>
+
+<p>Run <code>rails g pundit:install</code> to generate a default policy in app/policies/application_policy.rb</p>
+
+<p>Then create own policy, for example, a Post Policy.</p>
+
+<p>```ruby
+class PostPolicy &lt; ApplicationPolicy</p>
+
+<pre><code>attr_reader :current_user, :post
+</code></pre>
+
+<p>  def initialize(current_user, post)</p>
+
+<pre><code>@current_user = current_user
+@post = post
+</code></pre>
+
+<p>  end</p>
+
+<p>  def update?</p>
+
+<pre><code>@current_user.admin? or @post.user == @current_user
+</code></pre>
+
+<p>  end</p>
+
+<p>  def destroy?</p>
+
+<pre><code>@current_user.admin? or @post.user == @current_user
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>So if current user is not the author of this post or admin, then he is not allowed to update or destroy the post.</p>
+
+<p>After that, add <code>autorize @post</code> to update and destroy action in Post Controller.</p>
+
+<p>In Post show page, if current user do not have the permission, he will not see the edit and delete button.</p>
+
+<p>```ruby
+&lt;% if policy(@post).update? %></p>
+
+<pre><code>...
+</code></pre>
+
+<p>&lt;% end %>
+```</p>
+
+<p>Finally, add following code to Application Controller, so that we include Pundit and show the customized alert.</p>
+
+<p>```ruby
+&hellip;
+include Pundit
+&hellip;
+rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized</p>
+
+<p>  private</p>
+
+<p>  def user_not_authorized</p>
+
+<pre><code>redirect_to :back, :alert =&gt; "You don't have permission to those resources."
+</code></pre>
+
+<p>  end
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails Notes: Deeply Nested Resources]]></title>
@@ -218,63 +325,6 @@ def show</p>
 <p>end
 ```
 This will direct to the page that I want.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Notes: 利用七牛云储存Paperclip图片]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/11/02/railsnotes-storage-paperclip-images/"/>
-    <updated>2014-11-02T20:37:35+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/11/02/railsnotes-storage-paperclip-images</id>
-    <content type="html"><![CDATA[<p>之前使用<a href="http://voice.lawrencesun.info/posts/2014/09/21/rails-notes-upload-avatar-using-paperclip/">Paperclip来实现Rails应用上传图片的功能</a>, 但是在部署到Heroku时会有无法储存的问题, 每次push都会删除之前上传的图片。</p>
-
-<p>这是因为Heroku不支持动态上传文件, 很多人碰到这种情况, Stackoverflow上推荐的解决方案是使用Amazon S3, 但是这个服务需要信用卡注册, 另外只能免费使用一年。</p>
-
-<p>这无疑会提高试错和测试阶段的成本。经过另一番搜索, 发现<a href="https://portal.qiniu.com/signup?code=3lnzd178edmqa">七牛云</a>储存可以用来实现图片的储存和调用。</p>
-
-<!-- more -->
-
-
-<p>首先需要调用<a href="https://github.com/lidaobing/paperclip-qiniu">paperclip-qiniu</a>的gem, 并对之前使用paperclip的相关文件进行修改。</p>
-
-<p>修改paperclip的初始化内容, <code>config/initializers/paperclip.rb</code>:</p>
-
-<p><code>ruby
-Paperclip::Attachment.default_options[:storage] = :qiniu
-Paperclip::Attachment.default_options[:qiniu_credentials] = {
-  :access_key =&gt; 'youraccesskey',
-  :secret_key =&gt; 'yoursecretkey'
-}
-Paperclip::Attachment.default_options[:bucket] = 'topics-1024'
-Paperclip::Attachment.default_options[:use_timestamp] = false
-Paperclip::Attachment.default_options[:qiniu_host] =
-  'http://yourhostname.qiniudn.com'
-</code>
-这里access_key, secret_key, qiniu_host分别是七牛云储存的相关信息。</p>
-
-<p>```ruby
-has_attached_file :photo,</p>
-
-<pre><code>    :default_url =&gt; 'http://xxx.com/bookmissing.jpg',
-:path =&gt; ":class/:attachment/:id/:basename.:extension"
-</code></pre>
-
-<p>validates_attachment_content_type :photo, :content_type => /\Aimage\/.*\Z/
-```
-其中default_url是默认图片, 可以事先上传至七牛。</p>
-
-<p>path是图片储存和调用的地址, 可以根据需要来更改。例如:</p>
-
-<p><code>http://yourhost-qiniudn.com/books/photos/1/name.jpg</code></p>
-
-<p>接下来需要在view中调用:</p>
-
-<p><code>ruby
-&lt;%= qiniu_image_tag @movie.photo.url, :thumbnail =&gt; '212x316!', :quality =&gt; 80 %&gt;
-</code>
-这里可以自定义一些选项, 比如thumbnail, gravity, crop, quality等, 具体可以参考七牛云的<a href="http://docs.qiniutek.com/v3/api/foimg/#imageView">高级图像处理接口</a>文档。</p>
-
-<p>至此，实现了paperclip上传图片的存储和调用。</p>
 ]]></content>
   </entry>
   

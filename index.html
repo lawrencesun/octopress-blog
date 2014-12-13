@@ -124,6 +124,44 @@
   
 
 
+<time datetime="2014-12-13T09:39:39+08:00" data-updated="true" itemprop="datePublished">Dec 13<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/12/13/rails-notes-authorization-using-pundit/" itemprop="url">Rails Notes: Authorization Using Pundit</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>Authentitcation identifies a user, and authorization controls what a user can do. The most famous gem used for authorization in rails is <a href="railscasts.com/episodes/192-authorization-with-cancan">CanCan</a>, which is developed by Ryan Bates. However, this gem was no longer maintained. <a href="https://github.com/CanCanCommunity/cancancan">CanCanCan</a> and <a href="https://github.com/elabs/pundit">Pundit</a> are alternative gems we could use. Here I choosed Pundit.</p>
+
+<p>First, implement user roles. Define roles in User Model by using enum and add a new column to user table.</p>
+
+
+		
+		<a href="/posts/2014/12/13/rails-notes-authorization-using-pundit/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
 <time datetime="2014-11-29T21:29:26+08:00" data-updated="true" itemprop="datePublished">Nov 29<span>th</span>, 2014</time></div>
 		<div class="tags">
 
@@ -494,48 +532,6 @@
 
 		
 		<a href="/posts/2014/10/26/rails-notes-heroku-environment-configuration-problem/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-21T17:28:49+08:00" data-updated="true" itemprop="datePublished">Sep 21<span>st</span>, 2014</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/rails/'>Rails</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2014/09/21/rails-notes-upload-avatar-using-paperclip/" itemprop="url">Rails Notes: Upload Avatar Using Paperclip</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>In my previous rails apps, I used gravatar_for method to link the gravatar to users. In a recent app, I wanted to add cover photos to the books and allow users to upload the images.</p>
-
-<p>So I decided to use paperclip after seeing one of the <a href="http://railscasts.com/episodes/134-paperclip">episode</a> of railscast. Instead of applying the plugin, I installed paperclip gem.</p>
-
-<p>Add <code>gem "paperclip", "~&gt; 4.2"</code> to Gemfile and run <code>bundle install</code>.</p>
-
-<p>Then add photo columns to the existing books table.</p>
-
-
-		
-		<a href="/posts/2014/09/21/rails-notes-upload-avatar-using-paperclip/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>
