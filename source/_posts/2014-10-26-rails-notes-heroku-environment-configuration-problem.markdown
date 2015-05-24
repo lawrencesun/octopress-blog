@@ -16,6 +16,8 @@ can't convert nil into String
 ```
 The reason was that I set DOMAIN_NAME etc. inside secret.yml and this file was git ignored since I wanted to keep credentials private. So Heroku couldn't find these configuration values.
 
+<!-- more -->
+
 Using figaro gem seems a good way to fix this. But I didn't want to add another gem and create a new yml file.
 
 What I did was set Heroku environment variables directly and it worked:
