@@ -119,7 +119,7 @@
 
 <p><code>rails g migration AddRoleToUsers role:integer</code></p>
 
-<p>Set the default user as guest.</p>
+<p>Set the default user as guest. We could assign roles like user1.admin! and question the roles like user1.admin?</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -221,7 +221,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>UPDATE:</p>
 
+<p>Sometimes current_user are not defined, for example a guest user who is not signed in. Then the above authorization may raise a <code>undefined method 'admin?' for nil:NilClass</code> problem, which I met. The solution would be changing <code>current_user.admin?</code> to <code>current_user.try(:admin?)</code>.</p>
 </div>
 
 
@@ -277,7 +279,7 @@
 </div>
 			</div>
 			<footer id="footer" class="inner"><p>
-  Copyright &copy; 2014 - Lawrence Sun -
+  Copyright &copy; 2015 - Lawrence Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

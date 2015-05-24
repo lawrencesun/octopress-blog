@@ -5,13 +5,13 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Rails Notes: Link to Commentable - Lawrence Sun</title>
+	<title>Category: WordPress - Lawrence Sun</title>
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Rails Notes: Link to Commentable Few days ago I created a polymorphic comment model based on Railscasts. Today I wanted to show the lastest comments &hellip;">
+<meta name="description" content="Category: WordPress">
 
-<meta name="keywords" content="rails, polymorphic, commentable">
+
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -20,7 +20,7 @@
 
 	<link href="/atom.xml" rel="alternate" title="Lawrence Sun" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://voice.lawrencesun.info/posts/2014/11/08/rails-notes-link-to-commentable/">
+	<link rel="canonical" href="http://voice.lawrencesun.infoblog/categories/wordpress/">
 	<link href="/favicon.png" rel="shortcut icon">
 	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -105,95 +105,30 @@
 				
 			
 			<div class="mid-col-container">
-				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+				<div id="content" class="inner">
 	
-	<h1 class="title" itemprop="name">Rails Notes: Link to Commentable</h1>
-	<div class="entry-content" itemprop="articleBody"><p>Few days ago I created a polymorphic comment model based on <a href="http://railscasts.com/episodes/154-polymorphic-association">Railscasts</a>.</p>
-
-<p>Today I wanted to show the lastest comments on homepage and link each comment body to their &lsquo;parents&rsquo; like a book or a movie.</p>
-
-<p>The link path was a bit tricky and finally I figured it out.</p>
-
-<p>What you need here is this particular comment&rsquo;s commentable type like &lsquo;book&rsquo; or &lsquo;movie&rsquo;, as well as the commentable id, so it will leads you to the show page and the url should like &lsquo;book/id&rsquo;.</p>
-
-<!-- more -->
 
 
-<p>The view page could look like this.</p>
+	
+	
+	<section class="archives"><h1 class="year">2015</h1>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;%=</span> <span class="n">link_to</span> <span class="n">markdown</span><span class="p">(</span><span class="vi">@comment</span><span class="o">.</span><span class="n">body</span><span class="p">),</span> <span class="o">[</span><span class="vi">@comment</span><span class="o">.</span><span class="n">commentable</span><span class="p">,</span> <span class="vi">@comment</span><span class="o">]</span> <span class="o">%&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<p>Then it will pass commentable type and id, looking for comment/show action.</p>
-
-<p>So add show action in comments_controller like this</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">show</span>
-</span><span class='line'>  <span class="n">redirect_to</span> <span class="vi">@commentable</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
+<article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<span class="date"><time datetime="2015-05-03T10:56:59+08:00" itemprop="datePublished">May  3</time></span>
+		<br>
+		<span class="tags">
 
 
-<p>This will direct to the page that I want.</p>
-</div>
-
-
-    <br/>
-    <p class="meta">
-    <span class="byline author vcard">Posted by <span class="fn">Sun ▪ </span></span>
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-08T17:19:09+08:00" data-updated="true" itemprop="datePublished">Nov 8<span>th</span>, 2014</time>
-    <span class="categories"> ▪ 
-
-
-	<a class='category' href='/blog/categories/rails/'>Rails</a>
+	<a class='category' href='/blog/categories/wordpress/'>WordPress</a>
 
 
 </span>
-    </p>
+	    
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2015/05/03/wordpress-migration-to-windows-server/">WordPress迁移至Windows主机</a></h1>
 </article>
 
-	<div class="share">
-        <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
-        
-        
-        
-        <a class="addthis_button_sinaweibo"></a>
-        
-        
-        
-        <a class="addthis_button_compact"></a>
-        <a class="addthis_counter addthis_bubble_style"></a>
-        </div>
-  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid="></script>
-</div>
-
-
-
-
-<section id="comment">
-    <h1 class="title">Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-</section>
 </div>
 			</div>
 			<footer id="footer" class="inner"><p>
@@ -208,10 +143,7 @@ Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Sha
       var disqus_shortname = 'voicelawrencesun';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://voice.lawrencesun.info/posts/2014/11/08/rails-notes-link-to-commentable/';
-        var disqus_url = 'http://voice.lawrencesun.info/posts/2014/11/08/rails-notes-link-to-commentable/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

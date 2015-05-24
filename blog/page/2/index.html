@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Sep 21st, 2014 Rails Rails Notes: Upload Avatar Using Paperclip In my previous rails apps, I used gravatar_for method to link the gravatar to users &hellip;">
+<meta name="description" content="Oct 26th, 2014 Rails Rails Notes: Make Dropdown Work on Heroku After I deployed a app on Heroku, I found that the Bootstap dropdown menu didn&rsquo; &hellip;">
 
 
 
@@ -107,6 +107,91 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-26T12:07:57+08:00" data-updated="true" itemprop="datePublished">Oct 26<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/10/26/rails-notes-make-dropdown-work-on-heroku/" itemprop="url">Rails Notes: Make Dropdown Work on Heroku</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>After I deployed a app on Heroku, I found that the Bootstap dropdown menu didn&rsquo;t work on Heroku. It was working in my local development environment.</p>
+
+<p>So I searched the answers from stackoverflow. It seemed that it was a common problem.</p>
+
+<p>I had tried to reorder the //=jquery and //=bootstrap and reorder back again and again. I also ran asset precompile method. However, it still didn&rsquo;t work in my situation.</p>
+
+<p>Then I compared an app I wrote before, and I found that there might be the conflict between &lsquo;bootstrap&rsquo; and &lsquo;bootstrap-spockets&rsquo;. The dropdown menu worked if either of them were removed. So I removed &lsquo;bootstrap&rsquo; finally. I am not sure if it will cause any further problems but so far it&rsquo;s fine.</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-26T12:06:49+08:00" data-updated="true" itemprop="datePublished">Oct 26<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/10/26/rails-notes-heroku-environment-configuration-problem/" itemprop="url">Rails Notes: Heroku Environment Configuration Problem</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>When I tried to deploy one of my rails app on Heroku, the following problem occured.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>can't convert nil into String 
+</span><span class='line'>/app/config/initializers/devise.rb:13:in `+'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The reason was that I set DOMAIN_NAME etc. inside secret.yml and this file was git ignored since I wanted to keep credentials private. So Heroku couldn&rsquo;t find these configuration values.</p>
+
+
+		
+		<a href="/posts/2014/10/26/rails-notes-heroku-environment-configuration-problem/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -440,82 +525,6 @@ run <code>which git</code> to check out the directory.</p>
 
 </article>
 
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-03T21:35:00+08:00" data-updated="true" itemprop="datePublished">Aug 3<span>rd</span>, 2014</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2014/08/03/rails-notes-unlike-function/" itemprop="url">Rails Notes: How to &#8216;Like&#8217; Once and &#8216;Unlike&#8217; in Rails</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>Few months ago, I added a <a href="/posts/2014/02/11/rails-notes-adding-a-like-function/">&lsquo;Like&rsquo; function</a> to my rails project. It&rsquo;s a lovely function, but has some problems left. One is that users could like a single post/comment as much as they can, the other one is that users are not able to unlike.</p>
-
-<p>Thus, I tried to improve the likeable function this weekend. First thing I came up with my head was to add a uniqueness validation.</p>
-
-
-		
-		<a href="/posts/2014/08/03/rails-notes-unlike-function/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-18T21:03:55+08:00" data-updated="true" itemprop="datePublished">Jul 18<span>th</span>, 2014</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/ruby/'>Ruby</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2014/07/18/stock-data-crawler/" itemprop="url">Ruby程序:自动抓取股票财务数据</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>无论是投资还是投机股市，股票的财务状况仍然是不可或缺的参考指标。传统金融网站上的数据往往以个股为单位呈现，导致数据的查询、对比和分析比较困难。如果要进行全局扫描和分析，可能就需要把这些数据一个一个下载后进行处理，这方面的时间成本略高。</p>
-
-<p>前段时间在雪球偶然看到有人用Python做了一个自动获取数据的程序，觉得挺有趣，对大量数据的计算和分析可能有用，所以用了一天左右的时间用Ruby写了一个类似的代码。</p>
-
-
-		
-		<a href="/posts/2014/07/18/stock-data-crawler/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
 </div>
 <nav id="pagenavi">
     
@@ -528,7 +537,7 @@ run <code>which git</code> to check out the directory.</p>
 </nav></div>
 			</div>
 			<footer id="footer" class="inner"><p>
-  Copyright &copy; 2014 - Lawrence Sun -
+  Copyright &copy; 2015 - Lawrence Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

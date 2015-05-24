@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2014-12-13T10:06:44+08:00</updated>
+  <updated>2015-05-24T20:21:36+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -29,7 +29,7 @@
 
 <p><code>rails g migration AddRoleToUsers role:integer</code></p>
 
-<p>Set the default user as guest.</p>
+<p>Set the default user as guest. We could assign roles like user1.admin! and question the roles like user1.admin?</p>
 
 <p>```ruby
 class AddRoleToUsers &lt; ActiveRecord::Migration
@@ -117,6 +117,10 @@ rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized</p>
 
 <p>  end
 ```</p>
+
+<p>UPDATE:</p>
+
+<p>Sometimes current_user are not defined, for example a guest user who is not signed in. Then the above authorization may raise a <code>undefined method 'admin?' for nil:NilClass</code> problem, which I met. The solution would be changing <code>current_user.admin?</code> to <code>current_user.try(:admin?)</code>.</p>
 ]]></content>
   </entry>
   

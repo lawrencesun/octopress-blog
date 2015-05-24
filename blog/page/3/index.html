@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Jul 15th, 2014 Git 如何合并多个Git Commit 今天把之前做的一个rails项目升级到Twitter Bootstrap 3.2，结果问题一大堆。主要是class和id名称的改动，以及响应式布局的调整。最后在Heroku部署完成之后，发现原来的“点赞”图标无法正确显示， &hellip;">
+<meta name="description" content="Aug 3rd, 2014 Rails, Ruby Rails Notes: How to &#8216;Like&#8217; Once and &#8216;Unlike&#8217; in Rails Few months ago, I added a &lsquo;Like&rsquo &hellip;">
 
 
 
@@ -107,6 +107,82 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-03T21:35:00+08:00" data-updated="true" itemprop="datePublished">Aug 3<span>rd</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/08/03/rails-notes-unlike-function/" itemprop="url">Rails Notes: How to &#8216;Like&#8217; Once and &#8216;Unlike&#8217; in Rails</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>Few months ago, I added a <a href="/posts/2014/02/11/rails-notes-adding-a-like-function/">&lsquo;Like&rsquo; function</a> to my rails project. It&rsquo;s a lovely function, but has some problems left. One is that users could like a single post/comment as much as they can, the other one is that users are not able to unlike.</p>
+
+<p>Thus, I tried to improve the likeable function this weekend. First thing I came up with my head was to add a uniqueness validation.</p>
+
+
+		
+		<a href="/posts/2014/08/03/rails-notes-unlike-function/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-18T21:03:55+08:00" data-updated="true" itemprop="datePublished">Jul 18<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/07/18/stock-data-crawler/" itemprop="url">Ruby程序:自动抓取股票财务数据</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>无论是投资还是投机股市，股票的财务状况仍然是不可或缺的参考指标。传统金融网站上的数据往往以个股为单位呈现，导致数据的查询、对比和分析比较困难。如果要进行全局扫描和分析，可能就需要把这些数据一个一个下载后进行处理，这方面的时间成本略高。</p>
+
+<p>前段时间在雪球偶然看到有人用Python做了一个自动获取数据的程序，觉得挺有趣，对大量数据的计算和分析可能有用，所以用了一天左右的时间用Ruby写了一个类似的代码。</p>
+
+
+		
+		<a href="/posts/2014/07/18/stock-data-crawler/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -416,78 +492,6 @@
 
 </article>
 
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-01T10:18:40+08:00" data-updated="true" itemprop="datePublished">Mar 1<span>st</span>, 2014</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2014/03/01/rails-notes-counter-cache/" itemprop="url">Rails Notes: Counter Cache</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>By default, posts in my app are sorted by create_at time. I would like to sort them by the number of comments. In order to implement it, we will apply :counter_cache and :scope.</p>
-
-
-		
-		<a href="/posts/2014/03/01/rails-notes-counter-cache/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-02-22T11:25:16+08:00" data-updated="true" itemprop="datePublished">Feb 22<span>nd</span>, 2014</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2014/02/22/rails-notes-ajaxify-pagination/" itemprop="url">Rails Notes: Ajaxify Pagination</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>After applying <a href="/posts/2014/02/16/rails-notes-pagination-with-kaminari/">pagination</a> in my app, I would like to ajaxify kaminari paginator. I googled and stackoverflowed this issue, and found the solution, which is quite similar to what I did in <a href="/posts/2014/02/11/rails-notes-adding-a-like-function/">likeable</a> function.</p>
-
-
-		
-		<a href="/posts/2014/02/22/rails-notes-ajaxify-pagination/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
 </div>
 <nav id="pagenavi">
     
@@ -500,7 +504,7 @@
 </nav></div>
 			</div>
 			<footer id="footer" class="inner"><p>
-  Copyright &copy; 2014 - Lawrence Sun -
+  Copyright &copy; 2015 - Lawrence Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

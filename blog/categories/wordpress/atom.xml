@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: WordPress | Lawrence Sun]]></title>
+  <link href="http://voice.lawrencesun.info/blog/categories/wordpress/atom.xml" rel="self"/>
+  <link href="http://voice.lawrencesun.info/"/>
+  <updated>2015-05-24T20:21:36+08:00</updated>
+  <id>http://voice.lawrencesun.info/</id>
+  <author>
+    <name><![CDATA[Lawrence Sun]]></name>
+    <email><![CDATA[yuliang1987@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[WordPress迁移至Windows主机]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2015/05/03/wordpress-migration-to-windows-server/"/>
+    <updated>2015-05-03T10:56:59+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2015/05/03/wordpress-migration-to-windows-server</id>
+    <content type="html"><![CDATA[<p>去年底接了一个建立网站的小项目，考虑到该网站偏向于新闻发布，对其他功能要求不高，所以使用WordPress搭建是一个比较便捷的方式。</p>
+
+<p>本机测试是在<em>Ubuntu</em>的虚拟机环境下，但是网站最终需要搭建在<em>Windows Server 2012 R2</em>的虚拟主机上。</p>
+
+<blockquote><p>Windows Server 环境配置</p></blockquote>
+
+<!-- more -->
+
+
+<h1>未完成</h1>
+
+<blockquote><p>WordPress 数据迁移</p></blockquote>
+]]></content>
+  </entry>
+  
+</feed>
