@@ -1,0 +1,20 @@
+---
+layout: post
+title: pi的root权限
+categories:
+- Raspberry Pi
+tags:
+- raspberry pi
+- root
+published: true
+comments: true
+---
+<p>在玩几个简单的指令时, 出现了bc 指令不能找到的问题</p>
+
+<p>bash bc: command not found</p>
+
+<p>于是google之，可能是没有安装的原因，但是试了apt-get install bc，出现了权限。</p>
+
+<p>继续google，Debian squeeze 并没有root的密码，而是采用sudo apt-get来实现以root用户运行，或者是用 sudo su。用su pi切换回非root用户。</p>
+
+<p>试了一下，貌似还是无法找到bc的安装。:'(</p>

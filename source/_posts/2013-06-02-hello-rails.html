@@ -1,0 +1,34 @@
+---
+layout: post
+title: Hello, Rails!
+categories:
+- CS/WEB
+- Rails
+tags:
+- rails
+published: true
+comments: true
+---
+<p>两天时间完成了codeschool的<a href="http://www.codeschool.com/courses/rails-for-zombies-redux">Rails for Zombie</a>s，虽然还有不少内容似似而非，练习也基本是依样画瓢，不过总算对rails有了个初步印象。加上昨天用<a href="http://railsinstaller.org/">railsinstaller</a>在windows部署环境时，接触了rails的建立。</p>
+
+<p>晚上试着根据<a href="http://guides.rubyonrails.org/getting_started.html">railsguide</a>在ubuntu用rails建立个博客，结果出现了问题。</p>
+
+<p>在执行</p>
+
+<p>$ rails server</p>
+
+<p>出现了 runtime...错误。</p>
+
+<p>在ruby-china搜索到了答案，
+<pre class="lang:ruby decode:true">gem install execjs
+gem install therubyracer
+sudo apt-get install nodejs</pre>
+不过在执行第二行时，又出现了</p>
+
+<p>require ref...libv8...的错误</p>
+
+<p>在stackoverflow搜到解决方法：</p>
+
+<p>gem install therubyracer --version=0.10.2</p>
+
+<p><img class="alignnone" alt="" src="http://storage.live.com/items/B61984F863EE934F!140?a.jpg" width="414" height="322" /></p>

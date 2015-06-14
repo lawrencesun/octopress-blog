@@ -1,0 +1,32 @@
+---
+layout: post
+title: Linux学习 档案权限和目录配置
+categories:
+- 未分类
+tags: []
+published: false
+comments: true
+---
+<p>档案可存取身份分别是<strong>owner group others</strong> 权限有<strong>read write execute</strong>等</p>
+
+<p><strong>sudo ls -al </strong>显示所有档案的详细权限和属性</p>
+
+<p>选择一条作为例子</p>
+
+<p><strong>drwxr-xr-x 2 pi pi 4096 Dec 16 20:09 Scratch</strong></p>
+
+<p>第一个是d或- 代表档案或目录</p>
+
+<p>然后每三个为一组 即rwx\ r-x\ r-x， 代表owner、group、others，权限分别是可读可写可执行、可读可执行、可读可执行</p>
+
+<p>2 表示有2个档名连接到此节点i-note</p>
+
+<p>pi 表示该档案的所属者账号pi</p>
+
+<p>pi 表示该档案所属群组是pi</p>
+
+<p>4096 表示档案大小为4096 bytes</p>
+
+<p>Dec 16 20:09 表示建档时间或者最新修改时间，太久之前的会只显示年份，可通过ls -l --full-time显示完整格式</p>
+
+<p>Scarthc 是档名 如果前面有一个. 那么表示这个档是隐藏档。</p>

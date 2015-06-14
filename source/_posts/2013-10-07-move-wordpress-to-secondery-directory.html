@@ -1,0 +1,27 @@
+---
+layout: post
+title: 将wordpress博客搬家到二级目录
+categories:
+- WordPress
+tags:
+- wordpress
+- 二级目录
+- 博客搬家
+published: true
+comments: true
+---
+<p>未来有可能将个人博客升级成个人网站，所以需要把博客放在二级目录下。整个搬家过程持续了将近一个半小时。</p>
+
+<p>首先，进入wp后台，在设置-常规里把wordpress URI 和 site address URL 全部指向lawrencesun.info/blog，保存。</p>
+
+<p>第二步就是内容搬迁，把根目录下所有wp内容全部移动到新目录blog文件夹中。这步可以使用ftp工具(leapftp, cuteftp等)，使用过程中发现，考虑到权限等原因还是用主机空间的ftp manager更方便。</p>
+
+<p>很多教程里说要复制 <a title="Glossary" href="http://codex.wordpress.org/Glossary#.htaccess">.htaccess</a>文件，由于我的服务器是win，所以找不到该文件。另外我的固定链接是非常难看的默认模式，好处是不用修改，搬家过程中自动转换了。</p>
+
+<p>由于我主域名还没有建设，所以暂时把根目录访问链接到二级目录了。这步需要将index.php复制到根目录，并把require<tt>('./wp-blog-header.php');改成require('./wordpress/wp-blog-header.php');</tt></p>
+
+<p>搬家完成后还有一些善后工作。主要就是原有文章内部的链接和上传图片的链接，没找到便捷的方法，只有用文本视图编辑文章里面链接和插图的路径了，加一个/blog即可，好在我上传本地的图片不多。</p>
+
+<p>参考文献：中文官网上的翻译水平很次，看起来费劲，还是看英文的准确，外加google就不多说了。</p>
+
+<p><a href="http://codex.wordpress.org/Moving_WordPress">http://codex.wordpress.org/Moving_WordPress</a></p>

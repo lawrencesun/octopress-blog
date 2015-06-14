@@ -1,0 +1,47 @@
+---
+layout: post
+title: First step to using git
+categories:
+- CS/WEB
+tags:
+- git
+published: true
+comments: true
+---
+<p><strong>Part one create a repository</strong></p>
+
+<p>First of all, your should create an account @github.</p>
+
+<p>Then "Create A Repository" to create an place where your commits will be stored, a "Public" one. Normally, with a README.</p>
+
+<p>Copy the HTTPS url, then</p>
+
+<p>git clone <em>url    # paste your https url here</em></p>
+
+<p>ls # <em>check files</em></p>
+
+<p>cd <em>yourrepositoryname </em></p>
+
+<p>subl .  #<em> modified README.md through sublime text</em></p>
+
+<p>git status # should see "changes not staged for commit"</p>
+
+<p>git add README.md    <em># git add .         add all files</em></p>
+
+<p>git status # should see "changes to be commited"</p>
+
+<p>git commit -m "modified the file"    # should see 1 file changed etc.</p>
+
+<p># if this is the first time, then</p>
+
+<p>git config -- global user.name "<em>your user name</em>"</p>
+
+<p>git config -- global user. email <em>your email address</em></p>
+
+<p>git push origin master        # type in your username and password</p>
+
+<p>&nbsp;</p>
+
+<p><strong>Part two generate ssh keys</strong></p>
+
+<p>https://help.github.com/articles/generating-ssh-keys</p>

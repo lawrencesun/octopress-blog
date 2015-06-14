@@ -1,0 +1,76 @@
+---
+layout: post
+title: 在Raspberry Pi上安装Ruby/Rails
+categories:
+- CS/WEB
+- Raspberry Pi
+- Ruby
+tags:
+- Linux
+- rails
+- raspberry pi
+- ruby
+published: true
+comments: true
+---
+<p>Ruby on Rails 目前在国外很火，由于买不起Mac，Raspberry Pi 的Linux环境, 正好用来体验和学习一下Ruby。</p>
+
+<p>装了网卡之后一切安装都变得方便了。</p>
+
+<p>首先当然是Google之了。可是查到的资料不多，而且多数作者也是尝试，没有一个可靠的结论，也不知道运行速度如何。</p>
+
+<p>反正Pi就是用来折腾的，大不了重刷SD卡呗。</p>
+
+<p>#先更新一下</p>
+
+<p><strong>sudo apt-get update </strong></p>
+
+<p>#然后安装Ruby Version Manager（RVM）</p>
+
+<p><strong>curl -L get.rvm.io | bash -s stable --ruby</strong></p>
+
+<p>这里需要等很长时间...有说1小时的，有说3小时的。我决定采纳elinux上的建议，have a sleep and check in the morning.</p>
+
+<p>----------分割线---------zzZZZ</p>
+
+<p>早上起来Ruby已经装好了~~  need to run 'source/home/pi/.rvm/scripts/rvm' in all your open shell window.</p>
+
+<p><strong>ruby -v</strong></p>
+
+<p>ruby 1.9.3p385 (2013-02-06 revision 39114) [armv61-linux-eabi]</p>
+
+<p>#接下来安装rails</p>
+
+<p><strong>gem -v</strong></p>
+
+<p>1.8.25</p>
+
+<p><strong>gem install bundler rails</strong></p>
+
+<p>又要等了。。。好吧，去看会电视剧。。。</p>
+
+<p>----------分割线---------zzZZZ</p>
+
+<p>安装完成。</p>
+
+<p><strong>rails -v</strong></p>
+
+<p>3.2.12</p>
+
+<p>&nbsp;</p>
+
+<p>后记：</p>
+
+<p>Linux环境下的命令操作让人回想起dos时代的种种，当时进入游戏也是敲键盘。安装程序真是方便，简单的一行命令就可以了。</p>
+
+<p>&nbsp;</p>
+
+<p>reference:
+<p id="firstHeading" lang="en"><a href="http://elinux.org/RPi_Ruby_on_Rails#Installing_Ruby_on_Rails_on_Raspberry_Pi">RPi Ruby on Rails</a></p>
+<a href="http://rayhightower.com/blog/2012/12/03/ruby-on-raspberry-pi/">Ruby on Raspberry Pi</a></p>
+
+<p><a href="http://ruby-china.org/wiki/install_ruby_guide">如何快速正确的安装 Ruby, Rails 运行环境</a></p>
+
+<p>&nbsp;
+<p lang="en"></p>
+&nbsp;</p>

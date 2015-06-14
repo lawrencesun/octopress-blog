@@ -1,0 +1,63 @@
+---
+layout: post
+title: Start using Heroku and problem resolve
+categories:
+- CS/WEB
+- Ruby
+tags: []
+published: true
+comments: true
+---
+<p><strong>1. Signup</strong></p>
+
+<p><strong>2.Download and install Heroku:</strong></p>
+
+<p><a href="toolbelt.heroku.com">toolbelt.heroku.com</a></p>
+
+<p><strong>Login:</strong></p>
+
+<p>$ heroku login</p>
+
+<p><strong>3.Create heroku remote</strong></p>
+
+<p>$ heroku create</p>
+
+<p>$ git remote -v</p>
+
+<p>$ git remote rm heroku</p>
+
+<p>$ git remote add heroku git@heroku.com:xxxx.git     <em>#Here, xxxx.git is the git file created in the first line of this step</em></p>
+
+<p><strong>4. Deploying code</strong></p>
+
+<p>$ git push heroku master    #Some error occurs here, which cost me few hours to solve.</p>
+
+<p><strong>5. Error</strong></p>
+
+<p>"Permission denied (publickey). fatal: The remote end hung up unexpectedly."</p>
+
+<p><strong>  check keys:</strong></p>
+
+<p>$ heroku keys</p>
+
+<p><strong>  remove the old keys:</strong></p>
+
+<p>$ heroku keys:remove xxx@xxxxxx</p>
+
+<p><strong>   generate new keys:</strong></p>
+
+<p>$ ssh-keygen -t rsa</p>
+
+<p>$ heroku keys:add /root/.ssh/id_rsa.pub</p>
+
+<p>&nbsp;</p>
+
+<p>* using 'sudo'</p>
+
+<p>** reference:</p>
+
+<p><a href="https://devcenter.heroku.com/articles/keys">https://devcenter.heroku.com/articles/keys</a></p>
+
+<p><a href="http://www.whatibroke.com/?p=284">http://www.whatibroke.com/?p=284</a></p>
+
+<p><a href="http://stackoverflow.com/questions/2947190/pushing-app-to-heroku-problem">http://stackoverflow.com/questions/2947190/pushing-app-to-heroku-problem</a></p>

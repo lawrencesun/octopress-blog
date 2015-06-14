@@ -1,0 +1,52 @@
+---
+layout: post
+title: 在pi上学习linux
+categories:
+- CS/WEB
+- Linux
+- Raspberry Pi
+tags:
+- Linux
+- raspberry pi
+published: true
+comments: true
+---
+<p>之前没怎么接触过linux，只在研究生课程computer vision上用过ubuntu。因此在大多数人拿到raspberry pi一脸兴奋的时候，我却登陆和关机都无从下手。</p>
+
+<p>当时从用户手册知道了进入图形界面的指令:</p>
+
+<p><strong> startx</strong></p>
+
+<p>然后等我想关机的时候就傻眼了（好吧, 关电源也行），手册里没有说，只能借助强大的google了。查到关机指令是:</p>
+
+<p><strong> sudo shutdown-h now</strong></p>
+
+<p>当时也没多想。最近开始在<strong><a href="http://www.codecademy.com/" target="_blank">codecademy</a></strong>看ruby，自然就看了点linux，方才恍然大悟。原来x就是图形接口 window 的w 下一个字母就是x。</p>
+
+<p>于是暂时搁置用virtualbox安装ubuntu，直接上手用pi来玩一玩吧。</p>
+
+<p>用户登录输入pi，密码是raspberry之后（不可见，当时又吓了我一跳，哎，初学者）出现：</p>
+
+<p><strong> pi@raspberrypi ~ $</strong></p>
+
+<p>pi是用户名，@后面是主机名，~表示在根目录，$是一般用户的提示字符(root用户是#)</p>
+
+<p>好了，下面按照《鸟哥的私房菜》敲几个指令。</p>
+
+<p><strong> pi@raspberrypi ~ $ date   #显示时间</strong></p>
+
+<p>时间显示是Sun Dec 16 23:34:16 GMT 2012 咳 暂时没有联网 结果就是这样了。</p>
+
+<p>还可以改格式，方法是后面加上 <strong>+%Y/%m/%d</strong></p>
+
+<p><strong> echo $LANG    #显示语言</strong></p>
+
+<p><strong> LANG=en_US    #修改语言</strong></p>
+
+<p>我当时装的时候选择的语言是 en_GB</p>
+
+<p>在文本模式下的字体实在太小了，暂时没找到方法改变，只好进窗口模式下的terminal敲码了。</p>
+
+<p><strong>cal    # 显示日历 cal 2013 #显示今年的日历啦</strong></p>
+
+<p>ps. 最近越来越喜欢我的TV了，VGA的线接笔记本当扩展屏，HDMI的线接pi当第二主机显示屏，可惜新家还没有“锅”，不然还能看个电视，哎，当初怎么就没狠心买一个HD的呢...</p>

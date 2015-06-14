@@ -1,0 +1,40 @@
+---
+layout: post
+title: 在raspberry pi上安装gedit
+categories:
+- Raspberry Pi
+tags:
+- raspberry pi
+published: true
+comments: true
+---
+<p>在尝试安装sublime text 2失败之后，转向了gedit。之前安装了vim，但是作为linux新手，面对vim实在是有点无从下手。</p>
+
+<p>gedit是在尝试安装sublime时装的，至少可以使用。<strong>sudo apt-get install gedit</strong></p>
+
+<p>google了一下之后发现很多人推荐安装gmate以达到textmate的效果。</p>
+
+<p>安装方法如下：</p>
+
+<p><strong>sudo apt-add-repository ppa:ubuntu-on-rails/ppa </strong></p>
+
+<p><strong>sudo apt-get update </strong></p>
+
+<p><strong>sudo apt-get install gedit-gmate</strong></p>
+
+<p>可是在安装过程中出现两个错误。第一个错误是没有apt-add-repository指令，似乎可以通过</p>
+
+<p><strong>sudo apt-get install python-software-properties</strong></p>
+
+<p>来解决。参考<a href="http://askubuntu.com/questions/38021/how-to-add-a-ppa-on-a-server" target="_blank">这里</a>。</p>
+
+<p>但是最终还是安装不了。</p>
+
+<p>其他几个<a href="http://blog.sudobits.com/2012/03/06/top-10-gedit-plugins-for-programmers/" target="_blank">常见的插件</a>可以安装。</p>
+
+<p><strong>sudo apt-get install gedit-plugins</strong></p>
+
+<p><strong>
+</strong></p>
+
+<p>&nbsp;</p>

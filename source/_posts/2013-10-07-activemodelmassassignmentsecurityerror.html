@@ -1,0 +1,25 @@
+---
+layout: post
+title: ActiveModel::MassAssignmentSecurity::Error
+categories:
+- Rails
+tags:
+- rails
+published: true
+comments: true
+---
+<p>本来按着agile web development with rails的书，照葫芦画瓢不该有啥问题，结果在create new product时候，ActiveModel::MassAssignmentSecurity::Error 闪亮登场。</p>
+
+<p>错误追踪到product new这行...此时我的解决错误能力为0。果断求助Google，stackoverflow再显神威。</p>
+
+<p>http://stackoverflow.com/questions/6163759/cant-mass-assign-protected-attributes</p>
+
+<p>solution:</p>
+
+<p>put this into app/models/product.rb</p>
+
+<p><span style="background-color: #f4f4f4; font-family: 'Courier 10 Pitch', Courier, monospace; font-size: 10px; line-height: 18px;">attr_accessible :title, :description, :image_url, :price</span></p>
+
+<p>railscasts is great, mark.</p>
+
+<p>&nbsp;</p>

@@ -1,0 +1,21 @@
+---
+layout: post
+title: VirtualBox安装Ubuntu的蛋疼过程
+categories:
+- CS/WEB
+- Linux
+tags:
+- Ubuntu
+- VirtualBox
+published: true
+comments: true
+---
+<p>去年初上couresa的公开课安装了virtualbox+ubuntu，为了体验最新版本，就把旧版给删了，结果引发了一系列惨案。先是好不容易安装好的12.10显示出错，google之貌似没有一个完美的解决方案，只有降级至12.04，结果又出现“display low quality”的错误，貌似这个问题挺普遍，似乎和A卡驱动有关，神农尝百草般试遍所有解决方案，N次重装之后，终于找到了最佳方案:</p>
+
+<p>sudo apt-get install fglrx</p>
+
+<p>但是。。。在快捷键打开terminal的时候，小黑的显示屏正如其名，全黑了。重启多次之后用狂按F8按最后一次正确配置启动，惊出一身冷汗。</p>
+
+<p>当Ubuntu界面终于出现时，泪流满面......</p>
+
+<p>小黑你再坚持两年吧，给你先加快内存续命。</p>
