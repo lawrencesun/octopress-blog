@@ -1,0 +1,264 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>让Raspberry Pi 连上 Wifi - Lawrence Sun</title>
+	<meta name="author" content="Lawrence Sun">
+
+	
+<meta name="description" content="让Raspberry Pi 连上 Wifi Raspberry Pi B型支持网络连接，但是本身并不带有网卡。连不了网很多好玩的东西就无法实现了。 所以立即在Amazon 买了无线网卡，见下图。 由于Pi只有两个USB接口，只能鼠标键盘轮着插入了。。当然键盘更重要一些。 启动后，网卡自动识别了。 &hellip;">
+
+
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Lawrence Sun" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://voice.lawrencesun.info/posts/2013/02/15/raspberry-pi-link-to-wifi/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+	<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'> -->
+
+	<link href='http://fonts.useso.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<script src="http://ajax.useso.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+	<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+
+<link href="http://fonts.useso.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.useso.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("yuliang1987@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+	
+</div>
+<hgroup>
+  <h1><a href="/">Lawrence Sun</a></h1>
+  
+    <h2>Hello World</h2>
+  
+</hgroup>
+
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		<!--
+			<a class="email" href="mailto:yuliang1987@gmail.com" title="Email">Email</a>
+		 -->
+		
+		
+		
+			<a class="twitter" href="http://twitter.com/sunyuliang" title="Twitter">Twitter</a>
+		
+        
+            <a class="weibo" href="http://www.weibo.com/ylsun" title="Weibo">Weibo</a>
+        
+		
+			<a class="github" href="https://github.com/lawrencesun" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	
+	<h1 class="title" itemprop="name">让Raspberry Pi 连上 Wifi</h1>
+	<div class="entry-content" itemprop="articleBody"><p>Raspberry Pi B型支持网络连接，但是本身并不带有网卡。连不了网很多好玩的东西就无法实现了。</p>
+
+<p>所以立即在Amazon 买了无线网卡，见下图。</p>
+
+<p><img class="alignnone" title="wificard" alt="" src="http://storage.live.com/items/B61984F863EE934F!130?a.jpg" width="423" height="317" /></p>
+
+<p>由于Pi只有两个USB接口，只能鼠标键盘轮着插入了。。当然键盘更重要一些。</p>
+
+<p>启动后，网卡自动识别了。有两种方法可以联网。</p>
+
+<p>一种就是startx进入桌面操作，点击wifi config， 然后就和windows系统下一样，搜索wifi, 输入密码，done.</p>
+
+<p>还有一种就是命令输入。</p>
+
+<p>sudo nano /etc/network/interfaces</p>
+
+<p>之后会出现默认配置，如下。</p>
+
+<p><img class="alignnone" title="wificonfig" alt="" src="http://storage.live.com/items/B61984F863EE934F!131?a.jpg" width="423" height="317" /></p>
+
+<p>修改成以下内容：</p>
+
+<p>auto lo</p>
+
+<p>iface lo inet loopback<br />
+iface eth0 inet dhcp</p>
+
+<p>allow-hotplug wlan0       #热插拔<br />
+auto wlan0                          #默认使用wlan0设备名<br />
+iface wlan0 inet dhcp     #DHCP获取<br />
+wpa-ssid &#8220;yyy&#8221;                   #网络名称<br />
+wpa-psk &#8220;xxx&#8221;                    #密码</p>
+
+<p>修改好了之后</p>
+
+<p>sudo /etc/init.d/networking restart 运行</p>
+
+<p>可以看pi store、可以上网啦！</p>
+
+<p><img class="alignnone" title="pistore" alt="" src="http://storage.live.com/items/B61984F863EE934F!132?a.jpg" width="423" height="317" /></p>
+
+<p><img class="alignnone" title="pinet" alt="" src="http://storage.live.com/items/B61984F863EE934F!133?a.jpg" width="423" height="317" /></p>
+
+<p>reference:</p>
+
+<p><a title="Permanent Link to How To: WiFi on your Raspberry PI" href="http://pingbin.com/2012/12/setup-wifi-raspberry-pi/" rel="bookmark">How To: WiFi on your Raspberry PI</a><a href="http://blog.csdn.net/c80486/article/details/8545307" target="_blank">无线网络</a></p>
+
+<p><a href="http://blog.csdn.net/c80486/article/details/8545307" target="_blank">使用WIFI网卡连接</a></p>
+</div>
+
+
+    <br/>
+    <p class="meta">
+    <span class="byline author vcard">Posted by <span class="fn">Sun ▪ </span></span>
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-15T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time>
+    <span class="categories"> ▪ 
+
+
+	<a class='category' href='/blog/categories/raspberry-pi/'>Raspberry Pi</a>
+
+
+</span>
+    </p>
+</article>
+
+	<div class="share">
+        <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+        
+        
+        
+        <a class="addthis_button_sinaweibo"></a>
+        
+        
+        
+        <a class="addthis_button_compact"></a>
+        <a class="addthis_counter addthis_bubble_style"></a>
+        </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2015 - Lawrence Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			
+
+<script type="text/javascript">
+      var disqus_shortname = 'voicelawrencesun';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://voice.lawrencesun.info/posts/2013/02/15/raspberry-pi-link-to-wifi/';
+        var disqus_url = 'http://voice.lawrencesun.info/posts/2013/02/15/raspberry-pi-link-to-wifi/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-43779948-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+		</div>
+	</div>
+</body>
+</html>

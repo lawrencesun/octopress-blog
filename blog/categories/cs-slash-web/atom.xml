@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: CS/WEB | Lawrence Sun]]></title>
+  <link href="http://voice.lawrencesun.info/blog/categories/cs-slash-web/atom.xml" rel="self"/>
+  <link href="http://voice.lawrencesun.info/"/>
+  <updated>2015-06-14T17:46:08+08:00</updated>
+  <id>http://voice.lawrencesun.info/</id>
+  <author>
+    <name><![CDATA[Lawrence Sun]]></name>
+    <email><![CDATA[yuliang1987@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Hello, Rails!]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/06/02/hello-rails/"/>
+    <updated>2013-06-02T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/06/02/hello-rails</id>
+    <content type="html"><![CDATA[<p>两天时间完成了codeschool的<a href="http://www.codeschool.com/courses/rails-for-zombies-redux">Rails for Zombie</a>s，虽然还有不少内容似似而非，练习也基本是依样画瓢，不过总算对rails有了个初步印象。加上昨天用<a href="http://railsinstaller.org/">railsinstaller</a>在windows部署环境时，接触了rails的建立。</p>
+
+
+
+
+<p>晚上试着根据<a href="http://guides.rubyonrails.org/getting_started.html">railsguide</a>在ubuntu用rails建立个博客，结果出现了问题。</p>
+
+
+
+
+<p>在执行</p>
+
+
+
+
+<p>$ rails server</p>
+
+
+
+
+<p>出现了 runtime...错误。</p>
+
+
+
+
+<p>在ruby-china搜索到了答案，
+<pre class="lang:ruby decode:true">gem install execjs
+gem install therubyracer
+sudo apt-get install nodejs</pre>
+不过在执行第二行时，又出现了</p>
+
+
+
+
+<p>require ref...libv8...的错误</p>
+
+
+
+
+<p>在stackoverflow搜到解决方法：</p>
+
+
+
+
+<p>gem install therubyracer --version=0.10.2</p>
+
+
+
+
+<p><img class="alignnone" alt="" src="http://storage.live.com/items/B61984F863EE934F!140?a.jpg" width="414" height="322" /></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Start Using Heroku and Problem Resolve]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/05/30/start-using-heroku-and-problem-resolve/"/>
+    <updated>2013-05-30T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/05/30/start-using-heroku-and-problem-resolve</id>
+    <content type="html"><![CDATA[<p><strong>1. Signup</strong></p>
+
+
+
+
+<p><strong>2.Download and install Heroku:</strong></p>
+
+
+
+
+<p><a href="toolbelt.heroku.com">toolbelt.heroku.com</a></p>
+
+
+
+
+<p><strong>Login:</strong></p>
+
+
+
+
+<p>$ heroku login</p>
+
+
+
+
+<p><strong>3.Create heroku remote</strong></p>
+
+
+
+
+<p>$ heroku create</p>
+
+
+
+
+<p>$ git remote -v</p>
+
+
+
+
+<p>$ git remote rm heroku</p>
+
+
+
+
+<p>$ git remote add heroku git@heroku.com:xxxx.git     <em>#Here, xxxx.git is the git file created in the first line of this step</em></p>
+
+
+
+
+<p><strong>4. Deploying code</strong></p>
+
+
+
+
+<p>$ git push heroku master    #Some error occurs here, which cost me few hours to solve.</p>
+
+
+
+
+<p><strong>5. Error</strong></p>
+
+
+
+
+<p>"Permission denied (publickey). fatal: The remote end hung up unexpectedly."</p>
+
+
+
+
+<p><strong>  check keys:</strong></p>
+
+
+
+
+<p>$ heroku keys</p>
+
+
+
+
+<p><strong>  remove the old keys:</strong></p>
+
+
+
+
+<p>$ heroku keys:remove xxx@xxxxxx</p>
+
+
+
+
+<p><strong>   generate new keys:</strong></p>
+
+
+
+
+<p>$ ssh-keygen -t rsa</p>
+
+
+
+
+<p>$ heroku keys:add /root/.ssh/id_rsa.pub</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>* using 'sudo'</p>
+
+
+
+
+<p>** reference:</p>
+
+
+
+
+<p><a href="https://devcenter.heroku.com/articles/keys">https://devcenter.heroku.com/articles/keys</a></p>
+
+
+
+
+<p><a href="http://www.whatibroke.com/?p=284">http://www.whatibroke.com/?p=284</a></p>
+
+
+
+
+<p><a href="http://stackoverflow.com/questions/2947190/pushing-app-to-heroku-problem">http://stackoverflow.com/questions/2947190/pushing-app-to-heroku-problem</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[First Step to Using Git]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/05/02/first-step-to-using-git/"/>
+    <updated>2013-05-02T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/05/02/first-step-to-using-git</id>
+    <content type="html"><![CDATA[<p><strong>Part one create a repository</strong></p>
+
+
+
+
+<p>First of all, your should create an account @github.</p>
+
+
+
+
+<p>Then "Create A Repository" to create an place where your commits will be stored, a "Public" one. Normally, with a README.</p>
+
+
+
+
+<p>Copy the HTTPS url, then</p>
+
+
+
+
+<p>git clone <em>url    # paste your https url here</em></p>
+
+
+
+
+<p>ls # <em>check files</em></p>
+
+
+
+
+<p>cd <em>yourrepositoryname </em></p>
+
+
+
+
+<p>subl .  #<em> modified README.md through sublime text</em></p>
+
+
+
+
+<p>git status # should see "changes not staged for commit"</p>
+
+
+
+
+<p>git add README.md    <em># git add .         add all files</em></p>
+
+
+
+
+<p>git status # should see "changes to be commited"</p>
+
+
+
+
+<p>git commit -m "modified the file"    # should see 1 file changed etc.</p>
+
+
+
+
+<p># if this is the first time, then</p>
+
+
+
+
+<p>git config -- global user.name "<em>your user name</em>"</p>
+
+
+
+
+<p>git config -- global user. email <em>your email address</em></p>
+
+
+
+
+<p>git push origin master        # type in your username and password</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p><strong>Part two generate ssh keys</strong></p>
+
+
+
+
+<p>https://help.github.com/articles/generating-ssh-keys</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ubuntu忘记用户密码怎么办]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/04/28/ubuntu-forget-password/"/>
+    <updated>2013-04-28T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/04/28/ubuntu-forget-password</id>
+    <content type="html"><![CDATA[<p>今天在虚拟ubuntu上创建了ssh之后，一时脑残，把用户改成自动登录，结果sudo时需要密码，怎么输都不对。</p>
+
+
+
+
+<p>大脑再次短路，竟然选择了用百度，“ubuntu忘记用户密码怎么办”。结果99%是一堆误人子弟的烂文，千篇一律，很多文章有“见下图”，你妹图去哪里了，抄袭也要有点节操吧。Google "ubuntu forgot admin password"，立即找到图文详解，而且还介绍了可能会出现的错误。</p>
+
+
+
+
+<p>现在把解决方法记录一下，顺便回馈社会，虽然这篇文章被百度到的机会渺茫。
+<ol>
+    <li><strong>首先，不要慌张，重启系统。在开机画面出现之后，狂按左shift进入GRUB界面。（也有说按ESC的，反正我是不行）</strong></li>
+    <li><strong>选择recovery mode，进入recovery mode menu。</strong></li>
+    <li><strong>选择root     drop to root shell prompt 进入命令行。</strong></li>
+    <li><strong>输入passwd <em>user    </em>#user 就是你想要修改密码的用户名，以我为例就是 passwd lawrence</strong></li>
+    <li><strong>输入新密码，确认新密码</strong></li>
+    <li><strong>输入exit返回menu，选择resume，重启搞定。</strong></li>
+    <li><strong>如果出现"Authentication Manipulation error" pla pla 输入“mount -rw -o remount /” 之后再从第4步开始。</strong></li>
+</ol>
+自认为说得够详细，图就不配了，因为用skydrive来配图访问越来越慢。</p>
+
+
+
+
+<p>ps. 其实应该说是中文搜索和英文搜索，因为google搜中文98%也是出现烂文。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ubuntu上安装Rails和Sublime Text]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/03/29/rails-environment-on-ubuntu/"/>
+    <updated>2013-03-29T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/03/29/rails-environment-on-ubuntu</id>
+    <content type="html"><![CDATA[<p>基本步骤和上次在raspberry pi上的安装类似，不同的是，安装速度哗哗的。</p>
+
+
+
+
+<p>出现的几个问题都通过stackoverflow上找到答案了。</p>
+
+
+
+
+<p>一个是用rvm安装ruby的时候，出现
+<pre class="lang:ruby decode:true">Installing requirements for ubuntu, might require sudo password.
+Running 'apt-get --quiet --yes update' would require sudo.
+Cowardly refusing to continue, please read 'rvm autolibs'.
+Updating repositories
+Missing required packages: libgdbm-dev, libffi-dev.
+Cowardly refusing to continue, please read 'rvm autolibs'.</pre>
+解决方法是
+<pre class="lang:ruby decode:true">\curl -L https://get.rvm.io | bash -s stable --autolibs=3 --rails</pre>
+还有一个问题是装完rails之后执行 -v时 出现
+<pre class="lang:ruby decode:true">The program 'rails' is currently not installed. You can install it by typing: sudo apt-get install rails</pre>
+解决方法是</p>
+
+
+
+
+<p>set the 'Run command as login shell' checkbox on the Title and Command tab inside of gnome-terminal's Settings page.</p>
+
+
+
+
+<p>上次在raspberry pi上安装sublime text 2 失败，这次很顺利。
+<pre class="lang:ruby decode:true">sudo add-apt-repository ppa:webupd8team/sublime-text-2
+sudo apt-get update
+sudo apt-get install sublime-text</pre>
+参考<a href="http://wbond.net/sublime_packages/package_control/installation#Testing_Version">http://wbond.net/sublime_packages/package_control/installation#Testing_Version</a></p>
+
+
+
+
+<p>安装package control</p>
+
+
+
+
+<p>打开时又出现unable to run package setup...error13的错误</p>
+
+
+
+
+<p>google未果，terminal sudo运行没有问题。</p>
+
+
+
+
+<p>结合错误提示，应该是权限的原因。在ruby-china搜到了解决方法：
+<pre class="lang:ruby decode:true">sudo chown -R lawrence:lawrence ~/.config/sublime-text-2
+sudo chmod 700 -R ~/.config/sublime-text-2</pre>
+chown - change file ownership</p>
+
+
+
+
+<p>chmod - modify file access rights</p>
+
+
+
+
+<p><em>700(rwx------)</em> The file's owner may read, write, and execute the file. Nobody else has any rights. This setting is useful for programs that only the owner may use and must be kept private from others.</p>
+
+
+
+
+<p>&nbsp;</p>
+
+]]></content>
+  </entry>
+  
+</feed>

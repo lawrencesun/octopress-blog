@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Raspberry Pi | Lawrence Sun]]></title>
+  <link href="http://voice.lawrencesun.info/blog/categories/raspberry-pi/atom.xml" rel="self"/>
+  <link href="http://voice.lawrencesun.info/"/>
+  <updated>2015-06-14T17:46:08+08:00</updated>
+  <id>http://voice.lawrencesun.info/</id>
+  <author>
+    <name><![CDATA[Lawrence Sun]]></name>
+    <email><![CDATA[yuliang1987@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[在raspberry Pi上安装gedit]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/03/03/raspberry-pi-and-gedit/"/>
+    <updated>2013-03-03T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/03/03/raspberry-pi-and-gedit</id>
+    <content type="html"><![CDATA[<p>在尝试安装sublime text 2失败之后，转向了gedit。之前安装了vim，但是作为linux新手，面对vim实在是有点无从下手。</p>
+
+
+
+
+<p>gedit是在尝试安装sublime时装的，至少可以使用。<strong>sudo apt-get install gedit</strong></p>
+
+
+
+
+<p>google了一下之后发现很多人推荐安装gmate以达到textmate的效果。</p>
+
+
+
+
+<p>安装方法如下：</p>
+
+
+
+
+<p><strong>sudo apt-add-repository ppa:ubuntu-on-rails/ppa </strong></p>
+
+
+
+
+<p><strong>sudo apt-get update </strong></p>
+
+
+
+
+<p><strong>sudo apt-get install gedit-gmate</strong></p>
+
+
+
+
+<p>可是在安装过程中出现两个错误。第一个错误是没有apt-add-repository指令，似乎可以通过</p>
+
+
+
+
+<p><strong>sudo apt-get install python-software-properties</strong></p>
+
+
+
+
+<p>来解决。参考<a href="http://askubuntu.com/questions/38021/how-to-add-a-ppa-on-a-server" target="_blank">这里</a>。</p>
+
+
+
+
+<p>但是最终还是安装不了。</p>
+
+
+
+
+<p>其他几个<a href="http://blog.sudobits.com/2012/03/06/top-10-gedit-plugins-for-programmers/" target="_blank">常见的插件</a>可以安装。</p>
+
+
+
+
+<p><strong>sudo apt-get install gedit-plugins</strong></p>
+
+
+
+
+<p><strong>
+</strong></p>
+
+
+
+
+<p>&nbsp;</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[在Raspberry Pi上安装Ruby/Rails]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/02/21/raspberry-pi-and-rails/"/>
+    <updated>2013-02-21T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/02/21/raspberry-pi-and-rails</id>
+    <content type="html"><![CDATA[<p>Ruby on Rails 目前在国外很火，由于买不起Mac，Raspberry Pi 的Linux环境, 正好用来体验和学习一下Ruby。</p>
+
+
+
+
+<p>装了网卡之后一切安装都变得方便了。</p>
+
+
+
+
+<p>首先当然是Google之了。可是查到的资料不多，而且多数作者也是尝试，没有一个可靠的结论，也不知道运行速度如何。</p>
+
+
+
+
+<p>反正Pi就是用来折腾的，大不了重刷SD卡呗。</p>
+
+
+
+
+<p>#先更新一下</p>
+
+
+
+
+<p><strong>sudo apt-get update </strong></p>
+
+
+
+
+<p>#然后安装Ruby Version Manager（RVM）</p>
+
+
+
+
+<p><strong>curl -L get.rvm.io | bash -s stable --ruby</strong></p>
+
+
+
+
+<p>这里需要等很长时间...有说1小时的，有说3小时的。我决定采纳elinux上的建议，have a sleep and check in the morning.</p>
+
+
+
+
+<p>----------分割线---------zzZZZ</p>
+
+
+
+
+<p>早上起来Ruby已经装好了~~  need to run 'source/home/pi/.rvm/scripts/rvm' in all your open shell window.</p>
+
+
+
+
+<p><strong>ruby -v</strong></p>
+
+
+
+
+<p>ruby 1.9.3p385 (2013-02-06 revision 39114) [armv61-linux-eabi]</p>
+
+
+
+
+<p>#接下来安装rails</p>
+
+
+
+
+<p><strong>gem -v</strong></p>
+
+
+
+
+<p>1.8.25</p>
+
+
+
+
+<p><strong>gem install bundler rails</strong></p>
+
+
+
+
+<p>又要等了。。。好吧，去看会电视剧。。。</p>
+
+
+
+
+<p>----------分割线---------zzZZZ</p>
+
+
+
+
+<p>安装完成。</p>
+
+
+
+
+<p><strong>rails -v</strong></p>
+
+
+
+
+<p>3.2.12</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>后记：</p>
+
+
+
+
+<p>Linux环境下的命令操作让人回想起dos时代的种种，当时进入游戏也是敲键盘。安装程序真是方便，简单的一行命令就可以了。</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>reference:
+<p id="firstHeading" lang="en"><a href="http://elinux.org/RPi_Ruby_on_Rails#Installing_Ruby_on_Rails_on_Raspberry_Pi">RPi Ruby on Rails</a></p>
+<a href="http://rayhightower.com/blog/2012/12/03/ruby-on-raspberry-pi/">Ruby on Raspberry Pi</a></p>
+
+
+
+
+<p><a href="http://ruby-china.org/wiki/install_ruby_guide">如何快速正确的安装 Ruby, Rails 运行环境</a></p>
+
+
+
+
+<p>&nbsp;
+<p lang="en"></p>
+&nbsp;</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[让Raspberry Pi 连上 Wifi]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/02/15/raspberry-pi-link-to-wifi/"/>
+    <updated>2013-02-15T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/02/15/raspberry-pi-link-to-wifi</id>
+    <content type="html"><![CDATA[<p>Raspberry Pi B型支持网络连接，但是本身并不带有网卡。连不了网很多好玩的东西就无法实现了。</p>
+
+
+
+
+<p>所以立即在Amazon 买了无线网卡，见下图。</p>
+
+
+
+
+<p><img class="alignnone" title="wificard" alt="" src="http://storage.live.com/items/B61984F863EE934F!130?a.jpg" width="423" height="317" /></p>
+
+
+
+
+<p>由于Pi只有两个USB接口，只能鼠标键盘轮着插入了。。当然键盘更重要一些。</p>
+
+
+
+
+<p>启动后，网卡自动识别了。有两种方法可以联网。</p>
+
+
+
+
+<p>一种就是startx进入桌面操作，点击wifi config， 然后就和windows系统下一样，搜索wifi, 输入密码，done.</p>
+
+
+
+
+<p>还有一种就是命令输入。</p>
+
+
+
+
+<p>sudo nano /etc/network/interfaces</p>
+
+
+
+
+<p>之后会出现默认配置，如下。</p>
+
+
+
+
+<p><img class="alignnone" title="wificonfig" alt="" src="http://storage.live.com/items/B61984F863EE934F!131?a.jpg" width="423" height="317" /></p>
+
+
+
+
+<p>修改成以下内容：</p>
+
+
+
+
+<p>auto lo</p>
+
+
+
+
+<p>iface lo inet loopback<br />
+iface eth0 inet dhcp</p>
+
+
+
+
+<p>allow-hotplug wlan0       #热插拔<br />
+auto wlan0                          #默认使用wlan0设备名<br />
+iface wlan0 inet dhcp     #DHCP获取<br />
+wpa-ssid "yyy"                   #网络名称<br />
+wpa-psk "xxx"                    #密码</p>
+
+
+
+
+<p>修改好了之后</p>
+
+
+
+
+<p>sudo /etc/init.d/networking restart 运行</p>
+
+
+
+
+<p>可以看pi store、可以上网啦！</p>
+
+
+
+
+<p><img class="alignnone" title="pistore" alt="" src="http://storage.live.com/items/B61984F863EE934F!132?a.jpg" width="423" height="317" /></p>
+
+
+
+
+<p><img class="alignnone" title="pinet" alt="" src="http://storage.live.com/items/B61984F863EE934F!133?a.jpg" width="423" height="317" /></p>
+
+
+
+
+<p>reference:</p>
+
+
+
+
+<p><a title="Permanent Link to How To: WiFi on your Raspberry PI" href="http://pingbin.com/2012/12/setup-wifi-raspberry-pi/" rel="bookmark">How To: WiFi on your Raspberry PI</a><a href="http://blog.csdn.net/c80486/article/details/8545307" target="_blank">无线网络</a></p>
+
+
+
+
+<p><a href="http://blog.csdn.net/c80486/article/details/8545307" target="_blank">使用WIFI网卡连接</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pi的root权限]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/02/13/pi-root/"/>
+    <updated>2013-02-13T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/02/13/pi-root</id>
+    <content type="html"><![CDATA[<p>在玩几个简单的指令时, 出现了bc 指令不能找到的问题</p>
+
+
+
+
+<p>bash bc: command not found</p>
+
+
+
+
+<p>于是google之，可能是没有安装的原因，但是试了apt-get install bc，出现了权限。</p>
+
+
+
+
+<p>继续google，Debian squeeze 并没有root的密码，而是采用sudo apt-get来实现以root用户运行，或者是用 sudo su。用su pi切换回非root用户。</p>
+
+
+
+
+<p>试了一下，貌似还是无法找到bc的安装。:'(</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[在pi上学习linux]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/02/12/learning-linux-on-pi/"/>
+    <updated>2013-02-12T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/02/12/learning-linux-on-pi</id>
+    <content type="html"><![CDATA[<p>之前没怎么接触过linux，只在研究生课程computer vision上用过ubuntu。因此在大多数人拿到raspberry pi一脸兴奋的时候，我却登陆和关机都无从下手。</p>
+
+
+
+
+<p>当时从用户手册知道了进入图形界面的指令:</p>
+
+
+
+
+<p><strong> startx</strong></p>
+
+
+
+
+<p>然后等我想关机的时候就傻眼了（好吧, 关电源也行），手册里没有说，只能借助强大的google了。查到关机指令是:</p>
+
+
+
+
+<p><strong> sudo shutdown-h now</strong></p>
+
+
+
+
+<p>当时也没多想。最近开始在<strong><a href="http://www.codecademy.com/" target="_blank">codecademy</a></strong>看ruby，自然就看了点linux，方才恍然大悟。原来x就是图形接口 window 的w 下一个字母就是x。</p>
+
+
+
+
+<p>于是暂时搁置用virtualbox安装ubuntu，直接上手用pi来玩一玩吧。</p>
+
+
+
+
+<p>用户登录输入pi，密码是raspberry之后（不可见，当时又吓了我一跳，哎，初学者）出现：</p>
+
+
+
+
+<p><strong> pi@raspberrypi ~ $</strong></p>
+
+
+
+
+<p>pi是用户名，@后面是主机名，~表示在根目录，$是一般用户的提示字符(root用户是#)</p>
+
+
+
+
+<p>好了，下面按照《鸟哥的私房菜》敲几个指令。</p>
+
+
+
+
+<p><strong> pi@raspberrypi ~ $ date   #显示时间</strong></p>
+
+
+
+
+<p>时间显示是Sun Dec 16 23:34:16 GMT 2012 咳 暂时没有联网 结果就是这样了。</p>
+
+
+
+
+<p>还可以改格式，方法是后面加上 <strong>+%Y/%m/%d</strong></p>
+
+
+
+
+<p><strong> echo $LANG    #显示语言</strong></p>
+
+
+
+
+<p><strong> LANG=en_US    #修改语言</strong></p>
+
+
+
+
+<p>我当时装的时候选择的语言是 en_GB</p>
+
+
+
+
+<p>在文本模式下的字体实在太小了，暂时没找到方法改变，只好进窗口模式下的terminal敲码了。</p>
+
+
+
+
+<p><strong>cal    # 显示日历 cal 2013 #显示今年的日历啦</strong></p>
+
+
+
+
+<p>ps. 最近越来越喜欢我的TV了，VGA的线接笔记本当扩展屏，HDMI的线接pi当第二主机显示屏，可惜新家还没有“锅”，不然还能看个电视，哎，当初怎么就没狠心买一个HD的呢...</p>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: WordPress | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/wordpress/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2015-05-24T20:21:36+08:00</updated>
+  <updated>2015-06-14T17:46:08+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,36 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[从Wordress迁移文章到Octopress]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2015/06/14/migrate-posts-from-wordpress-to-octopress/"/>
+    <updated>2015-06-14T17:17:43+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2015/06/14/migrate-posts-from-wordpress-to-octopress</id>
+    <content type="html"><![CDATA[<p>奸商<em>Godaddy</em>发邮件说不再提供免费主机(当年买域名时所赠)并要求尽早迁移，使得我不得不打开沉睡已久的老博客，将之前的博客也搬家到Octopress。</p>
+
+<p>搬家自古以来就是件头疼的事情，当年把人人网上近百篇日志，以纯手工的方式，复制黏贴到WordPress上的悲惨经历仍历历在目。</p>
+
+<p>好在从WordPress迁移到Octopress的工作已经有无数前辈进行了摸索，并制造了自动化工具。</p>
+
+<!-- more -->
+
+
+<p>首先进入WP后台对内容进行导出，下载生成的xml文件，命名为"wordpress.xml"并放在Octopress的根目录下面。</p>
+
+<p>接下来下载<a href="https://gist.github.com/1394128">这个程式</a>并放到新建的utils目录下。</p>
+
+<p>先运行<code>gem install hpricot</code>，然后运行 <code>ruby -r "./utils/wordpressdotcom.rb" -e "Jekyll::WordpressDotCom.process"</code>。</p>
+
+<p>命令窗口提示import了169篇文章，这些文章可以在source/_posts目录里看到。</p>
+
+<p>如果你在WordPress里用的是和我一样的?P一类的路径，或者说别名和标题一样也是中文，那么很不幸，需要将别名改成英文。当然也有现成的转化工具可以用来实现，但我最终还是手动翻译了。</p>
+
+<p>后续还有不少格式、图片链接的问题(懒得处理了&hellip;)，但是基本内容已经搬运成功了。</p>
+
+<p><sub>参考: <a href="http://blog.yorkxin.org/posts/2011/11/26/import-from-wpcom-to-octopress/">Octopress搬家记</a>，<a href="http://blog.dayanjia.com/2012/04/migration-to-octopress-from-wordpress/">从Wordpress迁移到Octopress</a></sub></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[WordPress迁移至Windows主机]]></title>
@@ -30,6 +60,141 @@
 <h1>未完成</h1>
 
 <blockquote><p>WordPress 数据迁移</p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[将wordpress博客搬家到二级目录]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/10/07/move-wordpress-to-secondery-directory/"/>
+    <updated>2013-10-07T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/10/07/move-wordpress-to-secondery-directory</id>
+    <content type="html"><![CDATA[<p>未来有可能将个人博客升级成个人网站，所以需要把博客放在二级目录下。整个搬家过程持续了将近一个半小时。</p>
+
+
+
+
+<p>首先，进入wp后台，在设置-常规里把wordpress URI 和 site address URL 全部指向lawrencesun.info/blog，保存。</p>
+
+
+
+
+<p>第二步就是内容搬迁，把根目录下所有wp内容全部移动到新目录blog文件夹中。这步可以使用ftp工具(leapftp, cuteftp等)，使用过程中发现，考虑到权限等原因还是用主机空间的ftp manager更方便。</p>
+
+
+
+
+<p>很多教程里说要复制 <a title="Glossary" href="http://codex.wordpress.org/Glossary#.htaccess">.htaccess</a>文件，由于我的服务器是win，所以找不到该文件。另外我的固定链接是非常难看的默认模式，好处是不用修改，搬家过程中自动转换了。</p>
+
+
+
+
+<p>由于我主域名还没有建设，所以暂时把根目录访问链接到二级目录了。这步需要将index.php复制到根目录，并把require<tt>('./wp-blog-header.php');改成require('./wordpress/wp-blog-header.php');</tt></p>
+
+
+
+
+<p>搬家完成后还有一些善后工作。主要就是原有文章内部的链接和上传图片的链接，没找到便捷的方法，只有用文本视图编辑文章里面链接和插图的路径了，加一个/blog即可，好在我上传本地的图片不多。</p>
+
+
+
+
+<p>参考文献：中文官网上的翻译水平很次，看起来费劲，还是看英文的准确，外加google就不多说了。</p>
+
+
+
+
+<p><a href="http://codex.wordpress.org/Moving_WordPress">http://codex.wordpress.org/Moving_WordPress</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[个人博客图床的另一种选择 Picasa]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/09/16/image-hosting-using-picasa/"/>
+    <updated>2013-09-16T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/09/16/image-hosting-using-picasa</id>
+    <content type="html"><![CDATA[<p>图片存放一直是个问题，放主服务器速度快，安全稳定，但是占空间和流量。之前用<a title="如何使用skydrive网盘分享图片至博客" href="http://lawrencesun.info/?p=645">skydrive</a>来做图床，比较稳定，但是速度比较慢，另外链接产生太麻烦。</p>
+
+
+
+
+<p>这时候强大的谷歌又登场了，这就是<a href="http://picasa.google.com/">Picasa</a>。</p>
+
+
+
+
+<p>经过测试，图片载入速度很快，载入方法也比较简单。就是把所需图片上传到picasa的相册，并选择共享。然后使用wordpress 的 <a href="http://wordpress.org/extend/plugins/easy-picasa/">easy picasa</a>插件，在撰写新文章时add picasa image。</p>
+
+
+
+
+<p>由于现在许多图片是手机拍摄，所以手机本地上传必不可少，我用的是<a href="https://play.google.com/store/apps/details?id=larry.zou.colorfullife">picasa tool</a>。</p>
+
+
+
+
+<p>此外wp还有其他类似的插件，手机端也有不少相关应用选择。</p>
+
+
+
+
+<p>接下来一段时间的图床首选就是picasa了。当然也不是没有隐忧，比如谷歌的被墙和大扫除问题。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[如何使用skydrive网盘分享图片至博客]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/02/12/image-sharing-by-skydrive/"/>
+    <updated>2013-02-12T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/02/12/image-sharing-by-skydrive</id>
+    <content type="html"><![CDATA[<p>#突然发现博客已经成立两年了，年前在godaddy“续约”到2017年，为了庆祝续约，把各个插件都更新了下，没发现有什么区别。</p>
+
+
+
+
+<p>然后发现当时建立起网站的过程没有记录下来，只能祈祷博客别轻易崩溃了。</p>
+
+
+
+
+<p>所以我想，以后还是要记录一下学习和操作的部分内容，一来方便自己查阅，二来也能为他人提供帮助。虽然以现在的访问量来说（接近于0），后者暂时只是官方措辞罢了。#</p>
+
+
+
+
+<p>在博客里插入图片总是让人头疼。最常见的当然是由本地上传到wp目录下，好处是图片不易丢失，缺点就是占用本身就不大的空间（就博主来说，用的是godaddy的免费空间），而且要拷贝文章去其他网站的时候，图片往往就变成叉叉了。之前几个文章的插图出现叉叉就是因为文章拷贝过来后链接不可用。</p>
+
+
+
+
+<p>还有一种就是使用URL链接，好处是省流量，缺点是容易失效。常用的图床有flickr等，前几天发现skydrive也可以用。应该说效果不错，skydrive是微软的云端硬盘，支持多客户端，相对比较稳定，空间大小也够慷慨(7G)。</p>
+
+
+
+
+<p>首先，登陆skydrive，上载图片后，选择“共享”。</p>
+
+
+
+
+<p>然后点击获取链接，选择“公共”，复制给出的链接，点击完成。</p>
+
+
+
+
+<p>复制链接中“redir?resid=”后面部分，这里简称ID。</p>
+
+
+
+
+<p>最后你需要的url就是：http://storage.live.com/items/ID</p>
+
+
+
+
+<p>在wp编辑器里选择从url添加图片，大功告成。</p>
+
 ]]></content>
   </entry>
   

@@ -1,0 +1,789 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Lawrence Sun</title>
+	<meta name="author" content="Lawrence Sun">
+
+	
+<meta name="description" content="Dec 20th, 2013 Octopress Deploying Octopress to Github Pages and Custom Domain After Set up Octopress blog, I tried to deploying it to my own &hellip;">
+
+
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Lawrence Sun" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://voice.lawrencesun.info/blog/page/6/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+	<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'> -->
+
+	<link href='http://fonts.useso.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<script src="http://ajax.useso.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+	<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+
+<link href="http://fonts.useso.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.useso.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("yuliang1987@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+	
+</div>
+<hgroup>
+  <h1><a href="/">Lawrence Sun</a></h1>
+  
+    <h2>Hello World</h2>
+  
+</hgroup>
+
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		<!--
+			<a class="email" href="mailto:yuliang1987@gmail.com" title="Email">Email</a>
+		 -->
+		
+		
+		
+			<a class="twitter" href="http://twitter.com/sunyuliang" title="Twitter">Twitter</a>
+		
+        
+            <a class="weibo" href="http://www.weibo.com/ylsun" title="Weibo">Weibo</a>
+        
+		
+			<a class="github" href="https://github.com/lawrencesun" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner">
+<div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-20T08:16:04+08:00" data-updated="true" itemprop="datePublished">Dec 20<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>Octopress</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/12/20/deploy-octopress-to-github-page-and-custom-domain/" itemprop="url">Deploying Octopress to Github Pages and Custom Domain</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>After <a href="/blog/2013/12/19/set-up-octopress"><em>Set up Octopress blog</em></a>, I tried to deploying it to my own <em>subdomain</em>.</p>
+
+<p>First, create a new Github repository called &ldquo;username.github.io&rdquo;. e.g. I created a new repo &ldquo;lawrencesun.github.io&rdquo;.</p>
+
+<p>Then run:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rake</span> <span class="n">setup_github_pages</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Copy URL of this new repo.</p>
+
+<p>Next run:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rake</span> <span class="n">generate</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">deploy</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Run <em>rake preview</em> to see the blog at <em>localhost:4000</em></p>
+
+<p>Commit to source branch:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">git</span> <span class="n">add</span> <span class="o">.</span>
+</span><span class='line'><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;message&quot;</span>
+</span><span class='line'><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">source</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Octopress blog could be seen through <em>username.github.com</em> few minutes later.</p>
+
+<p>If you want to deploy it to your own domain like me,
+create a new CNAME record in domain name server.</p>
+
+<p>e.g. I went to DNS manage in the Godaddy, and added <em>voice</em> as the name, <strong>CNAME</strong> as the type and <em>lawrencesun.github.com</em> as the value.</p>
+
+<p>When typing in the new subdomain(in my case, voice.lawrencesun.info), it will point to a Github 404.</p>
+
+<p>Then run this to create a CNAME file in source directory:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">echo</span> <span class="s1">&#39;_yourdomain.com_(e.g. voice.lawrencesun.info)&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">source</span><span class="o">/</span><span class="no">CNAME</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Finally, run <em>rake generate</em> and <em>rake deploy</em> and git commit as well.</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-19T10:13:05+08:00" data-updated="true" itemprop="datePublished">Dec 19<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>Octopress</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/12/19/set-up-octopress/" itemprop="url">Hello Octopress</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>I have a blog built by powerful Wordpress and quite like it. There are plenty of great plugins and themes to help you customize blog.</p>
+
+<p><a href="http://octopress.org"><strong>Octopress</strong></a> is definately built for hackers. Pure words and command lines. So I think building a Octopress blog would be a good way to learn and share.</p>
+
+<p>The <em>advantages</em> of Octopress:</p>
+
+<ul>
+<li>static page</li>
+<li>markdown</li>
+<li>hosting on github pages</li>
+</ul>
+
+
+<p>Setup Octopress is easy if you are familar with ruby and git.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">git</span> <span class="nb">clone</span> <span class="ss">git</span><span class="p">:</span><span class="sr">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">imathis</span><span class="o">/</span><span class="n">octopress</span><span class="o">.</span><span class="n">git</span> <span class="n">octopress</span>
+</span><span class='line'><span class="n">cd</span> <span class="n">octopress</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then install dependencies and default theme.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
+</span><span class='line'><span class="n">bundler</span> <span class="n">install</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">install</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using third-party theme</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">git</span> <span class="nb">clone</span> <span class="n">git</span><span class="vi">@github</span><span class="o">.</span><span class="n">com</span><span class="ss">:USERNAME</span><span class="o">/</span><span class="no">THEMENAME</span><span class="o">.</span><span class="n">git</span> <span class="o">.</span><span class="n">themes</span><span class="o">/</span><span class="no">THEMENAME</span>
+</span><span class='line'><span class="n">rake</span> <span class="s2">&quot;install[THEMENAME]&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-26T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/startup/'>Startup</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/11/26/my-startup-weekend-experience-and-lessons-learned/" itemprop="url">My Startup Weekend Experience and Lessons Learned</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>Last weekend, I attended my first <a href="http://startupweekend.org">startup weekend </a>and I had an incredible crazy experience.</p>
+
+<p>Before this event, I was quite overwhelming, especially when I was asked to choose the type (tech, design, non-tech) I would like to attend. Because I had little knowledge about technical, design and marketing. Although I was familiar with technical things, and could write some simple code, I still chosen a non-tech ticket.</p>
+
+<p>There were over 50 people appeared on the first night. Half developer, half marketing. After  &#8217;pizza dinner&#8217;, 25 ideas finally pitched. Then I talked to some of the team leaders and voted. After top ideas picked, I joined a team called loyally. The reason for that was I was doing the similar things at the moment, helping small business to grow better in the digital world. Our goal was to build up an app to replace the paper loyalty card and analysis customers&#8217; data. Apart from me, we got 3 marketing people and 1 android developer.</p>
+
+<p>We brainstormed about this idea and drafted the famous business model canvas. It was my first time to get canvas done.</p>
+
+<p><img class="picasa" alt="" src="http://lh6.ggpht.com/-6uO_dCX2xz4/UpPb-N9apSI/AAAAAAAAAHs/aVAVb65FY4U/s400/2013_11_25_23_23.jpg" width="320" height="240" /></p>
+
+<p>We finished around 12.00 on Friday. When I went back home, and couldn&#8217;t sleep. I built a landing page powered by WordPress and <a href="http://zfer.us/MvpcY">Launch Effect</a> and run it on my Mac.</p>
+
+<p>I went back and grabbed a coffee after 3 hours&#8217; sleep. My landing page was kindly and silently rejected by the team leader. This job was transferred to another marketing teammate using shinning <a href="http://unbounce.com">Unbounce</a> although she didn&#8217;t even know it. I was a little bit disappointed but I felt great coz I knew how to set up and test a WordPress website on local through this.</p>
+
+<p>Three of us got out of the building, including me. We started at the coffee shop downstairs and finally chatted with 12 people in independent shops before lunch. I wasn&#8217;t contributed too much on this, I just talked to one assistant. After lunch, I set up the free domain and we got google app as corporate tool. We talked with a mentor and got quite excited about the data we might got and what we could do with that. So I suggested I could build up a mock-up of this data analysis platform.</p>
+
+<p>Then I spent the rest of the day building this website using html5 &amp; bootstrap. At end of the day, we got a website, a landing page, a sign in screen of android app, some twits&#8230;</p>
+
+<p><img class="picasa" alt="" src="http://lh3.ggpht.com/-SwN3IylbvA0/UpPm4Ac36GI/AAAAAAAAAIg/cxCZ5DhMyDo/s400/1.png" width="320" height="222" /></p>
+
+<p>Then our team leader worried about the hard part of data analysis, the reach of customers and financing model. We ended up with confuse.</p>
+
+<p>Sunday was the last day. The moral of our team went down and down, because the team leader decided to shift the idea and abolished the data thing. Our selling point became the referral and sharing. I felt disappointed  because I was quite fancy about the data idea even it&#8217;s hard to deal with. But I didn&#8217;t speak out  this because I was really tired and kind of lost. Then we discussed the approaches and financing models based on the assumptions rather than validated truth. I couldn&#8217;t believe the leader say he was thrilled after a shitty morning. Everyone went back to the comfort zones. Marketing people started to think about key words, promotion, marketing strategies&#8230; Our developer still focused on his android app. And I went back to modify my website. I almost lost my enthusiasm.</p>
+
+<p>Time flies, and we failed at the trial presentation. The presentation was really boring and unclear. The final pitch started soon after this. Our final modified presentation was presented by another teammate. Unfortunately, there was some problem with projection. Our App demo basically went well. Obviously our project didn&#8217;t get the attention and the interest of judges. I could see from their faces and questions.</p>
+
+<p>We could not win the battle. Winner was the team who built up the prototype app and hardware to control the growing of plants in pot. I liked the idea, it&#8217;s the future.</p>
+
+<p>However, I was surprised about what we could build up within just two days. The last time I worked so hard was the day before the deadline of my dissertation. I really liked the startup atmosphere, impressed by the energy and the enthusiasm people showed.</p>
+
+<p><img class="picasa" alt="" src="http://lh3.ggpht.com/-tbo6LOvJy8M/UpPb_uw9VdI/AAAAAAAAAHw/rDqBWSOMCzE/s400/2013_11_25_23_23.jpg" width="320" height="212" />
+<h2><strong><span style="text-decoration: underline;">Lessons Learned</span></strong>:</h2>
+1. <strong>Simple</strong></p>
+
+<p>At the end, a clear story should be told. What&#8217;s problem and what&#8217;s solution? I saw one team showed a complicated prototype, which was interesting, but hard to get the point.</p>
+
+<p>2. <strong>Team</strong></p>
+
+<p>I think our team was quite balanced. And we were all hard-working. The problem was, we could not corporate well. Almost everyone was doing their own things. There was little communication between the marketing teammates and the developer. The team leader didn&#8217;t show enough enthusiasm and optimisation.</p>
+
+<p>3. <strong>Track</strong></p>
+
+<p>Initially, we partly focus on the inconvenience of  having so many loyalty cards in wallet / losing cards etc. But that is the problem of consumers, and we wanted to get the money from business. There was a gap here. We couldn&#8217;t solved this well. What we focus on in the last few hours was kind of off rail. We didn&#8217;t go back to the business model canvas, I think that&#8217;s why we jumped a lot.</p>
+
+<p>4. <strong>Validation</strong></p>
+
+<p>We didn&#8217;t do the validation on Sunday. We just got off the building once and built up something based on a unclear idea. The winner got a very &#8216;M&#8217; product, but they had got more than 10 people to pre-order their unfinished product.</p>
+
+<p>5. <strong>Skill</strong></p>
+
+<p>I should learn about web development, as well as interpersonal skills.</p>
+
+<p>&nbsp;
+<h2><span style="text-decoration: underline;"><strong>Tools used</strong></span>:</h2>
+1. <a href="http://aws.amazon.com">Amazon web service</a> (free from sponsor, little bit complicated)</p>
+
+<p>2. <a href="http://www.go.co">Go.co</a> (free from sponsor, nice UI)</p>
+
+<p>3. <a href="http://www.google.com/intx/en_uk/enterprise/apps/business/">Google App</a> (free from sponsor)</p>
+
+<p>3. <a href="http://unbounce.com">Unbounce</a> (powerful but pricy)</p>
+
+<p>4. <a href="http://zfer.us/MvpcY">Launch Effect</a> (I kinda like it)</p>
+
+<p>5. <a href="http://www.sparkol.com?aid=158722">Sparkol</a> (free trial, create animation video)</p>
+
+<p>6. <a href="http://www.techsmith.com/jing.html‎">Jing</a> (screenshot, recording)</p>
+
+<p>7. Great workspace and food from <a href="http://manchester.techhub.com/">TechHub</a></p>
+
+<p>&nbsp;</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-02T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/startup/'>Startup</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/11/02/get-10-off-my-coffee/" itemprop="url">Get 10% Off My Coffee</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>I couldn&#8217;t believe I finally went into Starbucks and asked for 10% off my medium latte.</p>
+
+<p>I haven&#8217;t asked for discount in my life before today. Even I was overcharged, I rarely argued that.</p>
+
+<p>&#8220;Can I get 10% off ? &#8221; I asked the staff with (disinclined) smile.</p>
+
+<p>The staff looked surprised. So I asked it again.</p>
+
+<p>&#8220;What.. Why?&#8221;</p>
+
+<p>&#8220;It&#8217;s an assignment of my business course.&#8221;</p>
+
+<p>&#8220;Well&#8230; do you have a loyalty card or &#8230;? &#8221;</p>
+
+<p>&#8220;No. I just want to get 10% off.&#8221;</p>
+
+<p>&#8220;Sorry, no&#8230;&#8221;</p>
+
+<p>Failed as imagined. But I felt good.</p>
+
+<p>I usually don&#8217;t take the first step out. I lived in fear of failure, rejection, being embarrassed in public&#8230;</p>
+
+<p>When I looked back, I thought it wasn&#8217;t a big deal. I saw a lot of people asking for discount or other ridiculous requests.</p>
+
+<p>But the failure today means a lot to me, a least I tried, and I am prepared to fail again.</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-31T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/startup/'>Startup</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/10/31/some-thoughts-on-copywrite/" itemprop="url">Some Thoughts on Copywriting</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>I learned something about copywriting two weeks ago. I was excited about it. I felt I got the golden key to marketing coz I got to know AIDA, which stands for Attetion, Interest, Desire, Action. I thought it was way better than a formal sales letter. In my experience, I seldom read the whole boring letters and usually throw them into trash directly. I also learned some tricks, like bold font and misspelling to attract attentions, short width layout leading a comfort reading, adding interesting P.S. I knew how to find a charming subtitle from Digg or reddit.</p>
+
+<p>So I implement this methodology. I found around 20 email addresses of restaurants and salons (which are my targeting customers). I started the letter with some questions like Do you have your own mobile app? Do you know more than 60% people use smartphones? Do you know over there are 500,000,000 app downloading per day? I presented what we provide and what they could gain from it and how to action in the following parts. I also added a limited offer, trying to urge them make a quick decision. I put a subtitle called seriously you will have your own app for free. Clicked send. Besides, I post the same letters to some of these business using the hand writing envelope(coz I think it will increase the open chances).</p>
+
+<p>Ok, good news, opening rate over 60%. There is always a but following. 0 reply.</p>
+
+<p>I had a thought today. They probably close it after reading the first line. Why should they bother mobile apps? They care about traffic, customer loyalty, and more importantly, revenue. Most of them may not know what is app. Although I explained the relationship between the features and benefits below, they probably lose the interesting at first.</p>
+
+<p>Next time I will change the Attention part more relevant to customers.</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-31T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/startup/'>Startup</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/10/31/just-do-it/" itemprop="url">Just Do It</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>When I decided to engage myself to startup, I was not ready for the crucial reality, though I knew over 90% startups failed. Most of the startup stories are about success. Now I prefer the stories about failure.</p>
+
+<p>After getting to know more about lean startup from the LeanConf, I realised I should act, as soon as possible.</p>
+
+<p>One of the major problem is, I always tend to stay in the comfort zone. I dreamed a dream that customers would come to me. So I spent a lot of time to make my figure more shining. I have never met a single customer. I am introverted and don&#8217;t like to talk a lot with people. But now I know I must get out and talk to customers.</p>
+
+<p>Another problem is, I am not confident enough about the products. I think mobile app for small business is a good idea. Again, since I haven&#8217;t talk to them, I don&#8217;t know if it solved their problems.</p>
+
+<p>What I learned from other entrepreneurs is that fail as soon as possible. Otherwise you are killing your time and money.</p>
+
+<p>So I will get out to reach potential customers, and this time I shall set a deadline for myself.</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-28T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/startup/'>Startup</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/10/28/leanconf-in-manchester/" itemprop="url">#LeanConf in Manchester</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>I spent a wonderful weekend here in Manchester &#8212;- nice food and 10+ cups of coffee throughout the day, 4 or 5 bottles of beer at night &#8230; sounds nice, innit?</p>
+
+<p>Plus, I learned quite a lot about lean startup.</p>
+
+<p>One year ago, I got some vague ideas of lean startup from <a href="http://steveblank.com/">Steve Blank</a>&#8217;s online course. I haven&#8217;t complete that course and haven&#8217;t read the famous <a href="http://theleanstartup.com/">lean startup book</a>. But after reading plenty of &#8216;inspiring&#8217; posts and quotes like &#8216;Get off your office&#8217;, I felt exciting, wanted to &#8216;Follow your heart&#8217;, quit job and Rock&#8230;</p>
+
+<p>Then I found that I didn&#8217;t know how to implement. First of all, talking to customers was not that easy. I didn&#8217;t know who to talk, what to talk and how to talk. Secondly, what the hell is MVP? Is it a paper scratch, a website&#8230;? Besides, I didn&#8217;t have confidence of my skills and ideas. So few weeks later, I lose my enthusiasm.</p>
+
+<p>I found <a href="http://www.leanconf.co.uk/">LeanConf</a> from the <a href="https://www.startupdigest.com/‎">startupdigest</a> in late summer. I thought it will be beneficial for me to meet up similar mind guys and learn from the (un)successful founders. And it would be held in Manchester thanks to Ben<strong> </strong>@benaldred and Manuel<strong> </strong>@Digital_tonic. In addition, it offered 2 for 1 tickets including <a href="http://manchester.startupweekend.org/">startup weekend</a>.</p>
+
+<p>So I attended this conference which was amazing. Tomorrow I will write what I learned from it.</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-14T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/startup/'>Startup</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/10/14/my-journey-as-a-wantrepreneur-1/" itemprop="url">My Journey as a Wantrepreneur &#8211; $1 Story</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>I liked the word &#8216;wantrepreneur&#8217; since I saw it. Briefly speaking, I set up a company this summer. After quitting my full-time job, I finally started my business this month.</p>
+
+<p>All I did in the last two weeks was exactly a wantrepreneur would do. Buying a domain, setting up a website, printing business cards, renting a office(well, I just bought a virtual one coz I didn&#8217;t get enough money&#8230;), preparing keynotes&#8230;etc. BUT, I haven&#8217;t touched a single customer! I was afraid of being turned town, no confidence of my skills and products.</p>
+
+<p>I know many people like myself want to set up own business and live a freedom life. I read the blogs, ebooks of &#8216;How to xxx&#8217; all day and all of the night. And, of course, the overnight millionaire stories of start-ups.</p>
+
+<p>I found &#8216;How to make a $1000 a month&#8217; on <a href="http://www.appsumo.com" target="_blank">Appsumo</a> few days ago. I was suspicious at first about this kind of &#8216;How to&#8217; things and even now. After seeing the reviews and related videos, I thought,  why not have a try. So I joined today.</p>
+
+<p>The first class is to make $1 from friends. I know I could easily get $1 from my parents and roommate friends. I want to do something different. So I posted something like &#8216;I am taking this course and want to make $1 to begin my business. Could you help me out. &#8217; and &#8216;Not scam.&#8217; on Facebook and  then left my Paypal Address. I felt nervous and embarrassed, my heart rated up.</p>
+
+<p>10 minutes later, I received a message from my classmate, &#8216;Hi longtime no see.&#8217; Well yes, I haven&#8217;t log in Facebook for ages.</p>
+
+<p>Then I realized I should try other methods. While most of my friends (in China) were in sleep at that time,  I sent a message to one of my close friends in USA. She agreed after my explanation but the problem was that she didn&#8217;t use Paypal.</p>
+
+<p>Not a victory yet. But I feel good now coz I will ask for money from customers one day.</p>
+
+<p>Updated: here is the money I got, not in my hand though&#8230;</p>
+
+<p><img class="picasa" alt="" src="http://lh3.ggpht.com/-KaS7ZhcdvG0/Ul1E9CsN5AI/AAAAAAAAAGc/VuVSHSStS2c/s400/mmexport1381843683970.jpg" width="180" height="240" /><img class="picasa" alt="" src="http://lh5.ggpht.com/-L1ccJyeA0-4/Ul1Od2mMp-I/AAAAAAAAAGs/EggQgs0_HYY/s400/mmexport1381846615893.jpg" width="179" height="240" /></p>
+
+<p>PS. If you like my story&#8230; If you have read through this&#8230; <del>Please donate £1 more or less on the right sidebar.</del> OR you can just close this window and say some words.</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-07T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/wordpress/'>WordPress</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/10/07/move-wordpress-to-secondery-directory/" itemprop="url">将wordpress博客搬家到二级目录</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>未来有可能将个人博客升级成个人网站，所以需要把博客放在二级目录下。整个搬家过程持续了将近一个半小时。</p>
+
+<p>首先，进入wp后台，在设置-常规里把wordpress URI 和 site address URL 全部指向lawrencesun.info/blog，保存。</p>
+
+<p>第二步就是内容搬迁，把根目录下所有wp内容全部移动到新目录blog文件夹中。这步可以使用ftp工具(leapftp, cuteftp等)，使用过程中发现，考虑到权限等原因还是用主机空间的ftp manager更方便。</p>
+
+<p>很多教程里说要复制 <a title="Glossary" href="http://codex.wordpress.org/Glossary#.htaccess">.htaccess</a>文件，由于我的服务器是win，所以找不到该文件。另外我的固定链接是非常难看的默认模式，好处是不用修改，搬家过程中自动转换了。</p>
+
+<p>由于我主域名还没有建设，所以暂时把根目录访问链接到二级目录了。这步需要将index.php复制到根目录，并把require<tt>(&#8216;./wp-blog-header.php&#8217;);改成require(&#8216;./wordpress/wp-blog-header.php&#8217;);</tt></p>
+
+<p>搬家完成后还有一些善后工作。主要就是原有文章内部的链接和上传图片的链接，没找到便捷的方法，只有用文本视图编辑文章里面链接和插图的路径了，加一个/blog即可，好在我上传本地的图片不多。</p>
+
+<p>参考文献：中文官网上的翻译水平很次，看起来费劲，还是看英文的准确，外加google就不多说了。</p>
+
+<p><a href="http://codex.wordpress.org/Moving_WordPress">http://codex.wordpress.org/Moving_WordPress</a></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-07T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/10/07/activemodelmassassignmentsecurityerror/" itemprop="url">ActiveModel::MassAssignmentSecurity::Error</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>本来按着agile web development with rails的书，照葫芦画瓢不该有啥问题，结果在create new product时候，ActiveModel::MassAssignmentSecurity::Error 闪亮登场。</p>
+
+<p>错误追踪到product new这行&#8230;此时我的解决错误能力为0。果断求助Google，stackoverflow再显神威。</p>
+
+<p>http://stackoverflow.com/questions/6163759/cant-mass-assign-protected-attributes</p>
+
+<p>solution:</p>
+
+<p>put this into app/models/product.rb</p>
+
+<p><span style="background-color: #f4f4f4; font-family: 'Courier 10 Pitch', Courier, monospace; font-size: 10px; line-height: 18px;">attr_accessible :title, :description, :image_url, :price</span></p>
+
+<p>railscasts is great, mark.</p>
+
+<p>&nbsp;</p>
+
+		
+		
+	</div>
+
+</article>
+
+</div>
+<nav id="pagenavi">
+    
+        <a href="/blog/page/5/" class="prev">Prev</a>
+    
+    
+        <a href="/blog/page/7/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2015 - Lawrence Sun -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			
+
+<script type="text/javascript">
+      var disqus_shortname = 'voicelawrencesun';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-43779948-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+		</div>
+	</div>
+</body>
+</html>

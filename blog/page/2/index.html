@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Oct 26th, 2014 Rails Rails Notes: Make Dropdown Work on Heroku After I deployed a app on Heroku, I found that the Bootstap dropdown menu didn&rsquo; &hellip;">
+<meta name="description" content="Nov 2nd, 2014 Rails Rails Notes: 利用七牛云储存Paperclip图片 之前使用Paperclip来实现Rails应用上传图片的功能, 但是在部署到Heroku时会有无法储存的问题, 每次push都会删除之前上传的图片。 这是因为Heroku不支持动态上传文件, &hellip;">
 
 
 
@@ -107,6 +107,46 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-02T20:37:35+08:00" data-updated="true" itemprop="datePublished">Nov 2<span>nd</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/11/02/railsnotes-storage-paperclip-images/" itemprop="url">Rails Notes: 利用七牛云储存Paperclip图片</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>之前使用<a href="http://voice.lawrencesun.info/posts/2014/09/21/rails-notes-upload-avatar-using-paperclip/">Paperclip来实现Rails应用上传图片的功能</a>, 但是在部署到Heroku时会有无法储存的问题, 每次push都会删除之前上传的图片。</p>
+
+<p>这是因为Heroku不支持动态上传文件, 很多人碰到这种情况, Stackoverflow上推荐的解决方案是使用Amazon S3, 但是这个服务需要信用卡注册, 另外只能免费使用一年。</p>
+
+<p>这无疑会提高试错和测试阶段的成本。经过另一番搜索, 发现<a href="https://portal.qiniu.com/signup?code=3lnzd178edmqa">七牛云</a>储存可以用来实现图片的储存和调用。</p>
+
+
+		
+		<a href="/posts/2014/11/02/railsnotes-storage-paperclip-images/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -481,46 +521,6 @@ run <code>which git</code> to check out the directory.</p>
 
 		
 		<a href="/posts/2014/08/19/how-to-build-wp-blog-and-connect-weixin/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-12T16:14:58+08:00" data-updated="true" itemprop="datePublished">Aug 12<span>th</span>, 2014</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2014/08/12/rails-notes-remember-me-and-reset-password/" itemprop="url">Rails Notes: Remember Me and Reset Password</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><strong>1. Remember Me</strong></p>
-
-<p>We used sessions to store user&rsquo;s id in order to let them sign in just once. However, when users close browser, the session cookie is deleted. So we would like to replace it with a permanent one. Besides, if we store and expose user&rsquo;s id, it could be dangerous.</p>
-
-<p>Therefore, we will generate and store a unique token for each user. First, create a new column to store the token.</p>
-
-
-		
-		<a href="/posts/2014/08/12/rails-notes-remember-me-and-reset-password/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>

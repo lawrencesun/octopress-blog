@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 未分类 | Lawrence Sun]]></title>
+  <link href="http://voice.lawrencesun.info/blog/categories/wei-fen-lei/atom.xml" rel="self"/>
+  <link href="http://voice.lawrencesun.info/"/>
+  <updated>2015-06-14T17:46:08+08:00</updated>
+  <id>http://voice.lawrencesun.info/</id>
+  <author>
+    <name><![CDATA[Lawrence Sun]]></name>
+    <email><![CDATA[yuliang1987@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Another Blog]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/12/27/another-blog/"/>
+    <updated>2013-12-27T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/12/27/another-blog</id>
+    <content type="html"><![CDATA[<p><h4>I set up a new blog based on Octopress at <span style="color: #0000ff;"><strong><em><a href="http://voice.lawrencesun.info"><span style="color: #0000ff;">voice.lawrencesun.info</span></a></em></strong></span>.</h4></p>
+
+]]></content>
+  </entry>
+  
+</feed>

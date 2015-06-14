@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Startup | Lawrence Sun]]></title>
+  <link href="http://voice.lawrencesun.info/blog/categories/startup/atom.xml" rel="self"/>
+  <link href="http://voice.lawrencesun.info/"/>
+  <updated>2015-06-14T17:46:08+08:00</updated>
+  <id>http://voice.lawrencesun.info/</id>
+  <author>
+    <name><![CDATA[Lawrence Sun]]></name>
+    <email><![CDATA[yuliang1987@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[My Startup Weekend Experience and Lessons Learned]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/11/26/my-startup-weekend-experience-and-lessons-learned/"/>
+    <updated>2013-11-26T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/11/26/my-startup-weekend-experience-and-lessons-learned</id>
+    <content type="html"><![CDATA[<p>Last weekend, I attended my first <a href="http://startupweekend.org">startup weekend </a>and I had an incredible crazy experience.</p>
+
+
+
+
+<p>Before this event, I was quite overwhelming, especially when I was asked to choose the type (tech, design, non-tech) I would like to attend. Because I had little knowledge about technical, design and marketing. Although I was familiar with technical things, and could write some simple code, I still chosen a non-tech ticket.</p>
+
+
+
+
+<p>There were over 50 people appeared on the first night. Half developer, half marketing. After  'pizza dinner', 25 ideas finally pitched. Then I talked to some of the team leaders and voted. After top ideas picked, I joined a team called loyally. The reason for that was I was doing the similar things at the moment, helping small business to grow better in the digital world. Our goal was to build up an app to replace the paper loyalty card and analysis customers' data. Apart from me, we got 3 marketing people and 1 android developer.</p>
+
+
+
+
+<p>We brainstormed about this idea and drafted the famous business model canvas. It was my first time to get canvas done.</p>
+
+
+
+
+<p><img class="picasa" alt="" src="http://lh6.ggpht.com/-6uO_dCX2xz4/UpPb-N9apSI/AAAAAAAAAHs/aVAVb65FY4U/s400/2013_11_25_23_23.jpg" width="320" height="240" /></p>
+
+
+
+
+<p>We finished around 12.00 on Friday. When I went back home, and couldn't sleep. I built a landing page powered by WordPress and <a href="http://zfer.us/MvpcY">Launch Effect</a> and run it on my Mac.</p>
+
+
+
+
+<p>I went back and grabbed a coffee after 3 hours' sleep. My landing page was kindly and silently rejected by the team leader. This job was transferred to another marketing teammate using shinning <a href="http://unbounce.com">Unbounce</a> although she didn't even know it. I was a little bit disappointed but I felt great coz I knew how to set up and test a WordPress website on local through this.</p>
+
+
+
+
+<p>Three of us got out of the building, including me. We started at the coffee shop downstairs and finally chatted with 12 people in independent shops before lunch. I wasn't contributed too much on this, I just talked to one assistant. After lunch, I set up the free domain and we got google app as corporate tool. We talked with a mentor and got quite excited about the data we might got and what we could do with that. So I suggested I could build up a mock-up of this data analysis platform.</p>
+
+
+
+
+<p>Then I spent the rest of the day building this website using html5 &amp; bootstrap. At end of the day, we got a website, a landing page, a sign in screen of android app, some twits...</p>
+
+
+
+
+<p><img class="picasa" alt="" src="http://lh3.ggpht.com/-SwN3IylbvA0/UpPm4Ac36GI/AAAAAAAAAIg/cxCZ5DhMyDo/s400/1.png" width="320" height="222" /></p>
+
+
+
+
+<p>Then our team leader worried about the hard part of data analysis, the reach of customers and financing model. We ended up with confuse.</p>
+
+
+
+
+<p>Sunday was the last day. The moral of our team went down and down, because the team leader decided to shift the idea and abolished the data thing. Our selling point became the referral and sharing. I felt disappointed  because I was quite fancy about the data idea even it's hard to deal with. But I didn't speak out  this because I was really tired and kind of lost. Then we discussed the approaches and financing models based on the assumptions rather than validated truth. I couldn't believe the leader say he was thrilled after a shitty morning. Everyone went back to the comfort zones. Marketing people started to think about key words, promotion, marketing strategies... Our developer still focused on his android app. And I went back to modify my website. I almost lost my enthusiasm.</p>
+
+
+
+
+<p>Time flies, and we failed at the trial presentation. The presentation was really boring and unclear. The final pitch started soon after this. Our final modified presentation was presented by another teammate. Unfortunately, there was some problem with projection. Our App demo basically went well. Obviously our project didn't get the attention and the interest of judges. I could see from their faces and questions.</p>
+
+
+
+
+<p>We could not win the battle. Winner was the team who built up the prototype app and hardware to control the growing of plants in pot. I liked the idea, it's the future.</p>
+
+
+
+
+<p>However, I was surprised about what we could build up within just two days. The last time I worked so hard was the day before the deadline of my dissertation. I really liked the startup atmosphere, impressed by the energy and the enthusiasm people showed.</p>
+
+
+
+
+<p><img class="picasa" alt="" src="http://lh3.ggpht.com/-tbo6LOvJy8M/UpPb_uw9VdI/AAAAAAAAAHw/rDqBWSOMCzE/s400/2013_11_25_23_23.jpg" width="320" height="212" />
+<h2><strong><span style="text-decoration: underline;">Lessons Learned</span></strong>:</h2>
+1. <strong>Simple</strong></p>
+
+
+
+
+<p>At the end, a clear story should be told. What's problem and what's solution? I saw one team showed a complicated prototype, which was interesting, but hard to get the point.</p>
+
+
+
+
+<p>2. <strong>Team</strong></p>
+
+
+
+
+<p>I think our team was quite balanced. And we were all hard-working. The problem was, we could not corporate well. Almost everyone was doing their own things. There was little communication between the marketing teammates and the developer. The team leader didn't show enough enthusiasm and optimisation.</p>
+
+
+
+
+<p>3. <strong>Track</strong></p>
+
+
+
+
+<p>Initially, we partly focus on the inconvenience of  having so many loyalty cards in wallet / losing cards etc. But that is the problem of consumers, and we wanted to get the money from business. There was a gap here. We couldn't solved this well. What we focus on in the last few hours was kind of off rail. We didn't go back to the business model canvas, I think that's why we jumped a lot.</p>
+
+
+
+
+<p>4. <strong>Validation</strong></p>
+
+
+
+
+<p>We didn't do the validation on Sunday. We just got off the building once and built up something based on a unclear idea. The winner got a very 'M' product, but they had got more than 10 people to pre-order their unfinished product.</p>
+
+
+
+
+<p>5. <strong>Skill</strong></p>
+
+
+
+
+<p>I should learn about web development, as well as interpersonal skills.</p>
+
+
+
+
+<p>&nbsp;
+<h2><span style="text-decoration: underline;"><strong>Tools used</strong></span>:</h2>
+1. <a href="http://aws.amazon.com">Amazon web service</a> (free from sponsor, little bit complicated)</p>
+
+
+
+
+<p>2. <a href="http://www.go.co">Go.co</a> (free from sponsor, nice UI)</p>
+
+
+
+
+<p>3. <a href="http://www.google.com/intx/en_uk/enterprise/apps/business/">Google App</a> (free from sponsor)</p>
+
+
+
+
+<p>3. <a href="http://unbounce.com">Unbounce</a> (powerful but pricy)</p>
+
+
+
+
+<p>4. <a href="http://zfer.us/MvpcY">Launch Effect</a> (I kinda like it)</p>
+
+
+
+
+<p>5. <a href="http://www.sparkol.com?aid=158722">Sparkol</a> (free trial, create animation video)</p>
+
+
+
+
+<p>6. <a href="http://www.techsmith.com/jing.html‎">Jing</a> (screenshot, recording)</p>
+
+
+
+
+<p>7. Great workspace and food from <a href="http://manchester.techhub.com/">TechHub</a></p>
+
+
+
+
+<p>&nbsp;</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Get 10% Off My Coffee]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/11/02/get-10-off-my-coffee/"/>
+    <updated>2013-11-02T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/11/02/get-10-off-my-coffee</id>
+    <content type="html"><![CDATA[<p>I couldn't believe I finally went into Starbucks and asked for 10% off my medium latte.</p>
+
+
+
+
+<p>I haven't asked for discount in my life before today. Even I was overcharged, I rarely argued that.</p>
+
+
+
+
+<p>"Can I get 10% off ? " I asked the staff with (disinclined) smile.</p>
+
+
+
+
+<p>The staff looked surprised. So I asked it again.</p>
+
+
+
+
+<p>"What.. Why?"</p>
+
+
+
+
+<p>"It's an assignment of my business course."</p>
+
+
+
+
+<p>"Well... do you have a loyalty card or ...? "</p>
+
+
+
+
+<p>"No. I just want to get 10% off."</p>
+
+
+
+
+<p>"Sorry, no..."</p>
+
+
+
+
+<p>Failed as imagined. But I felt good.</p>
+
+
+
+
+<p>I usually don't take the first step out. I lived in fear of failure, rejection, being embarrassed in public...</p>
+
+
+
+
+<p>When I looked back, I thought it wasn't a big deal. I saw a lot of people asking for discount or other ridiculous requests.</p>
+
+
+
+
+<p>But the failure today means a lot to me, a least I tried, and I am prepared to fail again.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Some Thoughts on Copywriting]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/10/31/some-thoughts-on-copywrite/"/>
+    <updated>2013-10-31T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/10/31/some-thoughts-on-copywrite</id>
+    <content type="html"><![CDATA[<p>I learned something about copywriting two weeks ago. I was excited about it. I felt I got the golden key to marketing coz I got to know AIDA, which stands for Attetion, Interest, Desire, Action. I thought it was way better than a formal sales letter. In my experience, I seldom read the whole boring letters and usually throw them into trash directly. I also learned some tricks, like bold font and misspelling to attract attentions, short width layout leading a comfort reading, adding interesting P.S. I knew how to find a charming subtitle from Digg or reddit.</p>
+
+
+
+
+<p>So I implement this methodology. I found around 20 email addresses of restaurants and salons (which are my targeting customers). I started the letter with some questions like Do you have your own mobile app? Do you know more than 60% people use smartphones? Do you know over there are 500,000,000 app downloading per day? I presented what we provide and what they could gain from it and how to action in the following parts. I also added a limited offer, trying to urge them make a quick decision. I put a subtitle called seriously you will have your own app for free. Clicked send. Besides, I post the same letters to some of these business using the hand writing envelope(coz I think it will increase the open chances).</p>
+
+
+
+
+<p>Ok, good news, opening rate over 60%. There is always a but following. 0 reply.</p>
+
+
+
+
+<p>I had a thought today. They probably close it after reading the first line. Why should they bother mobile apps? They care about traffic, customer loyalty, and more importantly, revenue. Most of them may not know what is app. Although I explained the relationship between the features and benefits below, they probably lose the interesting at first.</p>
+
+
+
+
+<p>Next time I will change the Attention part more relevant to customers.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Just Do It]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/10/31/just-do-it/"/>
+    <updated>2013-10-31T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/10/31/just-do-it</id>
+    <content type="html"><![CDATA[<p>When I decided to engage myself to startup, I was not ready for the crucial reality, though I knew over 90% startups failed. Most of the startup stories are about success. Now I prefer the stories about failure.</p>
+
+
+
+
+<p>After getting to know more about lean startup from the LeanConf, I realised I should act, as soon as possible.</p>
+
+
+
+
+<p>One of the major problem is, I always tend to stay in the comfort zone. I dreamed a dream that customers would come to me. So I spent a lot of time to make my figure more shining. I have never met a single customer. I am introverted and don't like to talk a lot with people. But now I know I must get out and talk to customers.</p>
+
+
+
+
+<p>Another problem is, I am not confident enough about the products. I think mobile app for small business is a good idea. Again, since I haven't talk to them, I don't know if it solved their problems.</p>
+
+
+
+
+<p>What I learned from other entrepreneurs is that fail as soon as possible. Otherwise you are killing your time and money.</p>
+
+
+
+
+<p>So I will get out to reach potential customers, and this time I shall set a deadline for myself.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[#LeanConf in Manchester]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2013/10/28/leanconf-in-manchester/"/>
+    <updated>2013-10-28T00:00:00+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2013/10/28/leanconf-in-manchester</id>
+    <content type="html"><![CDATA[<p>I spent a wonderful weekend here in Manchester ---- nice food and 10+ cups of coffee throughout the day, 4 or 5 bottles of beer at night ... sounds nice, innit?</p>
+
+
+
+
+<p>Plus, I learned quite a lot about lean startup.</p>
+
+
+
+
+<p>One year ago, I got some vague ideas of lean startup from <a href="http://steveblank.com/">Steve Blank</a>'s online course. I haven't complete that course and haven't read the famous <a href="http://theleanstartup.com/">lean startup book</a>. But after reading plenty of 'inspiring' posts and quotes like 'Get off your office', I felt exciting, wanted to 'Follow your heart', quit job and Rock...</p>
+
+
+
+
+<p>Then I found that I didn't know how to implement. First of all, talking to customers was not that easy. I didn't know who to talk, what to talk and how to talk. Secondly, what the hell is MVP? Is it a paper scratch, a website...? Besides, I didn't have confidence of my skills and ideas. So few weeks later, I lose my enthusiasm.</p>
+
+
+
+
+<p>I found <a href="http://www.leanconf.co.uk/">LeanConf</a> from the <a href="https://www.startupdigest.com/‎">startupdigest</a> in late summer. I thought it will be beneficial for me to meet up similar mind guys and learn from the (un)successful founders. And it would be held in Manchester thanks to Ben<strong> </strong>@benaldred and Manuel<strong> </strong>@Digital_tonic. In addition, it offered 2 for 1 tickets including <a href="http://manchester.startupweekend.org/">startup weekend</a>.</p>
+
+
+
+
+<p>So I attended this conference which was amazing. Tomorrow I will write what I learned from it.</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<p>&nbsp;</p>
+
+]]></content>
+  </entry>
+  
+</feed>
