@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Startup Web or Native Apps Although my first product(and few more) in my beta company(means it haven&#8217;t been registered yet&#8230; ) was &hellip;">
+<meta name="description" content="CS/WEB, Ruby Start Using Heroku and Problem Resolve 1. Signup 2.Download and install Heroku: toolbelt.heroku.com Login: $ heroku login 3.Create &hellip;">
 
 
 
@@ -107,6 +107,93 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-30T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cs-slash-web/'>CS/WEB</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/05/30/start-using-heroku-and-problem-resolve/" itemprop="url">Start Using Heroku and Problem Resolve</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><strong>1. Signup</strong></p>
+
+<p><strong>2.Download and install Heroku:</strong></p>
+
+<p><a href="toolbelt.heroku.com">toolbelt.heroku.com</a></p>
+
+<p><strong>Login:</strong></p>
+
+<p>$ heroku login</p>
+
+<p><strong>3.Create heroku remote</strong></p>
+
+<p>$ heroku create</p>
+
+<p>$ git remote -v</p>
+
+<p>$ git remote rm heroku</p>
+
+<p>$ git remote add heroku git@heroku.com:xxxx.git     <em>#Here, xxxx.git is the git file created in the first line of this step</em></p>
+
+<p><strong>4. Deploying code</strong></p>
+
+<p>$ git push heroku master    #Some error occurs here, which cost me few hours to solve.</p>
+
+<p><strong>5. Error</strong></p>
+
+<p>&#8220;Permission denied (publickey). fatal: The remote end hung up unexpectedly.&#8221;</p>
+
+<p><strong>  check keys:</strong></p>
+
+<p>$ heroku keys</p>
+
+<p><strong>  remove the old keys:</strong></p>
+
+<p>$ heroku keys:remove xxx@xxxxxx</p>
+
+<p><strong>   generate new keys:</strong></p>
+
+<p>$ ssh-keygen -t rsa</p>
+
+<p>$ heroku keys:add /root/.ssh/id_rsa.pub</p>
+
+<p>&nbsp;</p>
+
+<p>* using &#8216;sudo&#8217;</p>
+
+<p>** reference:</p>
+
+<p><a href="https://devcenter.heroku.com/articles/keys">https://devcenter.heroku.com/articles/keys</a></p>
+
+<p><a href="http://www.whatibroke.com/?p=284">http://www.whatibroke.com/?p=284</a></p>
+
+<p><a href="http://stackoverflow.com/questions/2947190/pushing-app-to-heroku-problem">http://stackoverflow.com/questions/2947190/pushing-app-to-heroku-problem</a></p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -589,70 +676,6 @@ chown - change file ownership</p>
 <p>先扯这么多。</p>
 
 <p>&nbsp;</p>
-
-<p>&nbsp;</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-03T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/raspberry-pi/'>Raspberry Pi</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/03/03/raspberry-pi-and-gedit/" itemprop="url">在raspberry Pi上安装gedit</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>在尝试安装sublime text 2失败之后，转向了gedit。之前安装了vim，但是作为linux新手，面对vim实在是有点无从下手。</p>
-
-<p>gedit是在尝试安装sublime时装的，至少可以使用。<strong>sudo apt-get install gedit</strong></p>
-
-<p>google了一下之后发现很多人推荐安装gmate以达到textmate的效果。</p>
-
-<p>安装方法如下：</p>
-
-<p><strong>sudo apt-add-repository ppa:ubuntu-on-rails/ppa </strong></p>
-
-<p><strong>sudo apt-get update </strong></p>
-
-<p><strong>sudo apt-get install gedit-gmate</strong></p>
-
-<p>可是在安装过程中出现两个错误。第一个错误是没有apt-add-repository指令，似乎可以通过</p>
-
-<p><strong>sudo apt-get install python-software-properties</strong></p>
-
-<p>来解决。参考<a href="http://askubuntu.com/questions/38021/how-to-add-a-ppa-on-a-server" target="_blank">这里</a>。</p>
-
-<p>但是最终还是安装不了。</p>
-
-<p>其他几个<a href="http://blog.sudobits.com/2012/03/06/top-10-gedit-plugins-for-programmers/" target="_blank">常见的插件</a>可以安装。</p>
-
-<p><strong>sudo apt-get install gedit-plugins</strong></p>
-
-<p><strong>
-</strong></p>
 
 <p>&nbsp;</p>
 

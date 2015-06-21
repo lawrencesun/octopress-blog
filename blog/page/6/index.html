@@ -9,7 +9,8 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Dec 20th, 2013 Octopress Deploying Octopress to Github Pages and Custom Domain After Set up Octopress blog, I tried to deploying it to my own &hellip;">
+<meta name="description" content="Dec 22nd, 2013 Octopress Blogging With Octopress &#8211; Posts, Comments and SEO Run the following code to generate a new post: 1
+rake new_post[& &hellip;">
 
 
 
@@ -107,6 +108,61 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-22T01:34:23+08:00" data-updated="true" itemprop="datePublished">Dec 22<span>nd</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>Octopress</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/12/22/blogging-with-octopress/" itemprop="url">Blogging With Octopress &#8211; Posts, Comments and SEO</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>Run the following code to generate a new post:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rake</span> <span class="n">new_post</span><span class="o">[</span><span class="s2">&quot;new post&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Octopress uses <a href="http://daringfireball.net/projects/markdown/">Markdown</a>, which&rsquo;s clean and simple as writing a text. I am still learning how to use it well.</p>
+
+<p>In order to get better SEO optimizations, add <em>keywords</em> and <em>description</em> at the beginning of each post after <em>catagories</em>.</p>
+
+<p>Octopress also allows us to add google analytics. Simply add Analytics ID in _config.yml file and add included</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="p">{</span><span class="o">%</span> <span class="kp">include</span> <span class="n">google_analytics</span><span class="o">.</span><span class="n">html</span> <span class="o">%</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>in _includes/custom/after_footer.html.</p>
+
+<p>If you want to add comments after each post like me, add Disqus shortname in _config.yml file and set URL, username etc. in Disqus Setting.</p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -671,55 +727,6 @@ create a new CNAME record in domain name server.</p>
 <p>参考文献：中文官网上的翻译水平很次，看起来费劲，还是看英文的准确，外加google就不多说了。</p>
 
 <p><a href="http://codex.wordpress.org/Moving_WordPress">http://codex.wordpress.org/Moving_WordPress</a></p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-07T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/rails/'>Rails</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/10/07/activemodelmassassignmentsecurityerror/" itemprop="url">ActiveModel::MassAssignmentSecurity::Error</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>本来按着agile web development with rails的书，照葫芦画瓢不该有啥问题，结果在create new product时候，ActiveModel::MassAssignmentSecurity::Error 闪亮登场。</p>
-
-<p>错误追踪到product new这行&#8230;此时我的解决错误能力为0。果断求助Google，stackoverflow再显神威。</p>
-
-<p>http://stackoverflow.com/questions/6163759/cant-mass-assign-protected-attributes</p>
-
-<p>solution:</p>
-
-<p>put this into app/models/product.rb</p>
-
-<p><span style="background-color: #f4f4f4; font-family: 'Courier 10 Pitch', Courier, monospace; font-size: 10px; line-height: 18px;">attr_accessible :title, :description, :image_url, :price</span></p>
-
-<p>railscasts is great, mark.</p>
-
-<p>&nbsp;</p>
 
 		
 		

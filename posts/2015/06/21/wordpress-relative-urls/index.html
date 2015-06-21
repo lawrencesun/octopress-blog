@@ -5,13 +5,13 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Category: WordPress - Lawrence Sun</title>
+	<title>外网如何访问内部WordPress网站 - Lawrence Sun</title>
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Category: WordPress">
+<meta name="description" content="外网如何访问内部WordPress网站 之前在内部服务器搭建了一个WordPress网站，测试时使用的时Localhost，在内网上线时，将主机地址改为服务器的ip地址，即10.xxx.xxx.xxx。显然这种情况下，外网是不能访问的。 WordPress默认使用的是绝对路径， &hellip;">
 
-
+<meta name="keywords" content="wordpress, relative urls, multiple domains, 外网访问内部, 相对路径">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -20,7 +20,7 @@
 
 	<link href="/atom.xml" rel="alternate" title="Lawrence Sun" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://voice.lawrencesun.infoblog/categories/wordpress/">
+	<link rel="canonical" href="http://voice.lawrencesun.info/posts/2015/06/21/wordpress-relative-urls/">
 	<link href="/favicon.png" rel="shortcut icon">
 	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -105,131 +105,85 @@
 				
 			
 			<div class="mid-col-container">
-				<div id="content" class="inner">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 	
+	<h1 class="title" itemprop="name">外网如何访问内部WordPress网站</h1>
+	<div class="entry-content" itemprop="articleBody"><p>之前在内部服务器搭建了一个WordPress网站，测试时使用的时Localhost，在内网上线时，将主机地址改为服务器的ip地址，即10.xxx.xxx.xxx。显然这种情况下，外网是不能访问的。</p>
+
+<p>WordPress默认使用的是绝对路径，也就是说文章和图片的地址都是10.xxx.xxx.xxx/&hellip;。除此之外，js和css的路径也是绝对的。这样即使外网通过外网ip访问到了网站，内容和样式都是无法加载的。</p>
+
+<!-- more -->
 
 
-	
-	
-	<section class="archives"><h1 class="year">2015</h1>
+<p>首先想到的一个方法就是在WP后台或者数据库中将SiteURL改为外网的ip地址。但是这种方法相对暴力，也不利于扩展多域名/ip的指向。</p>
 
-<article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<span class="date"><time datetime="2015-06-21T10:08:42+08:00" itemprop="datePublished">Jun 21</time></span>
-		<br>
-		<span class="tags">
+<p>在网上搜到了一个方法，具体如下:</p>
+
+<p>在<code>wp-config.php</code>文件中加入以下两行代码：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>define('WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST']);
+</span><span class='line'>define('WP_HOME', 'http://' . $_SERVER['HTTP_HOST']);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样无论你是从内网还是外网访问，主机和链接地址都是随之动态改变的。</p>
+
+<p>至于文章中的图片和链接，还需要改成相对路径，如/?p=xxx和/wp-uploads/&hellip;等。</p>
+
+<p>最后一步，也是网上很多经验贴没有说明的，就是清除缓存。我按照上述步骤完成之后，多次测试都没有成功，外网访问时有些地址还是显示内网ip。删去了<code>wp-config.php</code>中的<code>define( 'WP_CACHE', true );</code>就好了。</p>
+</div>
+
+
+    <br/>
+    <p class="meta">
+    <span class="byline author vcard">Posted by <span class="fn">Sun ▪ </span></span>
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-21T10:08:42+08:00" data-updated="true" itemprop="datePublished">Jun 21<span>st</span>, 2015</time>
+    <span class="categories"> ▪ 
 
 
 	<a class='category' href='/blog/categories/wordpress/'>WordPress</a>
 
 
 </span>
-	    
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2015/06/21/wordpress-relative-urls/">外网如何访问内部WordPress网站</a></h1>
+    </p>
 </article>
 
-	
+	<div class="share">
+        <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+        
+        
+        
+        <a class="addthis_button_sinaweibo"></a>
+        
+        
+        
+        <a class="addthis_button_compact"></a>
+        <a class="addthis_counter addthis_bubble_style"></a>
+        </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid="></script>
+</div>
 
 
-<article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<span class="date"><time datetime="2015-06-14T17:17:43+08:00" itemprop="datePublished">Jun 14</time></span>
-		<br>
-		<span class="tags">
 
 
-	<a class='category' href='/blog/categories/octopress/'>Octopress</a>, <a class='category' href='/blog/categories/wordpress/'>WordPress</a>
-
-
-</span>
-	    
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2015/06/14/migrate-posts-from-wordpress-to-octopress/">从Wordress迁移文章到Octopress</a></h1>
-</article>
-
-	
-
-
-<article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<span class="date"><time datetime="2015-05-03T10:56:59+08:00" itemprop="datePublished">May  3</time></span>
-		<br>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/wordpress/'>WordPress</a>
-
-
-</span>
-	    
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2015/05/03/wordpress-migration-to-windows-server/">WordPress迁移至Windows主机</a></h1>
-</article>
-
-	
-
-
-	
-	
-		</section>
-	
-	<section class="archives"><h1 class="year">2013</h1>
-
-<article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<span class="date"><time datetime="2013-10-07T00:00:00+08:00" itemprop="datePublished">Oct  7</time></span>
-		<br>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/wordpress/'>WordPress</a>
-
-
-</span>
-	    
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/10/07/move-wordpress-to-secondery-directory/">将wordpress博客搬家到二级目录</a></h1>
-</article>
-
-	
-
-
-<article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<span class="date"><time datetime="2013-09-16T00:00:00+08:00" itemprop="datePublished">Sep 16</time></span>
-		<br>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/wordpress/'>WordPress</a>
-
-
-</span>
-	    
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/09/16/image-hosting-using-picasa/">个人博客图床的另一种选择 Picasa</a></h1>
-</article>
-
-	
-
-
-<article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<span class="date"><time datetime="2013-02-12T00:00:00+08:00" itemprop="datePublished">Feb 12</time></span>
-		<br>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/wordpress/'>WordPress</a>
-
-
-</span>
-	    
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/02/12/image-sharing-by-skydrive/">如何使用skydrive网盘分享图片至博客</a></h1>
-</article>
-
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
 </div>
 			</div>
 			<footer id="footer" class="inner"><p>
@@ -244,7 +198,10 @@ Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Sha
       var disqus_shortname = 'voicelawrencesun';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://voice.lawrencesun.info/posts/2015/06/21/wordpress-relative-urls/';
+        var disqus_url = 'http://voice.lawrencesun.info/posts/2015/06/21/wordpress-relative-urls/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

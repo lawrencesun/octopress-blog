@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="玩转数码 Ipad2也能升级ios7&#8230; 看到ios7支持ipad2的消息，顿时泪流满面。两年前的老机子仍然可以升级，颇有大V薛蛮子老来交(piao)友(chang)的风范。 今天ios7正式发布，我匆忙打开Setting&#8211;General&#8211;Update&# &hellip;">
+<meta name="description" content="Rails ActiveModel::MassAssignmentSecurity::Error 本来按着agile web development with rails的书，照葫芦画瓢不该有啥问题，结果在create new product时候，ActiveModel:: &hellip;">
 
 
 
@@ -107,6 +107,55 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-07T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/10/07/activemodelmassassignmentsecurityerror/" itemprop="url">ActiveModel::MassAssignmentSecurity::Error</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>本来按着agile web development with rails的书，照葫芦画瓢不该有啥问题，结果在create new product时候，ActiveModel::MassAssignmentSecurity::Error 闪亮登场。</p>
+
+<p>错误追踪到product new这行&#8230;此时我的解决错误能力为0。果断求助Google，stackoverflow再显神威。</p>
+
+<p>http://stackoverflow.com/questions/6163759/cant-mass-assign-protected-attributes</p>
+
+<p>solution:</p>
+
+<p>put this into app/models/product.rb</p>
+
+<p><span style="background-color: #f4f4f4; font-family: 'Courier 10 Pitch', Courier, monospace; font-size: 10px; line-height: 18px;">attr_accessible :title, :description, :image_url, :price</span></p>
+
+<p>railscasts is great, mark.</p>
+
+<p>&nbsp;</p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -650,93 +699,6 @@ sudo apt-get install nodejs</pre>
 <p>gem install therubyracer &#8211;version=0.10.2</p>
 
 <p><img class="alignnone" alt="" src="http://storage.live.com/items/B61984F863EE934F!140?a.jpg" width="414" height="322" /></p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-30T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/cs-slash-web/'>CS/WEB</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/05/30/start-using-heroku-and-problem-resolve/" itemprop="url">Start Using Heroku and Problem Resolve</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><strong>1. Signup</strong></p>
-
-<p><strong>2.Download and install Heroku:</strong></p>
-
-<p><a href="toolbelt.heroku.com">toolbelt.heroku.com</a></p>
-
-<p><strong>Login:</strong></p>
-
-<p>$ heroku login</p>
-
-<p><strong>3.Create heroku remote</strong></p>
-
-<p>$ heroku create</p>
-
-<p>$ git remote -v</p>
-
-<p>$ git remote rm heroku</p>
-
-<p>$ git remote add heroku git@heroku.com:xxxx.git     <em>#Here, xxxx.git is the git file created in the first line of this step</em></p>
-
-<p><strong>4. Deploying code</strong></p>
-
-<p>$ git push heroku master    #Some error occurs here, which cost me few hours to solve.</p>
-
-<p><strong>5. Error</strong></p>
-
-<p>&#8220;Permission denied (publickey). fatal: The remote end hung up unexpectedly.&#8221;</p>
-
-<p><strong>  check keys:</strong></p>
-
-<p>$ heroku keys</p>
-
-<p><strong>  remove the old keys:</strong></p>
-
-<p>$ heroku keys:remove xxx@xxxxxx</p>
-
-<p><strong>   generate new keys:</strong></p>
-
-<p>$ ssh-keygen -t rsa</p>
-
-<p>$ heroku keys:add /root/.ssh/id_rsa.pub</p>
-
-<p>&nbsp;</p>
-
-<p>* using &#8216;sudo&#8217;</p>
-
-<p>** reference:</p>
-
-<p><a href="https://devcenter.heroku.com/articles/keys">https://devcenter.heroku.com/articles/keys</a></p>
-
-<p><a href="http://www.whatibroke.com/?p=284">http://www.whatibroke.com/?p=284</a></p>
-
-<p><a href="http://stackoverflow.com/questions/2947190/pushing-app-to-heroku-problem">http://stackoverflow.com/questions/2947190/pushing-app-to-heroku-problem</a></p>
 
 		
 		
