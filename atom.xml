@@ -4,7 +4,7 @@
   <title><![CDATA[Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2015-09-04T01:48:37+08:00</updated>
+  <updated>2015-09-16T20:34:37+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,70 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[LaTex环境配置: Sublime Text + TeXLive + Sumatra PDF]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2015/09/16/latex-and-sublime-text/"/>
+    <updated>2015-09-16T19:51:48+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2015/09/16/latex-and-sublime-text</id>
+    <content type="html"><![CDATA[<p>前一阵子看到LaTex生成的PDF，感觉排版和公式特别酷炫。当然相较Word来说，无论是环境配置还是代码输入都比较复杂，但如果学会使用的话，绝对是写论文的利器。</p>
+
+<p>在知乎大神的推荐下，选择了比较熟悉的Sublime Text 3，配以TeXLive和Sumatra PDF，作为我在Win10系统下的LaTex环境配置。在设置ST的LaTexTools时出现不少问题，几番搜索终于配置成功。</p>
+
+<!-- more -->
+
+
+<p><strong>TeXLive</strong></p>
+
+<p>直接官网下载，安装。考虑到国内镜像文件下载速度不稳定，推荐下载iso。</p>
+
+<p><strong>Sumatra PDF</strong></p>
+
+<p>轻巧的PDF阅读器，也是官网下载，安装。</p>
+
+<p><strong>LaTexTools</strong></p>
+
+<p>是Sublime Text的一个插件。</p>
+
+<ol>
+<li><p>如果之前安装过Package Control可以跳到下一步。Ctrl+Shift+P打开命令输入行，输入install，选择Package Control: Install Package，回车安装。也可以去ST官网下载该文件直接安装。</p></li>
+<li><p>输入install package，选择LaTexTools进行安装。</p></li>
+</ol>
+
+
+<p><strong>配置以及双向搜索</strong></p>
+
+<p>输入Ctrl+Shift+P，运行Reconfigure and migrate settings。</p>
+
+<p>打开Preferences > Browse Packages&hellip; 选择User文件夹中的LaTexTools.sublime-settings</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"Windows": {
+</span><span class='line'>      //这里修改成texlive的路径
+</span><span class='line'>      "texpath": "C:\\texlive\\2015\\bin\\win32;$PATH",
+</span><span class='line'>      //这里修改成texlive
+</span><span class='line'>      "distro": "texlive",
+</span><span class='line'>      //这里修改成SumatraPDF.exe所在路径，留空的话需要将Sumatra所在路径添加到系统环境变量中去
+</span><span class='line'>      "sumatra": "C:\\...路径...\\SumatraPDF.exe"
+</span><span class='line'>},</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里就连接了TexLive和SumatraPDF，编译完成后会自动打开SumatraPDF。</p>
+
+<p>打开SumatraPDF > 设置 > 设置反向搜索命令行</p>
+
+<p>修改成Sublime Text的路径, &ldquo;C:\ &hellip;路径&hellip;\sublime_text.exe&rdquo; &ldquo;%f:%l&rdquo;</p>
+
+<p>新建一个tex文件，保存后Ctrl+B进行编译，如果没有错误，就会打开SumatraPDF，同时在PDF文档中双击某一处时，就会返回tex文件中相互对应的位置。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[八月: 青海湖(上)]]></title>
@@ -1096,40 +1160,6 @@ run <code>which git</code> to check out the directory.</p>
 <p>回到旅舍，在一楼酒吧享受了Happy Hour提供的免费自助，意大利的最后一站米兰之旅就此画上了休止符。</p>
 
 <p><sub>23/06/2013 初稿于米兰 10/2014 整理 </sub></p>
-
-<p><sub>注: <a href="http://voice.lawrencesun.info/blog/categories/man-you-ji/">曼游记系列</a>: 本系列游记照片由谷哥四儿子联手谷哥相册友情提供 </sub></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[曼游记终极篇之欧洲行 Day 7]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/09/13/travel-europe-day-7/"/>
-    <updated>2014-09-13T16:31:17+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/09/13/travel-europe-day-7</id>
-    <content type="html"><![CDATA[<p>没能按计划早起，睡了个懒觉。由于昨天到威尼斯之后预订了去米兰的车次，为了防止来回旅馆错过列车，所以先直奔火车站存包，然后乘水上巴士出发去玻璃岛。</p>
-
-<p>要去这个岛的游客非常多，等了好久也没挤上直航的公交3号，只好在几分钟之后坐上公交4.2号，慢慢悠悠地晃了40多分钟，终于抵达了玻璃岛。</p>
-
-<p>当地人民多以制作玻璃为生，街道两旁几乎都是精美的玻璃制品店。</p>
-
-<p>由于时间紧，转了一圈之后就直接去岛上另一个车站乘坐12路前往彩色岛，大约半个小时之后到达。彩色岛，顾名思义，这里的房子都是彩漆，一幢房子一个颜色，门帘也是彩色的，看起来非常温馨。</p>
-
-<!-- more -->
-
-
-<p><img src="https://lh4.googleusercontent.com/-1hdSzW-AgW4/Uv9r0vihrlI/AAAAAAAAAdw/yXAkNWVNM6o/w400" alt="img" /></p>
-
-<p><sub>* 彩色岛</sub></p>
-
-<p>在彩色岛点了盘海鲜饭，确实是夹生的，当初在曼城的某意大利餐馆第一次吃的时候还以为是没煮熟呢。</p>
-
-<p><img src="https://lh4.googleusercontent.com/-rbN2rKEzM0w/Uv9rwLTNf6I/AAAAAAAAAdg/egg9xdMEJxA/w400" alt="img" /></p>
-
-<p><sub>* 海鲜饭</sub></p>
-
-<p>岛屿并不大，逛了一个小时以后就沿着来路返回主岛了。找了家酒吧，在下午关门之前吃了碗沙拉。吃完取来包裹，在车站稍等片刻，便乘坐火车前往下一站，米兰。</p>
-
-<p><sub>21/06/2013 初稿于威尼斯 09/2014 整理 </sub></p>
 
 <p><sub>注: <a href="http://voice.lawrencesun.info/blog/categories/man-you-ji/">曼游记系列</a>: 本系列游记照片由谷哥四儿子联手谷哥相册友情提供 </sub></p>
 ]]></content>
