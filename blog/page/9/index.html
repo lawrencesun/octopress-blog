@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="云端漫笔 飞行模式下的阅读 飞机是一个世外桃源，刷不了微博，上不了QQ，墙里墙外都开不了花。飞行模式下，只能吃喝拉撒睡，娱乐活动就是读书看电影瞄空姐。 这些年基本都是在旅途中完成阅读，在这个浮躁的时代，花十几个小时看书实在是奢侈。 本来这次想在机场买几本书看，怎料杭州机场的国际候机室居然没有书店 &hellip;">
+<meta name="description" content="CS/WEB, Linux VirtualBox安装Ubuntu的蛋疼过程 去年初上couresa的公开课安装了virtualbox+ubuntu，为了体验最新版本，就把旧版给删了，结果引发了一系列惨案。先是好不容易安装好的12.10显示出错，google之貌似没有一个完美的解决方案， &hellip;">
 
 
 
@@ -107,6 +107,49 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-28T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cs-slash-web/'>CS/WEB</a>, <a class='category' href='/blog/categories/linux/'>Linux</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/03/28/ubuntu-on-virtualbox/" itemprop="url">VirtualBox安装Ubuntu的蛋疼过程</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>去年初上couresa的公开课安装了virtualbox+ubuntu，为了体验最新版本，就把旧版给删了，结果引发了一系列惨案。先是好不容易安装好的12.10显示出错，google之貌似没有一个完美的解决方案，只有降级至12.04，结果又出现“display low quality”的错误，貌似这个问题挺普遍，似乎和A卡驱动有关，神农尝百草般试遍所有解决方案，N次重装之后，终于找到了最佳方案:</p>
+
+<p>sudo apt-get install fglrx</p>
+
+<p>但是。。。在快捷键打开terminal的时候，小黑的显示屏正如其名，全黑了。重启多次之后用狂按F8按最后一次正确配置启动，惊出一身冷汗。</p>
+
+<p>当Ubuntu界面终于出现时，泪流满面&#8230;&#8230;</p>
+
+<p>小黑你再坚持两年吧，给你先加快内存续命。</p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -654,59 +697,6 @@ wpa-psk &#8220;xxx&#8221;                    #密码</p>
 <p><strong>cal    # 显示日历 cal 2013 #显示今年的日历啦</strong></p>
 
 <p>ps. 最近越来越喜欢我的TV了，VGA的线接笔记本当扩展屏，HDMI的线接pi当第二主机显示屏，可惜新家还没有“锅”，不然还能看个电视，哎，当初怎么就没狠心买一个HD的呢&#8230;</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-12T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/wordpress/'>WordPress</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/02/12/image-sharing-by-skydrive/" itemprop="url">如何使用skydrive网盘分享图片至博客</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>#突然发现博客已经成立两年了，年前在godaddy“续约”到2017年，为了庆祝续约，把各个插件都更新了下，没发现有什么区别。</p>
-
-<p>然后发现当时建立起网站的过程没有记录下来，只能祈祷博客别轻易崩溃了。</p>
-
-<p>所以我想，以后还是要记录一下学习和操作的部分内容，一来方便自己查阅，二来也能为他人提供帮助。虽然以现在的访问量来说（接近于0），后者暂时只是官方措辞罢了。#</p>
-
-<p>在博客里插入图片总是让人头疼。最常见的当然是由本地上传到wp目录下，好处是图片不易丢失，缺点就是占用本身就不大的空间（就博主来说，用的是godaddy的免费空间），而且要拷贝文章去其他网站的时候，图片往往就变成叉叉了。之前几个文章的插图出现叉叉就是因为文章拷贝过来后链接不可用。</p>
-
-<p>还有一种就是使用URL链接，好处是省流量，缺点是容易失效。常用的图床有flickr等，前几天发现skydrive也可以用。应该说效果不错，skydrive是微软的云端硬盘，支持多客户端，相对比较稳定，空间大小也够慷慨(7G)。</p>
-
-<p>首先，登陆skydrive，上载图片后，选择“共享”。</p>
-
-<p>然后点击获取链接，选择“公共”，复制给出的链接，点击完成。</p>
-
-<p>复制链接中“redir?resid=”后面部分，这里简称ID。</p>
-
-<p>最后你需要的url就是：http://storage.live.com/items/ID</p>
-
-<p>在wp编辑器里选择从url添加图片，大功告成。</p>
 
 		
 		
