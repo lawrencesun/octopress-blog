@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Dec 31st, 2013 Fitbit, Gadgets Fitbit Flex Review I bought myself Fitbit Flex as a Christmas gift. It was on the top of my wishing list. I was &hellip;">
+<meta name="description" content="Jan 9th, 2014 Git My Git Cheet Sheet When I saw the Error on my rails sample_app and couldn&rsquo;t find the solution the other day, I wanted to &hellip;">
 
 
 
@@ -107,6 +107,196 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-09T05:08:18+08:00" data-updated="true" itemprop="datePublished">Jan 9<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/git/'>Git</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/01/09/my-git-cheet-sheet/" itemprop="url">My Git Cheet Sheet</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>When I saw the Error on my rails sample_app and couldn&rsquo;t find the solution the other day, I wanted to abort the changes and intended to go back to the last commit. I searched on <em>stackoverflow</em> and followed the instruction, ran something like</p>
+
+<pre><code>git reset --Hard 
+</code></pre>
+
+<p>Then&hellip; I messed up the files and commits, unsurprisingly.</p>
+
+<p>So I decided to learn some basic command of <strong>Git</strong> apart from</p>
+
+<pre><code>git add .
+git commit -m "I need a cupa"
+git push
+</code></pre>
+
+<p>After watching and practing Git command from <strong>Git Real</strong> on <a href="http://zfer.us/9yIBW">Code School</a>, I generated a basic <em>cheat sheet</em> for myself. Here it is.</p>
+
+
+		
+		<a href="/posts/2014/01/09/my-git-cheet-sheet/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-09T04:47:46+08:00" data-updated="true" itemprop="datePublished">Jan 9<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>Octopress</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/01/09/add-about-page/" itemprop="url">Add About Page</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>Three steps:</p>
+
+<ul>
+<li>Run
+<code>
+rake new_page[about]
+</code></li>
+<li>Add following code to &ldquo;/source/_includes/custom/navigation.html file&rdquo;</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> &lt;li&gt;&lt;a href="/about"&gt;About&lt;/a&gt;&lt;/li&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Edit &ldquo;/about/index.markdown&rdquo; file if you want.</li>
+</ul>
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-09T03:39:38+08:00" data-updated="true" itemprop="datePublished">Jan 9<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>Octopress</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2014/01/09/add-weibo-support-to-octopress-blog/" itemprop="url">Add Weibo Support to Octopress Blog</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>Since I will go back China very soon, I think adding a <em>Weibo</em> link on the sidebar might be a good move. To be honest, I am not too keen on Weibo. The reason? Information overload.</p>
+
+<ul>
+<li>First, add following code to &ldquo;/source/_includes/header.html&rdquo;</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{ % if site.weibo_user % }
+</span><span class='line'>  &lt;a class="weibo" href="http://www.weibo.com/ylsun" title="Weibo"&gt;Weibo&lt;/a&gt;
+</span><span class='line'>{ % endif % }</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Second, add following code to &ldquo;/sass/parts/_header.scss&rdquo;</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="o">&amp;</span><span class="nc">.weibo</span><span class="p">{</span>
+</span><span class='line'>  <span class="k">background</span><span class="o">:</span> <span class="n">image</span><span class="o">-</span><span class="sx">url(&#39;social/weibo.png&#39;)</span> <span class="k">center</span> <span class="k">no-repeat</span> <span class="m">#e32529</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="m">#e32529</span><span class="p">;</span>
+</span><span class='line'>  <span class="o">&amp;:</span><span class="n">hover</span><span class="err">{</span>
+</span><span class='line'>      <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="n">darken</span><span class="p">(</span><span class="m">#e32529</span><span class="o">,</span> <span class="m">10</span><span class="o">%</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Then, add the <a href="https://github.com/lawrencesun/lawrencesun.github.io/tree/source/source/images/social">“weibo.png”</a> to “/source/images/social” dirctory.</li>
+<li>Finally, add following code to &ldquo;_config.yml&rdquo;</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="err">#</span> <span class="nt">Weibo</span>
+</span><span class='line'><span class="nt">weibo_user</span><span class="o">:</span> <span class="nt">ylsun</span> <span class="err">#</span> <span class="err">微博数字</span> <span class="nt">ID</span> <span class="err">或域名</span> <span class="nt">ID</span>
+</span><span class='line'><span class="nt">weibo_share</span><span class="o">:</span> <span class="nt">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><sub>Thanks for sharing <a href="http://www.imallen.com/blog/2013/05/12/add-support-for-weibo-and-dribbble-to-greyshade.html">Allen</a> </sub></p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -598,153 +788,6 @@ create a new CNAME record in domain name server.</p>
 
 </article>
 
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-02T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/startup/'>Startup</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/11/02/get-10-off-my-coffee/" itemprop="url">Get 10% Off My Coffee</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>I couldn&#8217;t believe I finally went into Starbucks and asked for 10% off my medium latte.</p>
-
-<p>I haven&#8217;t asked for discount in my life before today. Even I was overcharged, I rarely argued that.</p>
-
-<p>&#8220;Can I get 10% off ? &#8221; I asked the staff with (disinclined) smile.</p>
-
-<p>The staff looked surprised. So I asked it again.</p>
-
-<p>&#8220;What.. Why?&#8221;</p>
-
-<p>&#8220;It&#8217;s an assignment of my business course.&#8221;</p>
-
-<p>&#8220;Well&#8230; do you have a loyalty card or &#8230;? &#8221;</p>
-
-<p>&#8220;No. I just want to get 10% off.&#8221;</p>
-
-<p>&#8220;Sorry, no&#8230;&#8221;</p>
-
-<p>Failed as imagined. But I felt good.</p>
-
-<p>I usually don&#8217;t take the first step out. I lived in fear of failure, rejection, being embarrassed in public&#8230;</p>
-
-<p>When I looked back, I thought it wasn&#8217;t a big deal. I saw a lot of people asking for discount or other ridiculous requests.</p>
-
-<p>But the failure today means a lot to me, a least I tried, and I am prepared to fail again.</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-31T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/startup/'>Startup</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/10/31/some-thoughts-on-copywrite/" itemprop="url">Some Thoughts on Copywriting</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>I learned something about copywriting two weeks ago. I was excited about it. I felt I got the golden key to marketing coz I got to know AIDA, which stands for Attetion, Interest, Desire, Action. I thought it was way better than a formal sales letter. In my experience, I seldom read the whole boring letters and usually throw them into trash directly. I also learned some tricks, like bold font and misspelling to attract attentions, short width layout leading a comfort reading, adding interesting P.S. I knew how to find a charming subtitle from Digg or reddit.</p>
-
-<p>So I implement this methodology. I found around 20 email addresses of restaurants and salons (which are my targeting customers). I started the letter with some questions like Do you have your own mobile app? Do you know more than 60% people use smartphones? Do you know over there are 500,000,000 app downloading per day? I presented what we provide and what they could gain from it and how to action in the following parts. I also added a limited offer, trying to urge them make a quick decision. I put a subtitle called seriously you will have your own app for free. Clicked send. Besides, I post the same letters to some of these business using the hand writing envelope(coz I think it will increase the open chances).</p>
-
-<p>Ok, good news, opening rate over 60%. There is always a but following. 0 reply.</p>
-
-<p>I had a thought today. They probably close it after reading the first line. Why should they bother mobile apps? They care about traffic, customer loyalty, and more importantly, revenue. Most of them may not know what is app. Although I explained the relationship between the features and benefits below, they probably lose the interesting at first.</p>
-
-<p>Next time I will change the Attention part more relevant to customers.</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-31T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/startup/'>Startup</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/10/31/just-do-it/" itemprop="url">Just Do It</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>When I decided to engage myself to startup, I was not ready for the crucial reality, though I knew over 90% startups failed. Most of the startup stories are about success. Now I prefer the stories about failure.</p>
-
-<p>After getting to know more about lean startup from the LeanConf, I realised I should act, as soon as possible.</p>
-
-<p>One of the major problem is, I always tend to stay in the comfort zone. I dreamed a dream that customers would come to me. So I spent a lot of time to make my figure more shining. I have never met a single customer. I am introverted and don&#8217;t like to talk a lot with people. But now I know I must get out and talk to customers.</p>
-
-<p>Another problem is, I am not confident enough about the products. I think mobile app for small business is a good idea. Again, since I haven&#8217;t talk to them, I don&#8217;t know if it solved their problems.</p>
-
-<p>What I learned from other entrepreneurs is that fail as soon as possible. Otherwise you are killing your time and money.</p>
-
-<p>So I will get out to reach potential customers, and this time I shall set a deadline for myself.</p>
-
-		
-		
-	</div>
-
-</article>
-
 </div>
 <nav id="pagenavi">
     
@@ -757,7 +800,7 @@ create a new CNAME record in domain name server.</p>
 </nav></div>
 			</div>
 			<footer id="footer" class="inner"><p>
-  Copyright &copy; 2015 - Lawrence Sun -
+  Copyright &copy; 2016 - Lawrence Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

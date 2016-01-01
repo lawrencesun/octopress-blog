@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="CS/WEB, Linux VirtualBox安装Ubuntu的蛋疼过程 去年初上couresa的公开课安装了virtualbox+ubuntu，为了体验最新版本，就把旧版给删了，结果引发了一系列惨案。先是好不容易安装好的12.10显示出错，google之貌似没有一个完美的解决方案， &hellip;">
+<meta name="description" content="CS/WEB, Linux Ubuntu忘记用户密码怎么办 今天在虚拟ubuntu上创建了ssh之后，一时脑残，把用户改成自动登录，结果sudo时需要密码，怎么输都不对。 大脑再次短路，竟然选择了用百度，“ubuntu忘记用户密码怎么办”。结果99%是一堆误人子弟的烂文，千篇一律，很多文章有“ &hellip;">
 
 
 
@@ -107,6 +107,195 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-28T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cs-slash-web/'>CS/WEB</a>, <a class='category' href='/blog/categories/linux/'>Linux</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/04/28/ubuntu-forget-password/" itemprop="url">Ubuntu忘记用户密码怎么办</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>今天在虚拟ubuntu上创建了ssh之后，一时脑残，把用户改成自动登录，结果sudo时需要密码，怎么输都不对。</p>
+
+<p>大脑再次短路，竟然选择了用百度，“ubuntu忘记用户密码怎么办”。结果99%是一堆误人子弟的烂文，千篇一律，很多文章有“见下图”，你妹图去哪里了，抄袭也要有点节操吧。Google &#8220;ubuntu forgot admin password&#8221;，立即找到图文详解，而且还介绍了可能会出现的错误。</p>
+
+<p>现在把解决方法记录一下，顺便回馈社会，虽然这篇文章被百度到的机会渺茫。
+<ol>
+	<li><strong>首先，不要慌张，重启系统。在开机画面出现之后，狂按左shift进入GRUB界面。（也有说按ESC的，反正我是不行）</strong></li>
+	<li><strong>选择recovery mode，进入recovery mode menu。</strong></li>
+	<li><strong>选择root     drop to root shell prompt 进入命令行。</strong></li>
+	<li><strong>输入passwd <em>user    </em>#user 就是你想要修改密码的用户名，以我为例就是 passwd lawrence</strong></li>
+	<li><strong>输入新密码，确认新密码</strong></li>
+	<li><strong>输入exit返回menu，选择resume，重启搞定。</strong></li>
+	<li><strong>如果出现&#8221;Authentication Manipulation error&#8221; pla pla 输入“mount -rw -o remount /” 之后再从第4步开始。</strong></li>
+</ol>
+自认为说得够详细，图就不配了，因为用skydrive来配图访问越来越慢。</p>
+
+<p>ps. 其实应该说是中文搜索和英文搜索，因为google搜中文98%也是出现烂文。</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-19T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/wan-zhuan-shu-ma/'>玩转数码</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/04/19/another-phone/" itemprop="url">换一个二奶（上）</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>自从Google N4册封正室之后，BB 9900的地位显得非常尴尬。9900没有当二奶的经验，我只能忍痛放弃这位昔日的全明星，过几天会为它和touch 4举行一个告别仪式。</p>
+
+<p>先来看看刚刚入职二奶的Nokia 101&#8230;</p>
+
+<p>好了，这里和谐省去初夜开箱的详细介绍。从某种意义上来说，它绝对是低档中的战斗机。</p>
+
+<p>首先，它来路不正&#8230; 因为英村基本是不卖低档机的，特别是双卡双待机的。打开介绍，一堆鸟文看不懂，用google translate照相了一下，确认来源法国。</p>
+
+<p>接下来介绍它的强劲性能。600+小时超长待机，8+通话时长！一块电池就搞定。双卡！不双待&#8230;支持SD卡！</p>
+
+<p>开机了，居然是彩屏！不仅有屏显时刻，还有锁键盘（经典的menu+*）。</p>
+
+<p><img class="alignnone" alt="" src="http://storage.live.com/items/B61984F863EE934F!153?a.jpg" width="317" height="423" /></p>
+
+<p>音乐、收音机、计算器、重复闹钟、小游戏样样俱全！</p>
+
+<p>最神奇的是，功能键按两下上，手电筒开启！</p>
+
+<p><img class="alignnone" alt="" src="http://storage.live.com/items/B61984F863EE934F!149?a.jpg" width="254" height="190" /></p>
+
+<p>随机还附送线控耳机一副，真是业界良心。</p>
+
+<p><img class="alignnone" alt="" src="http://storage.live.com/items/B61984F863EE934F!145?a.jpg" width="338" height="451" /></p>
+
+<p>外放铃声二格音量方圆百米都能听到，轰聋流氓吓死小偷&#8230;</p>
+
+<p>遗憾的是，敲核桃恐怕是不行了。</p>
+
+<p>ps. 实测待机时间约两周，略失望&#8230;</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-29T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cs-slash-web/'>CS/WEB</a>, <a class='category' href='/blog/categories/linux/'>Linux</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/03/29/rails-environment-on-ubuntu/" itemprop="url">Ubuntu上安装Rails和Sublime Text</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>基本步骤和上次在raspberry pi上的安装类似，不同的是，安装速度哗哗的。</p>
+
+<p>出现的几个问题都通过stackoverflow上找到答案了。</p>
+
+<p>一个是用rvm安装ruby的时候，出现
+<pre class="lang:ruby decode:true">Installing requirements for ubuntu, might require sudo password.
+Running 'apt-get --quiet --yes update' would require sudo.
+Cowardly refusing to continue, please read 'rvm autolibs'.
+Updating repositories
+Missing required packages: libgdbm-dev, libffi-dev.
+Cowardly refusing to continue, please read 'rvm autolibs'.</pre>
+解决方法是
+<pre class="lang:ruby decode:true">\curl -L https://get.rvm.io | bash -s stable --autolibs=3 --rails</pre>
+还有一个问题是装完rails之后执行 -v时 出现
+<pre class="lang:ruby decode:true">The program 'rails' is currently not installed. You can install it by typing: sudo apt-get install rails</pre>
+解决方法是</p>
+
+<p>set the &#8216;Run command as login shell&#8217; checkbox on the Title and Command tab inside of gnome-terminal&#8217;s Settings page.</p>
+
+<p>上次在raspberry pi上安装sublime text 2 失败，这次很顺利。
+<pre class="lang:ruby decode:true">sudo add-apt-repository ppa:webupd8team/sublime-text-2
+sudo apt-get update
+sudo apt-get install sublime-text</pre>
+参考<a href="http://wbond.net/sublime_packages/package_control/installation#Testing_Version">http://wbond.net/sublime_packages/package_control/installation#Testing_Version</a></p>
+
+<p>安装package control</p>
+
+<p>打开时又出现unable to run package setup&#8230;error13的错误</p>
+
+<p>google未果，terminal sudo运行没有问题。</p>
+
+<p>结合错误提示，应该是权限的原因。在ruby-china搜到了解决方法：
+<pre class="lang:ruby decode:true">sudo chown -R lawrence:lawrence ~/.config/sublime-text-2
+sudo chmod 700 -R ~/.config/sublime-text-2</pre>
+chown - change file ownership</p>
+
+<p>chmod - modify file access rights</p>
+
+<p><em>700(rwx&#8212;&#8212;)</em> The file&#8217;s owner may read, write, and execute the file. Nobody else has any rights. This setting is useful for programs that only the owner may use and must be kept private from others.</p>
+
+<p>&nbsp;</p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -539,171 +728,6 @@ wpa-psk &#8220;xxx&#8221;                    #密码</p>
 
 </article>
 
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-13T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/raspberry-pi/'>Raspberry Pi</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/02/13/pi-root/" itemprop="url">Pi的root权限</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>在玩几个简单的指令时, 出现了bc 指令不能找到的问题</p>
-
-<p>bash bc: command not found</p>
-
-<p>于是google之，可能是没有安装的原因，但是试了apt-get install bc，出现了权限。</p>
-
-<p>继续google，Debian squeeze 并没有root的密码，而是采用sudo apt-get来实现以root用户运行，或者是用 sudo su。用su pi切换回非root用户。</p>
-
-<p>试了一下，貌似还是无法找到bc的安装。:&#8217;(</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-13T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/cs-slash-web/'>CS/WEB</a>, <a class='category' href='/blog/categories/linux/'>Linux</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/02/13/linux-man/" itemprop="url">Linux几个很man的热键</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><strong>[Tab]</strong></p>
-
-<p>例如，用在ca后面，按[Tab]就会出现ca开头的命令</p>
-
-<p><strong>[Ctrl]+c</strong></p>
-
-<p>用来终止指令</p>
-
-<p><strong>[Ctrl]+d</strong></p>
-
-<p>表示输入结束</p>
-
-<p><strong>man</strong> xxx</p>
-
-<p>查指令的用法，出现后按空格键或者page up/down翻页，q退出，/xxx向下查找关键字，?xxx向上查找，[Home]第一页，[End]最后一页，</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-12T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/cs-slash-web/'>CS/WEB</a>, <a class='category' href='/blog/categories/linux/'>Linux</a>, <a class='category' href='/blog/categories/raspberry-pi/'>Raspberry Pi</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/02/12/learning-linux-on-pi/" itemprop="url">在pi上学习linux</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>之前没怎么接触过linux，只在研究生课程computer vision上用过ubuntu。因此在大多数人拿到raspberry pi一脸兴奋的时候，我却登陆和关机都无从下手。</p>
-
-<p>当时从用户手册知道了进入图形界面的指令:</p>
-
-<p><strong> startx</strong></p>
-
-<p>然后等我想关机的时候就傻眼了（好吧, 关电源也行），手册里没有说，只能借助强大的google了。查到关机指令是:</p>
-
-<p><strong> sudo shutdown-h now</strong></p>
-
-<p>当时也没多想。最近开始在<strong><a href="http://www.codecademy.com/" target="_blank">codecademy</a></strong>看ruby，自然就看了点linux，方才恍然大悟。原来x就是图形接口 window 的w 下一个字母就是x。</p>
-
-<p>于是暂时搁置用virtualbox安装ubuntu，直接上手用pi来玩一玩吧。</p>
-
-<p>用户登录输入pi，密码是raspberry之后（不可见，当时又吓了我一跳，哎，初学者）出现：</p>
-
-<p><strong> pi@raspberrypi ~ $</strong></p>
-
-<p>pi是用户名，@后面是主机名，~表示在根目录，$是一般用户的提示字符(root用户是#)</p>
-
-<p>好了，下面按照《鸟哥的私房菜》敲几个指令。</p>
-
-<p><strong> pi@raspberrypi ~ $ date   #显示时间</strong></p>
-
-<p>时间显示是Sun Dec 16 23:34:16 GMT 2012 咳 暂时没有联网 结果就是这样了。</p>
-
-<p>还可以改格式，方法是后面加上 <strong>+%Y/%m/%d</strong></p>
-
-<p><strong> echo $LANG    #显示语言</strong></p>
-
-<p><strong> LANG=en_US    #修改语言</strong></p>
-
-<p>我当时装的时候选择的语言是 en_GB</p>
-
-<p>在文本模式下的字体实在太小了，暂时没找到方法改变，只好进窗口模式下的terminal敲码了。</p>
-
-<p><strong>cal    # 显示日历 cal 2013 #显示今年的日历啦</strong></p>
-
-<p>ps. 最近越来越喜欢我的TV了，VGA的线接笔记本当扩展屏，HDMI的线接pi当第二主机显示屏，可惜新家还没有“锅”，不然还能看个电视，哎，当初怎么就没狠心买一个HD的呢&#8230;</p>
-
-		
-		
-	</div>
-
-</article>
-
 </div>
 <nav id="pagenavi">
     
@@ -716,7 +740,7 @@ wpa-psk &#8220;xxx&#8221;                    #密码</p>
 </nav></div>
 			</div>
 			<footer id="footer" class="inner"><p>
-  Copyright &copy; 2015 - Lawrence Sun -
+  Copyright &copy; 2016 - Lawrence Sun -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
