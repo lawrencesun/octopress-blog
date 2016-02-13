@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Flask | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/flask/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2016-02-13T19:54:49+08:00</updated>
+  <updated>2016-02-13T19:57:04+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -23,6 +23,9 @@
 <p>最终按照上述的几个资源，搭建了一个基本满足需求的<a href="meddata.applinzi.com">Web应用</a>，因为时间不多，对验证和国际化用了简单粗暴的方法。</p>
 
 <p><img src="http://7xj95q.com1.z0.glb.clouddn.com/meddata.png?imageView2/2/w/400/h/300/q/85|watermark/2/text/TGF3cmVuY2UgU3Vu/font/YXJpYWw=/fontsize/200/fill/I0VGRUZFRg==/dissolve/56/gravity/SouthEast/dx/10/dy/10" alt="img" /></p>
+
+<!-- more -->
+
 
 <p>SAE是支持扩展第三方库的，但同时预先也安装了不少，因此需要配置与本地测试相同的环境，包括安装扩展库和指定版本。SAE的python文档都有一些具体的说明，但是排版比较散乱。</p>
 
