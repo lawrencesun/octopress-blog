@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Flask | Lawrence Sun]]></title>
+  <link href="http://voice.lawrencesun.info/blog/categories/flask/atom.xml" rel="self"/>
+  <link href="http://voice.lawrencesun.info/"/>
+  <updated>2016-02-13T19:54:49+08:00</updated>
+  <id>http://voice.lawrencesun.info/</id>
+  <author>
+    <name><![CDATA[Lawrence Sun]]></name>
+    <email><![CDATA[yuliang1987@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Flask应用SAE部署]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2016/02/13/flask-app-deploy/"/>
+    <updated>2016-02-13T12:53:04+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2016/02/13/flask-app-deploy</id>
+    <content type="html"><![CDATA[<p>如何Build一个Flask应用可以参考Flask<a href="flask.pocoo.org">官方文档</a>，The Flask Mega-Turorial和Flask Web Development一书。值得一提的是，许多教程使用的第三方库都是比较早的版本，有一些用法会稍有不同，大多数问题都是因为版本不同造成的。</p>
+
+<p>最终按照上述的几个资源，搭建了一个基本满足需求的<a href="meddata.applinzi.com">Web应用</a>，因为时间不多，对验证和国际化用了简单粗暴的方法。</p>
+
+<p><img src="http://7xj95q.com1.z0.glb.clouddn.com/meddata.png?imageView2/2/w/400/h/300/q/85|watermark/2/text/TGF3cmVuY2UgU3Vu/font/YXJpYWw=/fontsize/200/fill/I0VGRUZFRg==/dissolve/56/gravity/SouthEast/dx/10/dy/10" alt="img" /></p>
+
+<p>SAE是支持扩展第三方库的，但同时预先也安装了不少，因此需要配置与本地测试相同的环境，包括安装扩展库和指定版本。SAE的python文档都有一些具体的说明，但是排版比较散乱。</p>
+
+<p><strong>打包本地环境</strong></p>
+
+<p><code>
+Venv/lib/python2.7/site-packages
+zip -r site-packages.zip .
+</code></p>
+
+<p>将压缩包拷贝到项目目录下</p>
+
+<p><strong>配置第三方目标</strong></p>
+
+<p>即<code>config.yaml</code>文件，具体可参考SAE官方文档或我应用中提供的GitHub链接。</p>
+
+<p><strong>配置index.wsgi</strong></p>
+
+<p>```
+import os
+import sys</p>
+
+<p>root = os.path.dirname(<strong>file</strong>)</p>
+
+<h1>sys.path.insert(0, os.path.join(root, &lsquo;site-packages&rsquo;))</h1>
+
+<p>sys.path.insert(0, os.path.join(root, &lsquo;site-packages.zip&rsquo;))</p>
+
+<p>import sae
+from myapp import app, db
+db.create_all()
+application = sae.create_wsgi_app(app)
+```</p>
+
+<p><strong>使用Git上传SAE</strong></p>
+
+<p><code>
+~/myproject/app$ git inti
+~/myproject/app$ git add .
+~/myproject/app$ git commit -m "message"
+~/myproject/app$ git remote add sae https://git.sinacloud.com/AppName
+~/myproject/app$ git push sae master:1
+</code></p>
+
+<p><strong>本地和SAE数据库切换</strong></p>
+
+<p><code>
+try:
+  import sae.const
+  db = sae.const.MYSQL_DB
+  user = sae.const.MYSQL_USER
+  pw = sae.const.MYSQL_PASS
+  host = sae.const.MYSQL_HOST
+  port = int(sae.const.MYSQL_PORT)
+except ImportError:
+  pass
+</code></p>
+
+<p><strong>可能出现的问题</strong></p>
+
+<ul>
+<li>“OperationalError: (1045, &lsquo;access deny&rsquo;)”</li>
+</ul>
+
+
+<p>solution: 需要在SAE初始化MySQL数据库。</p>
+
+<ul>
+<li>“this is MySQLdb version (1, 2, 5, &lsquo;final&rsquo;, 1), but _mysql is version (1, 2, 3, &lsquo;final&rsquo;, 0)”</li>
+</ul>
+
+
+<p>solution: SAE上的版本低，删除site-packages下的mysqldb和mysql-python</p>
+
+<ul>
+<li>“OperationalError: (OperationalError) (2006, &lsquo;MySQL server has gone away&rsquo;)”</li>
+</ul>
+
+
+<p>solution: 因为sqlalchemy引起，在每次<code>session.commit()</code>之后加上<code>session.close()</code>，关闭当前session，将mysql连接还给连接池；并
+在config.py里加上<code>SQLALCHEMY_POOL_RECYCLE = 10</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Flask应用环境搭建]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2016/02/13/flask-app-environments/"/>
+    <updated>2016-02-13T12:52:51+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2016/02/13/flask-app-environments</id>
+    <content type="html"><![CDATA[<p>去年奶奶和我说，每天用手机自带的记事本来记录某一时刻的血压、心率，在排版
+查找和分析时比较麻烦，问我能不能做一个专门的APP来记录。这事一直拖到过年，因为年夜饭、拜年、同学会这些事，时间打得比较散，比较适合做这个。</p>
+
+<p>因为功能需求不多，所以考虑部署在几近免费的<a href="http://t.cn/R48mxld">新浪云</a>。SAE支持PHP, Python和JAVA，考虑到以后可能会用Python，于是毅然放弃了世界上最好的语言。</p>
+
+<p>Python的Web框架很多，最终选择了据说是比较轻的Flask。乍一看，也是和Rails类似的MVP结构，但是社区活跃度和支持度显然不是很高，遇到坑的时候往往需要花上不少时间去搜索。</p>
+
+<p>本机环境选择了Ubuntu，自带python 2.7, 需要配置MySQL.</p>
+
+<!-- more -->
+
+
+<ul>
+<li>为了使用easy_install, 安装python setuptools, 一组Python的工具包</li>
+</ul>
+
+
+<p><code>$ wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python</code></p>
+
+<ul>
+<li>安装virtualenv</li>
+</ul>
+
+
+<p><code>$ sudo easy_install virtualenv</code></p>
+
+<ul>
+<li>创建一个项目并启用用virtualenv创建一个新的环境</li>
+</ul>
+
+
+<p><code>
+$ mkdir myproject
+$ cd myproject
+~/myproject$ virtualenv venv
+~/myproject$ . venv/bin/activate
+</code></p>
+
+<ul>
+<li>安装Flask</li>
+</ul>
+
+
+<p><code>~/myproject$ pip install Flask</code></p>
+
+<ul>
+<li>在venv环境下安装flask-sqlalchemy</li>
+</ul>
+
+
+<p><code>pip install flask-sqlalchemy</code></p>
+
+<ul>
+<li>创建Flask应用</li>
+</ul>
+
+
+<p><code>
+~/myproject$ mkdir app
+~/myproject$ mkdir app/static
+~/myproject$ mkdir app/templates
+~/myproject$ cd app
+</code></p>
+
+<ul>
+<li>在app创建<code>config.yaml</code>, <code>index.wsgi</code>, <code>myapp.py</code>等</li>
+</ul>
+
+
+<p><code>
+~/myproject/app$ touch config.yaml
+~/myproject/app$ subl config.yaml
+</code></p>
+
+<ul>
+<li>MySQL安装配置，可以参考<a href="http://shmilyaw-hotmail-com.iteye.com/blog/1689160">这篇</a></li>
+</ul>
+
+
+<p>先确认是否安装MySQL</p>
+
+<p><code>$ mysql --version</code></p>
+
+<p>可能会遇到的问题：</p>
+
+<p><code>pin install mysql-python</code> 出现 <code>mysql_config not found</code></p>
+
+<p>solution: <code>sudo apt-get install libmysqlclient-dev</code></p>
+
+<p>出现<code>command 'x86_64-linux-gnu-gcc' failed with exit status 1</code></p>
+
+<p>solution: <code>sudo apt-get install python-dev</code></p>
+
+<ul>
+<li><p>python在使用，经常会出现indentation的问题，如果使用Sublime Text的话可以参考<a href="http://stackoverflow.com/questions/14773271/how-to-fix-convert-space-indentation-in-sublime-text">这篇</a></p></li>
+<li><p>测试</p></li>
+</ul>
+
+
+<p>```
+from flask import Flask, g, request</p>
+
+<p>app = Flask(<strong>name</strong>)
+app.debug = True</p>
+
+<p>@app.route(&lsquo;/&rsquo;)
+def hello():</p>
+
+<pre><code>return "Hello, world! - Flask"
+</code></pre>
+
+<p>if <strong>name</strong> == &lsquo;<strong>main</strong>&rsquo;:</p>
+
+<pre><code>app.run()
+</code></pre>
+
+<p>```</p>
+
+<p><code>~/myproject/app$ python myapp.py</code></p>
+
+<p>打开127.0.0.1:5000，出现"Hello, world! &ndash; Flask"</p>
+]]></content>
+  </entry>
+  
+</feed>

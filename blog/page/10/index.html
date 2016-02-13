@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Raspberry Pi Pi的root权限 在玩几个简单的指令时, 出现了bc 指令不能找到的问题 bash bc: command not found 于是google之，可能是没有安装的原因，但是试了apt-get install bc，出现了权限。 继续google，Debian &hellip;">
+<meta name="description" content="CS/WEB, Raspberry Pi, Ruby 在Raspberry Pi上安装Ruby/Rails Ruby on Rails 目前在国外很火，由于买不起Mac，Raspberry Pi 的Linux环境, 正好用来体验和学习一下Ruby。 装了网卡之后一切安装都变得方便了。 &hellip;">
 
 
 
@@ -107,6 +107,183 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-21T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cs-slash-web/'>CS/WEB</a>, <a class='category' href='/blog/categories/raspberry-pi/'>Raspberry Pi</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/02/21/raspberry-pi-and-rails/" itemprop="url">在Raspberry Pi上安装Ruby/Rails</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>Ruby on Rails 目前在国外很火，由于买不起Mac，Raspberry Pi 的Linux环境, 正好用来体验和学习一下Ruby。</p>
+
+<p>装了网卡之后一切安装都变得方便了。</p>
+
+<p>首先当然是Google之了。可是查到的资料不多，而且多数作者也是尝试，没有一个可靠的结论，也不知道运行速度如何。</p>
+
+<p>反正Pi就是用来折腾的，大不了重刷SD卡呗。</p>
+
+<p>#先更新一下</p>
+
+<p><strong>sudo apt-get update </strong></p>
+
+<p>#然后安装Ruby Version Manager（RVM）</p>
+
+<p><strong>curl -L get.rvm.io | bash -s stable &#8211;ruby</strong></p>
+
+<p>这里需要等很长时间&#8230;有说1小时的，有说3小时的。我决定采纳elinux上的建议，have a sleep and check in the morning.</p>
+
+<p>&#8212;&#8212;&#8212;-分割线&#8212;&#8212;&#8212;zzZZZ</p>
+
+<p>早上起来Ruby已经装好了~~  need to run &#8216;source/home/pi/.rvm/scripts/rvm&#8217; in all your open shell window.</p>
+
+<p><strong>ruby -v</strong></p>
+
+<p>ruby 1.9.3p385 (2013-02-06 revision 39114) [armv61-linux-eabi]</p>
+
+<p>#接下来安装rails</p>
+
+<p><strong>gem -v</strong></p>
+
+<p>1.8.25</p>
+
+<p><strong>gem install bundler rails</strong></p>
+
+<p>又要等了。。。好吧，去看会电视剧。。。</p>
+
+<p>&#8212;&#8212;&#8212;-分割线&#8212;&#8212;&#8212;zzZZZ</p>
+
+<p>安装完成。</p>
+
+<p><strong>rails -v</strong></p>
+
+<p>3.2.12</p>
+
+<p>&nbsp;</p>
+
+<p>后记：</p>
+
+<p>Linux环境下的命令操作让人回想起dos时代的种种，当时进入游戏也是敲键盘。安装程序真是方便，简单的一行命令就可以了。</p>
+
+<p>&nbsp;</p>
+
+<p>reference:
+<p id="firstHeading" lang="en"><a href="http://elinux.org/RPi_Ruby_on_Rails#Installing_Ruby_on_Rails_on_Raspberry_Pi">RPi Ruby on Rails</a></p>
+<a href="http://rayhightower.com/blog/2012/12/03/ruby-on-raspberry-pi/">Ruby on Raspberry Pi</a></p>
+
+<p><a href="http://ruby-china.org/wiki/install_ruby_guide">如何快速正确的安装 Ruby, Rails 运行环境</a></p>
+
+<p>&nbsp;
+<p lang="en"></p>
+&nbsp;</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-15T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/raspberry-pi/'>Raspberry Pi</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/02/15/raspberry-pi-link-to-wifi/" itemprop="url">让Raspberry Pi 连上 Wifi</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>Raspberry Pi B型支持网络连接，但是本身并不带有网卡。连不了网很多好玩的东西就无法实现了。</p>
+
+<p>所以立即在Amazon 买了无线网卡，见下图。</p>
+
+<p><img class="alignnone" title="wificard" alt="" src="http://storage.live.com/items/B61984F863EE934F!130?a.jpg" width="423" height="317" /></p>
+
+<p>由于Pi只有两个USB接口，只能鼠标键盘轮着插入了。。当然键盘更重要一些。</p>
+
+<p>启动后，网卡自动识别了。有两种方法可以联网。</p>
+
+<p>一种就是startx进入桌面操作，点击wifi config， 然后就和windows系统下一样，搜索wifi, 输入密码，done.</p>
+
+<p>还有一种就是命令输入。</p>
+
+<p>sudo nano /etc/network/interfaces</p>
+
+<p>之后会出现默认配置，如下。</p>
+
+<p><img class="alignnone" title="wificonfig" alt="" src="http://storage.live.com/items/B61984F863EE934F!131?a.jpg" width="423" height="317" /></p>
+
+<p>修改成以下内容：</p>
+
+<p>auto lo</p>
+
+<p>iface lo inet loopback<br />
+iface eth0 inet dhcp</p>
+
+<p>allow-hotplug wlan0       #热插拔<br />
+auto wlan0                          #默认使用wlan0设备名<br />
+iface wlan0 inet dhcp     #DHCP获取<br />
+wpa-ssid &#8220;yyy&#8221;                   #网络名称<br />
+wpa-psk &#8220;xxx&#8221;                    #密码</p>
+
+<p>修改好了之后</p>
+
+<p>sudo /etc/init.d/networking restart 运行</p>
+
+<p>可以看pi store、可以上网啦！</p>
+
+<p><img class="alignnone" title="pistore" alt="" src="http://storage.live.com/items/B61984F863EE934F!132?a.jpg" width="423" height="317" /></p>
+
+<p><img class="alignnone" title="pinet" alt="" src="http://storage.live.com/items/B61984F863EE934F!133?a.jpg" width="423" height="317" /></p>
+
+<p>reference:</p>
+
+<p><a title="Permanent Link to How To: WiFi on your Raspberry PI" href="http://pingbin.com/2012/12/setup-wifi-raspberry-pi/" rel="bookmark">How To: WiFi on your Raspberry PI</a><a href="http://blog.csdn.net/c80486/article/details/8545307" target="_blank">无线网络</a></p>
+
+<p><a href="http://blog.csdn.net/c80486/article/details/8545307" target="_blank">使用WIFI网卡连接</a></p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -580,129 +757,6 @@
 <div>吃完饭回旅舍，我们在楼下的电脑上互相加了非死不可，我说我都N久没更新了，在天朝还不能访问。我和安东尼都碰上了登陆异常检测，需要验证。有三种方法，一种是说出照片里圈的好友，一共5题，一种是回答安全问题，还有一种是手机短信认证。安东尼成功通过第一种。轮到我了，结果第一张照片就卡住了，完全不知道里面那个人是谁。然后我说我还是短信认证吧，我对回答安全问题也没有信心。凯特问我英文名是不是自己取的，我说是翻字典取的，其实我之前还用过其他名字，他们问我现在这个名字用了多久，不会是两天吧。</div>
 <div>早上起来我们就要各奔东西了，妮可中午就要离开贝尔法斯特了，我准备乘车去伦敦德里小镇。早餐时，凯特问我今天有什么计划，我说 i am going to have a big breakfast. 大笑。妮可说了几句道别的话，我对这种情形不太熟悉，就说谢谢和你也是之类的。凯特和安东尼说我们三个可以晚上见，我说 i will try not to miss the bus back here.</div>
 <div>20日于Europa bus station Cafe Nerd</div>
-&nbsp;</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-23T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/man-you-ji/'>曼游记</a>, <a class='category' href='/blog/categories/lu-xing/'>驴行</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2012/10/23/belfast/" itemprop="url">曼游记（x）之贝尔法斯特初印象</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><div /></p>
-
-<p>主流旅行类日志分两种，一种是图片为主配上一两行清新文字，一种是行程攻略。前者对摄影要求高，还要会看图说话，后者对自己用处不大，还容易误导别人。两者都不是我的强项，我写的就是流水账，如同我这次的旅行一样，没有攻略，没有计划，想到哪里走到哪里。</p>
-
-<p>这次的旅行非常轻松，主要是精神上的，肉体还是难免受点折磨的，从睡了两小时便赶往机场开始。</p>
-
-<p>&nbsp;</p>
-
-<p><strong>一、贝尔法斯特初印象，2012年10月19日，周五，阴</strong>
-<div>北爱尔兰是英国的一部分，所以这次来把这块拼图给补上。尽管这次坐的飞机就像是航空里的拖拉机，但也就一个小时便飞抵达北爱首府贝尔法斯特了。&nbsp;</div></p>
-
-<p>在贝尔法斯特走了一圈，印象并不是很深。这个城市也许是受到战乱的影响，没有留下特别宏伟古老的建筑。城市的建筑风格和道路建设都比较现代，说现代千万别联想到帝都魔都，在英国，除了伦敦都是乡村。相比伦敦那种坑坑洼洼的高跟鞋克星路，爱丁堡那种上坡下坡脚踝终结路，贝尔法斯特的道路算是不错，但也因此没有什么特色。</p>
-
-<p>和英格兰的黑色的士不同，这里的的士五颜六色，车型也不怎么统一，像是停在汽车站的黑车。尽管这里是北爱尔兰首府，街上的人却少的可怜，并不是随处可见中国人和阿叉黑佬。</p>
-
-<p>爱尔兰人的口音颇重，不过相对苏格兰的要好一些，夹杂着英音和美音。当然从发展角度说，美音才是杂交品种，还是近亲杂交。</p>
-
-<p>爱尔兰人也以喝酒出名，最著名的是irish coffee 和Guinness。不过如果和苏格兰人PK，估计胜算不大。我亲眼目睹一个苏格兰大哥喝威斯基喝嗨了，第二天照样高速飚车，还清醒地在摄像机前减速摆鬼脸。</p>
-
-<p>北爱尔兰也一直处于独立和联合的争斗中，数十年来从未中断，中央政府甚至一度收回了自治权。但在这里，并没有脱离英国的浓重迹象。比如在即将获得独立投票的苏格兰，导游特别是大胡子导游总会喊几句Freedom，讲述苏格兰人和英格兰人的斗争史，以及各种关于苏格兰人的笑话。独具一格的建筑和街头不穿短裤的风笛手，完全听不懂的苏格兰语以及到处飘扬的苏格兰旗，无不宣扬着自己的不同。在贝尔法斯特却看不到这些，除了墙上些许的涂鸦。</p>
-
-<p>
-<div>今天先是去了位于女王学院的植物园，非常宁静漂亮。然后去了当地的圣乔治市场，这里贩卖着各种服饰、古董、海鲜，聚集着各方赶来的老太太们。</div>
-<div><img title="photo-media" src="http://fmn.rrimg.com/fmn056/20121023/2315/b_large_fLOf_5e4100002dcf1263.jpg" border="0" alt="" /></div>
-<div><img title="photo-media" src="http://fmn.rrimg.com/fmn061/20121023/2315/b_large_OuYu_0849000001431263.jpg" border="0" alt="" /></div>
-<div>贝尔法斯特是工业重地，最著名的莫过于泰坦尼克号的建造。就在当年建造厂的边上，兴建了一座冰山状的博物馆。博物馆非常先进，有缆车、电梯和电影院等现代科技帮你了解当年的历史。在参观博物馆之前，刚巧赶上一个步行游览小团，导游带着我们从即将改造成五星酒店的设计室开始，走过当年的建筑工地，和修缮工地。</div>
-<div>泰坦尼克号还有两艘姐妹巨轮，命运都颇为坎坷。老大虽然平安服役数十载，最终却难逃解体的命运。老三却从来没有作为客轮远航，在战争中被作为了大型医院，结果遭遇德军炮火袭击，半小时不到就沉没了。导游说很多人都质疑贝尔法斯特的工艺，但是他说，泰坦尼克号是沉没是因为英国的工程师，苏格兰的水手还有加拿大的冰&#8230;导游说，电影里那个站在船头的镜头并不现实，因为当时的温度是零下25度&#8230;</div>
-<div>由于董事长在沉船后把所有有关泰坦尼克号的资料都销毁了，所以很多人都吹牛说自己的爷爷当年是造这艘船的。其实当年造船非常辛苦，一周工作65个小时，上厕所都要掐表，每周才发1磅（相当于现在的170多磅）。有趣的是，有两位工人偷摸着在随地小便以避免厕所掐表，不想却被摄影师拍进了纪录相片。接着我们又参观了建造工地，当年的轨道都还在，还有修缮装修的码头。</div>
-<div><img title="photo-media" src="http://fmn.rrfmn.com/fmn058/20121023/2315/b_large_ul2P_4fd400000aaf1263.jpg" border="0" alt="" /></div>
-<div><img title="photo-media" src="http://fmn.rrfmn.com/fmn058/20121023/2315/b_large_3DxF_08490000014b1263.jpg" border="0" alt="" /></div>
-<div><img title="photo-media" src="http://fmn.rrimg.com/fmn065/20121023/2315/b_large_tYb6_67ba00001b8e1263.jpg" border="0" alt="" /></div>
-<div>参观完博物馆，精疲力尽，走回在市中心吃了顿中餐自助，便回旅社了，见到了室友妮可，一位来自南非的医生，在爱尔兰共和国的一个地方工作。简单交谈了一会，就各自上床看书了。</div>
-<div>19日晚 于belfast international youth hostel.</div>
-
-&nbsp;</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-17T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/yun-duan-man-bi/'>云端漫笔</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2012/10/17/endless-tunnel/" itemprop="url">狂奔在没有尽头的隧道</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><div /></p>
-
-<p>最近看的几部电影类型各异，喜剧ted，西部lawless，逻辑looper，动作taken2。青春电影似乎在这个讲究特效和场面的时代有些没落，故事情节流于俗套，又或者脱离现实。当初选壁花少年（The perks of being a wallflower）看主要还是奔着Emma去的，预告片的情节和音乐也是选择的原因之一。</p>
-
-<p>男猪脚的人生真是悲催的可以，阿姨车祸、好友过世、没有朋友。上高中后，独自一人躲在派对一角，既渴望又恐惧地看着狂欢的人群；明知道正确答案，却不敢举手回答；爱上好友却又不敢大胆表白&#8230;然后两位好友偶然进入了他的生活，给他带来了欢乐和前行的勇气。他开始参加派对，在俱乐部表演重口味，甚至为好友大打出手。</p>
-
-<p>多次在男猪脚身上看到了自己的影子而产生青春的共鸣。但当我努力地想去找寻自己的青春记忆时，却痛苦地发现，也许是由于当初的波澜不惊，这段记忆竟如此破碎不堪，模糊不清。</p>
-
-<p>影片开始出现的幽暗隧道始终贯穿其中，男女猪脚站在狂奔的汽车上，张开双臂，呼喊着，勇敢地迎接未知的未来之路，最终穿过隧道，繁华尽显，并继续向前狂奔。</p>
-
-<p>幽暗的隧道，充满着未知和不确定，正如生活，有时看不清路，也看不到出口。但是为了尽头处的繁华，只有向前狂奔，拥抱未知。即使这个隧道没有尽头，也只盼狂奔的激情如青春般燃烧释放。</p>
-
-<p>&nbsp;</p>
-
-<p>PS: 80那个没有社交网络也能交友、没有短信却能面对面地交流、卡带里放着老歌的年代如今显得如此地生动而令人怀念。</p>
-
-<p>PS2: 相比老外，我们的中学生活真是too simple了，白瞎了这段青春年少。</p>
-
-<p>
 &nbsp;</p>
 
 		
