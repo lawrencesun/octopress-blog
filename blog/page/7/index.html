@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Dec 19th, 2013 Octopress Hello Octopress I have a blog built by powerful Wordpress and quite like it. There are plenty of great plugins and themes &hellip;">
+<meta name="description" content="Dec 20th, 2013 Octopress Deploying Octopress to Github Pages and Custom Domain After Set up Octopress blog, I tried to deploying it to my own &hellip;">
 
 
 
@@ -107,6 +107,94 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-20T08:16:04+08:00" data-updated="true" itemprop="datePublished">Dec 20<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>Octopress</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/12/20/deploy-octopress-to-github-page-and-custom-domain/" itemprop="url">Deploying Octopress to Github Pages and Custom Domain</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>After <a href="/blog/2013/12/19/set-up-octopress"><em>Set up Octopress blog</em></a>, I tried to deploying it to my own <em>subdomain</em>.</p>
+
+<p>First, create a new Github repository called &ldquo;username.github.io&rdquo;. e.g. I created a new repo &ldquo;lawrencesun.github.io&rdquo;.</p>
+
+<p>Then run:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rake</span> <span class="n">setup_github_pages</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Copy URL of this new repo.</p>
+
+<p>Next run:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rake</span> <span class="n">generate</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">deploy</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Run <em>rake preview</em> to see the blog at <em>localhost:4000</em></p>
+
+<p>Commit to source branch:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">git</span> <span class="n">add</span> <span class="o">.</span>
+</span><span class='line'><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;message&quot;</span>
+</span><span class='line'><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">source</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Octopress blog could be seen through <em>username.github.com</em> few minutes later.</p>
+
+<p>If you want to deploy it to your own domain like me,
+create a new CNAME record in domain name server.</p>
+
+<p>e.g. I went to DNS manage in the Godaddy, and added <em>voice</em> as the name, <strong>CNAME</strong> as the type and <em>lawrencesun.github.com</em> as the value.</p>
+
+<p>When typing in the new subdomain(in my case, voice.lawrencesun.info), it will point to a Github 404.</p>
+
+<p>Then run this to create a CNAME file in source directory:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">echo</span> <span class="s1">&#39;_yourdomain.com_(e.g. voice.lawrencesun.info)&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">source</span><span class="o">/</span><span class="no">CNAME</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Finally, run <em>rake generate</em> and <em>rake deploy</em> and git commit as well.</p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -630,71 +718,6 @@
 <p><span style="background-color: #f4f4f4; font-family: 'Courier 10 Pitch', Courier, monospace; font-size: 10px; line-height: 18px;">attr_accessible :title, :description, :image_url, :price</span></p>
 
 <p>railscasts is great, mark.</p>
-
-<p>&nbsp;</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-20T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/wan-zhuan-shu-ma/'>玩转数码</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/09/20/ipad2-upgrade-to-ios7/" itemprop="url">Ipad2也能升级ios7&#8230;</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>看到ios7支持ipad2的消息，顿时泪流满面。两年前的老机子仍然可以升级，颇有大V薛蛮子老来交(piao)友(chang)的风范。</p>
-
-<p>今天ios7正式发布，我匆忙打开Setting&#8211;General&#8211;Update&#8230; ios7出现了！下载&#8230;</p>
-
-<p>&#8230;&#8230;</p>
-
-<p>6小时过后&#8230;ios7三过家门而不入，终于在第四次成功安装上了。</p>
-
-<p>界面非常干净，配色很清新。首页图标很和谐，甚至有点看不清&#8230;更新过的应用会在图标左下角显示蓝点。大多数应用都还没有更新，图标显得突兀。文件夹可以扩展。</p>
-
-<p>下拉菜单是更加全面的消息提醒，上拉菜单是快速开关。</p>
-
-<p><img class="picasa" alt="" src="http://lh6.ggpht.com/-l6E79NBUdxU/UjuC7HWyFYI/AAAAAAAAAFk/MOy9ImVpJq4/s400/IMG_20130919_235817.jpg" width="180" height="240" /><img class="picasa" alt="" src="http://lh4.ggpht.com/-1fEFd500t9I/UjuDbqrawGI/AAAAAAAAAF0/3GPoBROXHhE/s400/IMG_20130919_235851.jpg" width="180" height="240" /></p>
-
-<p>桌面背景可以设置成动态的，另外应用图标也随着机子的改变而改变显示角度。</p>
-
-<p>不少原装应用界面都大幅改动，比如相机，时钟。</p>
-
-<p><img class="picasa" alt="" src="http://lh5.ggpht.com/-ogml36rTIAY/UjuDQxku9BI/AAAAAAAAAFs/iUezzZc1Jkw/s400/IMG_20130919_235919.jpg" width="180" height="240" /></p>
-
-<p>多任务切换也比以前方便，可以手势操作。</p>
-
-<p><img class="picasa" alt="" src="http://lh5.ggpht.com/-UvPdm3xDHnU/UjuCizIyLlI/AAAAAAAAAGM/jycnU5Bk6Kc/s400/IMG_20130920_000049.jpg" width="180" height="240" /></p>
-
-<p>尽管ipad2支持ios7，但是很多功能都没法实现。</p>
-
-<p>总的来说，ios7颠覆了原有ios系统的设计，但是创新明显不足，甚至让人产生使用安卓的错觉。由于设计从拟物到抽象，整个系统上手起来就会有点慢。现在ios在功能和设计上相比安卓已经不像几年前那样优势明显，反而需要学习对手。当然ios系统的稳定性，应用的高质量，以及和硬件的完美结合仍然领先业界。</p>
-
-<p>&nbsp;</p>
 
 <p>&nbsp;</p>
 
