@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Dec 20th, 2013 Octopress Deploying Octopress to Github Pages and Custom Domain After Set up Octopress blog, I tried to deploying it to my own &hellip;">
+<meta name="description" content="Dec 25th, 2013 Heroku, Ruby, Sinatra, Web App Cracker Jokes I spent few hours on building Cracker Jokes &mdash; A Web Application based on Ruby and &hellip;">
 
 
 
@@ -26,18 +26,14 @@
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-	<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'> -->
-
-	<link href='http://fonts.useso.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
-	<script src="http://ajax.useso.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'> 
+	<script src="http://cdn.staticfile.org/jquery/1.7.2/jquery.min.js"></script>
 
 	<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
 	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
 
-<link href="http://fonts.useso.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.useso.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 </head>
 
 
@@ -107,6 +103,106 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-25T13:25:07+08:00" data-updated="true" itemprop="datePublished">Dec 25<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/heroku/'>Heroku</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>, <a class='category' href='/blog/categories/sinatra/'>Sinatra</a>, <a class='category' href='/blog/categories/web-app/'>Web App</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/12/25/cracker-jokes/" itemprop="url">Cracker Jokes</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>I spent few hours on building <a href="http://crackerjokes.herokuapp.com/"><strong>Cracker Jokes</strong></a> &mdash; A Web Application based on <em>Ruby</em> and <em>Sinatra</em>.</p>
+
+<p>I have little knowledge of Christmas. Sleeping and eating instant noodles was the theme of last few Christmas. This year, however, I am invited to a Christmas party. Apart from chosing the gifts, I also got to know some more about Christmas tradition.</p>
+
+<p>Craker Jokes is one of them. I have seen it few times on UK films and also inside Tescos. So I came up with the idea &mdash; backing up some <em>cracker jokes</em> for the party.</p>
+
+<p>I decide to use Ruby and Sinatra to realize it. Since I built a similar web app last summer, I set up this app quickly.</p>
+
+<p>The feature is quite simple, pop up a joke and click to see the next. <a href="http://crackerjokes.herokuapp.com/">Click here and have fun!</a> Suggestions are always <a href="https://github.com/lawrencesun/crackerjokes"><em>welcome</em></a>.</p>
+
+<p><em>Merry Christmas and Happy New Year</em></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-22T01:34:23+08:00" data-updated="true" itemprop="datePublished">Dec 22<span>nd</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>Octopress</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/12/22/blogging-with-octopress/" itemprop="url">Blogging With Octopress &#8211; Posts, Comments and SEO</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>Run the following code to generate a new post:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rake</span> <span class="n">new_post</span><span class="o">[</span><span class="s2">&quot;new post&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Octopress uses <a href="http://daringfireball.net/projects/markdown/">Markdown</a>, which&rsquo;s clean and simple as writing a text. I am still learning how to use it well.</p>
+
+<p>In order to get better SEO optimizations, add <em>keywords</em> and <em>description</em> at the beginning of each post after <em>catagories</em>.</p>
+
+<p>Octopress also allows us to add google analytics. Simply add Analytics ID in _config.yml file and add included</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="p">{</span><span class="o">%</span> <span class="kp">include</span> <span class="n">google_analytics</span><span class="o">.</span><span class="n">html</span> <span class="o">%</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>in _includes/custom/after_footer.html.</p>
+
+<p>If you want to add comments after each post like me, add Disqus shortname in _config.yml file and set URL, username etc. in Disqus Setting.</p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -622,104 +718,6 @@ create a new CNAME record in domain name server.</p>
 <p><img class="picasa" alt="" src="http://lh3.ggpht.com/-KaS7ZhcdvG0/Ul1E9CsN5AI/AAAAAAAAAGc/VuVSHSStS2c/s400/mmexport1381843683970.jpg" width="180" height="240" /><img class="picasa" alt="" src="http://lh5.ggpht.com/-L1ccJyeA0-4/Ul1Od2mMp-I/AAAAAAAAAGs/EggQgs0_HYY/s400/mmexport1381846615893.jpg" width="179" height="240" /></p>
 
 <p>PS. If you like my story&#8230; If you have read through this&#8230; <del>Please donate £1 more or less on the right sidebar.</del> OR you can just close this window and say some words.</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-07T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/wordpress/'>WordPress</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/10/07/move-wordpress-to-secondery-directory/" itemprop="url">将wordpress博客搬家到二级目录</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>未来有可能将个人博客升级成个人网站，所以需要把博客放在二级目录下。整个搬家过程持续了将近一个半小时。</p>
-
-<p>首先，进入wp后台，在设置-常规里把wordpress URI 和 site address URL 全部指向lawrencesun.info/blog，保存。</p>
-
-<p>第二步就是内容搬迁，把根目录下所有wp内容全部移动到新目录blog文件夹中。这步可以使用ftp工具(leapftp, cuteftp等)，使用过程中发现，考虑到权限等原因还是用主机空间的ftp manager更方便。</p>
-
-<p>很多教程里说要复制 <a title="Glossary" href="http://codex.wordpress.org/Glossary#.htaccess">.htaccess</a>文件，由于我的服务器是win，所以找不到该文件。另外我的固定链接是非常难看的默认模式，好处是不用修改，搬家过程中自动转换了。</p>
-
-<p>由于我主域名还没有建设，所以暂时把根目录访问链接到二级目录了。这步需要将index.php复制到根目录，并把require<tt>(&#8216;./wp-blog-header.php&#8217;);改成require(&#8216;./wordpress/wp-blog-header.php&#8217;);</tt></p>
-
-<p>搬家完成后还有一些善后工作。主要就是原有文章内部的链接和上传图片的链接，没找到便捷的方法，只有用文本视图编辑文章里面链接和插图的路径了，加一个/blog即可，好在我上传本地的图片不多。</p>
-
-<p>参考文献：中文官网上的翻译水平很次，看起来费劲，还是看英文的准确，外加google就不多说了。</p>
-
-<p><a href="http://codex.wordpress.org/Moving_WordPress">http://codex.wordpress.org/Moving_WordPress</a></p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-07T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/rails/'>Rails</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/10/07/activemodelmassassignmentsecurityerror/" itemprop="url">ActiveModel::MassAssignmentSecurity::Error</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>本来按着agile web development with rails的书，照葫芦画瓢不该有啥问题，结果在create new product时候，ActiveModel::MassAssignmentSecurity::Error 闪亮登场。</p>
-
-<p>错误追踪到product new这行&#8230;此时我的解决错误能力为0。果断求助Google，stackoverflow再显神威。</p>
-
-<p>http://stackoverflow.com/questions/6163759/cant-mass-assign-protected-attributes</p>
-
-<p>solution:</p>
-
-<p>put this into app/models/product.rb</p>
-
-<p><span style="background-color: #f4f4f4; font-family: 'Courier 10 Pitch', Courier, monospace; font-size: 10px; line-height: 18px;">attr_accessible :title, :description, :image_url, :price</span></p>
-
-<p>railscasts is great, mark.</p>
-
-<p>&nbsp;</p>
 
 		
 		

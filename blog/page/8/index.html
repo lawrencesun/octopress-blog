@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="玩转数码 Ipad2也能升级ios7&#8230; 看到ios7支持ipad2的消息，顿时泪流满面。两年前的老机子仍然可以升级，颇有大V薛蛮子老来交(piao)友(chang)的风范。 今天ios7正式发布，我匆忙打开Setting&#8211;General&#8211;Update&# &hellip;">
+<meta name="description" content="WordPress 将wordpress博客搬家到二级目录 未来有可能将个人博客升级成个人网站，所以需要把博客放在二级目录下。整个搬家过程持续了将近一个半小时。 首先，进入wp后台，在设置-常规里把wordpress URI 和 site address URL 全部指向lawrencesun. &hellip;">
 
 
 
@@ -26,18 +26,14 @@
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-	<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'> -->
-
-	<link href='http://fonts.useso.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
-	<script src="http://ajax.useso.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'> 
+	<script src="http://cdn.staticfile.org/jquery/1.7.2/jquery.min.js"></script>
 
 	<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
 	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
 
-<link href="http://fonts.useso.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.useso.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 </head>
 
 
@@ -107,6 +103,104 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-07T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/wordpress/'>WordPress</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/10/07/move-wordpress-to-secondery-directory/" itemprop="url">将wordpress博客搬家到二级目录</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>未来有可能将个人博客升级成个人网站，所以需要把博客放在二级目录下。整个搬家过程持续了将近一个半小时。</p>
+
+<p>首先，进入wp后台，在设置-常规里把wordpress URI 和 site address URL 全部指向lawrencesun.info/blog，保存。</p>
+
+<p>第二步就是内容搬迁，把根目录下所有wp内容全部移动到新目录blog文件夹中。这步可以使用ftp工具(leapftp, cuteftp等)，使用过程中发现，考虑到权限等原因还是用主机空间的ftp manager更方便。</p>
+
+<p>很多教程里说要复制 <a title="Glossary" href="http://codex.wordpress.org/Glossary#.htaccess">.htaccess</a>文件，由于我的服务器是win，所以找不到该文件。另外我的固定链接是非常难看的默认模式，好处是不用修改，搬家过程中自动转换了。</p>
+
+<p>由于我主域名还没有建设，所以暂时把根目录访问链接到二级目录了。这步需要将index.php复制到根目录，并把require<tt>(&#8216;./wp-blog-header.php&#8217;);改成require(&#8216;./wordpress/wp-blog-header.php&#8217;);</tt></p>
+
+<p>搬家完成后还有一些善后工作。主要就是原有文章内部的链接和上传图片的链接，没找到便捷的方法，只有用文本视图编辑文章里面链接和插图的路径了，加一个/blog即可，好在我上传本地的图片不多。</p>
+
+<p>参考文献：中文官网上的翻译水平很次，看起来费劲，还是看英文的准确，外加google就不多说了。</p>
+
+<p><a href="http://codex.wordpress.org/Moving_WordPress">http://codex.wordpress.org/Moving_WordPress</a></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-07T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/10/07/activemodelmassassignmentsecurityerror/" itemprop="url">ActiveModel::MassAssignmentSecurity::Error</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>本来按着agile web development with rails的书，照葫芦画瓢不该有啥问题，结果在create new product时候，ActiveModel::MassAssignmentSecurity::Error 闪亮登场。</p>
+
+<p>错误追踪到product new这行&#8230;此时我的解决错误能力为0。果断求助Google，stackoverflow再显神威。</p>
+
+<p>http://stackoverflow.com/questions/6163759/cant-mass-assign-protected-attributes</p>
+
+<p>solution:</p>
+
+<p>put this into app/models/product.rb</p>
+
+<p><span style="background-color: #f4f4f4; font-family: 'Courier 10 Pitch', Courier, monospace; font-size: 10px; line-height: 18px;">attr_accessible :title, :description, :image_url, :price</span></p>
+
+<p>railscasts is great, mark.</p>
+
+<p>&nbsp;</p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -593,150 +687,6 @@
 <p><strong>祭旗</strong></p>
 
 <p>本来打算去年暑假去，结果还是决定去伦敦看四年一次的奥运会，把积蓄花的所剩无几。重整山河之后，如今终于可以兵发欧洲大陆了。祭旗就暂时免了，还是到时候用美食祭一祭我的五脏庙吧。</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-02T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/cs-slash-web/'>CS/WEB</a>, <a class='category' href='/blog/categories/rails/'>Rails</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/06/02/hello-rails/" itemprop="url">Hello, Rails!</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>两天时间完成了codeschool的<a href="http://www.codeschool.com/courses/rails-for-zombies-redux">Rails for Zombie</a>s，虽然还有不少内容似似而非，练习也基本是依样画瓢，不过总算对rails有了个初步印象。加上昨天用<a href="http://railsinstaller.org/">railsinstaller</a>在windows部署环境时，接触了rails的建立。</p>
-
-<p>晚上试着根据<a href="http://guides.rubyonrails.org/getting_started.html">railsguide</a>在ubuntu用rails建立个博客，结果出现了问题。</p>
-
-<p>在执行</p>
-
-<p>$ rails server</p>
-
-<p>出现了 runtime&#8230;错误。</p>
-
-<p>在ruby-china搜索到了答案，
-<pre class="lang:ruby decode:true">gem install execjs
-gem install therubyracer
-sudo apt-get install nodejs</pre>
-不过在执行第二行时，又出现了</p>
-
-<p>require ref&#8230;libv8&#8230;的错误</p>
-
-<p>在stackoverflow搜到解决方法：</p>
-
-<p>gem install therubyracer &#8211;version=0.10.2</p>
-
-<p><img class="alignnone" alt="" src="http://storage.live.com/items/B61984F863EE934F!140?a.jpg" width="414" height="322" /></p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-30T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/cs-slash-web/'>CS/WEB</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/05/30/start-using-heroku-and-problem-resolve/" itemprop="url">Start Using Heroku and Problem Resolve</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><strong>1. Signup</strong></p>
-
-<p><strong>2.Download and install Heroku:</strong></p>
-
-<p><a href="toolbelt.heroku.com">toolbelt.heroku.com</a></p>
-
-<p><strong>Login:</strong></p>
-
-<p>$ heroku login</p>
-
-<p><strong>3.Create heroku remote</strong></p>
-
-<p>$ heroku create</p>
-
-<p>$ git remote -v</p>
-
-<p>$ git remote rm heroku</p>
-
-<p>$ git remote add heroku git@heroku.com:xxxx.git     <em>#Here, xxxx.git is the git file created in the first line of this step</em></p>
-
-<p><strong>4. Deploying code</strong></p>
-
-<p>$ git push heroku master    #Some error occurs here, which cost me few hours to solve.</p>
-
-<p><strong>5. Error</strong></p>
-
-<p>&#8220;Permission denied (publickey). fatal: The remote end hung up unexpectedly.&#8221;</p>
-
-<p><strong>  check keys:</strong></p>
-
-<p>$ heroku keys</p>
-
-<p><strong>  remove the old keys:</strong></p>
-
-<p>$ heroku keys:remove xxx@xxxxxx</p>
-
-<p><strong>   generate new keys:</strong></p>
-
-<p>$ ssh-keygen -t rsa</p>
-
-<p>$ heroku keys:add /root/.ssh/id_rsa.pub</p>
-
-<p>&nbsp;</p>
-
-<p>* using &#8216;sudo&#8217;</p>
-
-<p>** reference:</p>
-
-<p><a href="https://devcenter.heroku.com/articles/keys">https://devcenter.heroku.com/articles/keys</a></p>
-
-<p><a href="http://www.whatibroke.com/?p=284">http://www.whatibroke.com/?p=284</a></p>
-
-<p><a href="http://stackoverflow.com/questions/2947190/pushing-app-to-heroku-problem">http://stackoverflow.com/questions/2947190/pushing-app-to-heroku-problem</a></p>
 
 		
 		

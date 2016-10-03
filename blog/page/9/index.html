@@ -9,7 +9,7 @@
 	<meta name="author" content="Lawrence Sun">
 
 	
-<meta name="description" content="Startup Web or Native Apps Although my first product(and few more) in my beta company(means it haven&#8217;t been registered yet&#8230; ) was &hellip;">
+<meta name="description" content="CS/WEB, Rails Hello, Rails! 两天时间完成了codeschool的Rails for Zombies，虽然还有不少内容似似而非，练习也基本是依样画瓢，不过总算对rails有了个初步印象。加上昨天用railsinstaller在windows部署环境时， &hellip;">
 
 
 
@@ -26,18 +26,14 @@
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-	<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'> -->
-
-	<link href='http://fonts.useso.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
-	<script src="http://ajax.useso.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'> 
+	<script src="http://cdn.staticfile.org/jquery/1.7.2/jquery.min.js"></script>
 
 	<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
 	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
 
-<link href="http://fonts.useso.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.useso.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 </head>
 
 
@@ -107,6 +103,150 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-02T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cs-slash-web/'>CS/WEB</a>, <a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/06/02/hello-rails/" itemprop="url">Hello, Rails!</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>两天时间完成了codeschool的<a href="http://www.codeschool.com/courses/rails-for-zombies-redux">Rails for Zombie</a>s，虽然还有不少内容似似而非，练习也基本是依样画瓢，不过总算对rails有了个初步印象。加上昨天用<a href="http://railsinstaller.org/">railsinstaller</a>在windows部署环境时，接触了rails的建立。</p>
+
+<p>晚上试着根据<a href="http://guides.rubyonrails.org/getting_started.html">railsguide</a>在ubuntu用rails建立个博客，结果出现了问题。</p>
+
+<p>在执行</p>
+
+<p>$ rails server</p>
+
+<p>出现了 runtime&#8230;错误。</p>
+
+<p>在ruby-china搜索到了答案，
+<pre class="lang:ruby decode:true">gem install execjs
+gem install therubyracer
+sudo apt-get install nodejs</pre>
+不过在执行第二行时，又出现了</p>
+
+<p>require ref&#8230;libv8&#8230;的错误</p>
+
+<p>在stackoverflow搜到解决方法：</p>
+
+<p>gem install therubyracer &#8211;version=0.10.2</p>
+
+<p><img class="alignnone" alt="" src="http://storage.live.com/items/B61984F863EE934F!140?a.jpg" width="414" height="322" /></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-30T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cs-slash-web/'>CS/WEB</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/posts/2013/05/30/start-using-heroku-and-problem-resolve/" itemprop="url">Start Using Heroku and Problem Resolve</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p><strong>1. Signup</strong></p>
+
+<p><strong>2.Download and install Heroku:</strong></p>
+
+<p><a href="toolbelt.heroku.com">toolbelt.heroku.com</a></p>
+
+<p><strong>Login:</strong></p>
+
+<p>$ heroku login</p>
+
+<p><strong>3.Create heroku remote</strong></p>
+
+<p>$ heroku create</p>
+
+<p>$ git remote -v</p>
+
+<p>$ git remote rm heroku</p>
+
+<p>$ git remote add heroku git@heroku.com:xxxx.git     <em>#Here, xxxx.git is the git file created in the first line of this step</em></p>
+
+<p><strong>4. Deploying code</strong></p>
+
+<p>$ git push heroku master    #Some error occurs here, which cost me few hours to solve.</p>
+
+<p><strong>5. Error</strong></p>
+
+<p>&#8220;Permission denied (publickey). fatal: The remote end hung up unexpectedly.&#8221;</p>
+
+<p><strong>  check keys:</strong></p>
+
+<p>$ heroku keys</p>
+
+<p><strong>  remove the old keys:</strong></p>
+
+<p>$ heroku keys:remove xxx@xxxxxx</p>
+
+<p><strong>   generate new keys:</strong></p>
+
+<p>$ ssh-keygen -t rsa</p>
+
+<p>$ heroku keys:add /root/.ssh/id_rsa.pub</p>
+
+<p>&nbsp;</p>
+
+<p>* using &#8216;sudo&#8217;</p>
+
+<p>** reference:</p>
+
+<p><a href="https://devcenter.heroku.com/articles/keys">https://devcenter.heroku.com/articles/keys</a></p>
+
+<p><a href="http://www.whatibroke.com/?p=284">http://www.whatibroke.com/?p=284</a></p>
+
+<p><a href="http://stackoverflow.com/questions/2947190/pushing-app-to-heroku-problem">http://stackoverflow.com/questions/2947190/pushing-app-to-heroku-problem</a></p>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -544,117 +684,6 @@ chown - change file ownership</p>
 <p>我在想，要是前些年也投身演艺界，说不定也能跻身右派和公知了。当然我是不会用天天嚷选票这种低端技术的，有选票又如何，能投苍老师吗，大家都是演戏，何必如此较真。那如何取悦和扩大脑残粉呢，大概就是时而愤慨，时而悲壮下吧。</p>
 
 <p>阅读不成，只有看电影了。一翻全是主旋律，林肯，逃离德黑兰&#8230; 看得昏昏欲睡。好吧，既来之，则睡之。下次坐飞机还是带上kindle吧。</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-04T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/yun-duan-man-bi/'>云端漫笔</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/03/04/ride-a-bike/" itemprop="url">骑车是一项蛋疼的运动</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>本来两烩期间，当响应号召吹下牛皮，可惜好久没有扯淡了，所以还是先扯淡吧。</p>
-
-<p>骑车是一项蛋疼的运动，尤其一加速就扯着蛋。我有时会怀疑这是锻炼身体还是折磨身体。当然偶尔骑一下还是不错的。记得小时候为了完成社区实践，常常去参加社区“你丢我捡”活动。骑车有点类似，“你排我吸”，全心全意为人民服雾。“你丢我捡”可以得一个社区主任的盖章，“你排我吸”则更加高尚一些，纯公益活动，连擦鼻灰的纸都自己掏。</p>
-
-<p>我还是很喜欢这项运动的，在骑的时候可以思考人生而不会被队友和球迷骂。以前骑车时胡思乱想，有时骑到一半发现自己身处十字路口，被汽车十面埋伏。</p>
-
-<p>飙车是很有意思的。可惜车烂腿短，没有任何优势，常常被人超车。唯一逆袭的方法，大概就是许愿道路前方有个黑心钉，阻止前方后视灯光的渐渐远逝。在小不列颠，带上头盔手套，开启前后灯，还可以和汽车一起深夜飙车。每当追着警车狂骑的时候，都会让人想起极品飞车热力追踪。</p>
-
-<p>先扯这么多。</p>
-
-<p>&nbsp;</p>
-
-<p>&nbsp;</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-03T00:00:00+08:00" data-updated="true" itemprop="datePublished"></time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/raspberry-pi/'>Raspberry Pi</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/posts/2013/03/03/raspberry-pi-and-gedit/" itemprop="url">在raspberry Pi上安装gedit</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>在尝试安装sublime text 2失败之后，转向了gedit。之前安装了vim，但是作为linux新手，面对vim实在是有点无从下手。</p>
-
-<p>gedit是在尝试安装sublime时装的，至少可以使用。<strong>sudo apt-get install gedit</strong></p>
-
-<p>google了一下之后发现很多人推荐安装gmate以达到textmate的效果。</p>
-
-<p>安装方法如下：</p>
-
-<p><strong>sudo apt-add-repository ppa:ubuntu-on-rails/ppa </strong></p>
-
-<p><strong>sudo apt-get update </strong></p>
-
-<p><strong>sudo apt-get install gedit-gmate</strong></p>
-
-<p>可是在安装过程中出现两个错误。第一个错误是没有apt-add-repository指令，似乎可以通过</p>
-
-<p><strong>sudo apt-get install python-software-properties</strong></p>
-
-<p>来解决。参考<a href="http://askubuntu.com/questions/38021/how-to-add-a-ppa-on-a-server" target="_blank">这里</a>。</p>
-
-<p>但是最终还是安装不了。</p>
-
-<p>其他几个<a href="http://blog.sudobits.com/2012/03/06/top-10-gedit-plugins-for-programmers/" target="_blank">常见的插件</a>可以安装。</p>
-
-<p><strong>sudo apt-get install gedit-plugins</strong></p>
-
-<p><strong>
-</strong></p>
-
-<p>&nbsp;</p>
 
 		
 		
