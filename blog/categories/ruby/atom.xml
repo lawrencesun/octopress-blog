@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2016-10-04T15:36:57+08:00</updated>
+  <updated>2016-10-04T15:48:11+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -201,7 +201,7 @@ $ rails g mailer user_mailer password_reset
 
 <p>```ruby
 class UserMailer &lt; ActionMailer::Base
-  default from: &ldquo;<a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#58;&#x66;&#x72;&#111;&#109;&#64;&#x65;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#x63;&#x6f;&#x6d;">&#102;&#x72;&#x6f;&#x6d;&#64;&#101;&#120;&#97;&#109;&#x70;&#x6c;&#101;&#46;&#x63;&#111;&#x6d;</a>&rdquo;</p>
+  default from: &ldquo;<a href="&#x6d;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#102;&#x72;&#x6f;&#109;&#x40;&#x65;&#x78;&#97;&#109;&#x70;&#108;&#101;&#46;&#x63;&#x6f;&#x6d;">&#x66;&#x72;&#111;&#x6d;&#64;&#101;&#120;&#x61;&#x6d;&#x70;&#108;&#x65;&#x2e;&#x63;&#111;&#109;</a>&rdquo;</p>
 
 <p>  def password_reset(user)</p>
 
