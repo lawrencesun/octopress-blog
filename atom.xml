@@ -4,7 +4,7 @@
   <title><![CDATA[Lawrence Sun]]></title>
   <link href="http://voice.lawrencesun.info/atom.xml" rel="self"/>
   <link href="http://voice.lawrencesun.info/"/>
-  <updated>2016-10-04T15:48:11+08:00</updated>
+  <updated>2017-03-06T01:01:28+08:00</updated>
   <id>http://voice.lawrencesun.info/</id>
   <author>
     <name><![CDATA[Lawrence Sun]]></name>
@@ -12,6 +12,36 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[城市骑行]]></title>
+    <link href="http://voice.lawrencesun.info/posts/2017/03/05/cycling-in-the-city/"/>
+    <updated>2017-03-05T22:58:37+08:00</updated>
+    <id>http://voice.lawrencesun.info/posts/2017/03/05/cycling-in-the-city</id>
+    <content type="html"><![CDATA[<p><strong>城市骑行</strong></p>
+
+<p>一个阳光明媚的周五，突然决定骑车回家。踏上一辆小红车，自西向东，顺风而行。查了地图，17公里。当年骑行半个小时便出城门，如今吭哧半个时辰，却只能横跨半个杭城；当年卧铺上一个昼夜方至帝都，如今高铁上刷个知乎，就到了京城吃上烤鸭——城市变大而世界变小了。</p>
+
+<p>诚然，城市化是必然历程。但现今这城市浓妆艳抹，逐渐失去了昔日的风雅脱俗。城市的建设就如同韩国的整容，千篇一律。若不是看到道路一侧的西溪湿地，直把杭州作汴州倒也是可能的。</p>
+
+<p>一路相安无事。骑罢下车，方觉七窍不通。不禁感慨当下骑行者无疑是伟大的，踩下脚踏板便化身移动吸尘器，为环境建设献出绵薄之力。</p>
+
+<!-- more -->
+
+
+<p><strong>人车相让</strong></p>
+
+<p>杭城有一个暖心的地方全国知名，就是人行横道车让人。细想来，这固然是文明礼仪之体现，特别对行人来说无疑是一种良好的体验，但对行车人来说可能就欠佳了。十步一停，不仅废了油钱，也磨了耐性，通行效率低下。理想的道路应是接近全封闭的，无须顾忌路旁杀出程咬金来，行人亦有天桥地道四通八达而无须在车灯前徘徊。</p>
+
+<p><strong>城乡</strong></p>
+
+<p>如果逆向而行，便出离了城市。当初的田园村庄早已踪迹全无。今年岁初，去了义乌佛堂，剧院戏台，老街小巷，楼阁庙宇&hellip;这片城市吞噬的边缘之地，正挽留着即将消逝的记忆。也许走得远了，有时需要回头寻思根在哪里。</p>
+
+<p><strong>人类简史</strong></p>
+
+<p>但人类的步伐不会停滞，甚至加速前行。《人类简史》认为八卦和故事是人类崛起的起因。由此想来，现在的人工智能的确还处于人工智障的水准。随着算法和计算能力的不断突破，越来越觉得本世纪可能是人类历史的重要存档点。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[吴哥之美]]></title>
@@ -1520,82 +1550,6 @@
 <p>4.会发现还是不能登陆Web端，因此需要在Console端输入http server enable</p>
 
 <p>通过以上步骤，就可以进入Web端界面并根据需求对路由器进行配置了。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rails Notes: At or Reply to Someone]]></title>
-    <link href="http://voice.lawrencesun.info/posts/2014/11/09/rails-notes-at-someone/"/>
-    <updated>2014-11-09T08:52:19+08:00</updated>
-    <id>http://voice.lawrencesun.info/posts/2014/11/09/rails-notes-at-someone</id>
-    <content type="html"><![CDATA[<p><strong>1. At</strong></p>
-
-<p>The &lsquo;@&rsquo; function is used widely on web apps.</p>
-
-<p>Here I use a jquery plugin called <a href="https://github.com/ichord/At.js">atwho</a>. First download jquery.atwho.js, jquery.caret.js, jquery.atwho.css. Then add these files to app/assets.</p>
-
-<p>Add <code>//= require jquery.atwho</code> to app/assets/javascripts/application.js and add <code>*= require jquery.atwho</code> to app/assets/stylesheets/application.css.scss.</p>
-
-<!-- more -->
-
-
-<p>Then use it to at users when replying a comment. Following <a href="http://happycasts.net/episodes/76">happycasts</a>, bind the textarea like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$(function(){
-</span><span class='line'>  var commenter = [];
-</span><span class='line'>  var commenter_exist= [];
-</span><span class='line'>  $('.comment-user').each(function() {
-</span><span class='line'>      if($.inArray($(this).text(), commenter_exist) &lt; 0){
-</span><span class='line'>      commenter.push($(this).text());
-</span><span class='line'>      commenter_exist.push($(this).text());
-</span><span class='line'>    }
-</span><span class='line'>  });
-</span><span class='line'>  $('textarea').atwho({at:"@", 'data':commenter});
-</span><span class='line'>});</span></code></pre></td></tr></table></div></figure>
-
-
-<p>One problem I found was this atwho funciont didn&rsquo;t work until refreshed this page. When I deleted turoblink, it worked fine. So Finally I solved it by using a gem called <a href="https://github.com/kossnocorp/jquery.turbolinks">jquery.turbolinks</a>.</p>
-
-<p><strong>2. Reply</strong></p>
-
-<p>Sometimes we would like to reply to other&rsquo;s comment. When we click reply button, we want to &lsquo;@&rsquo; this comment&rsquo;s author.</p>
-
-<p>Thanks to <a href="https://github.com/chloerei/campo">Campo</a> app, I added reply function to my own rails app.</p>
-
-<p>Add following parts to comments view.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;a class="btn", data-reply-to="@&lt;%= comment.user.name %&gt; " &gt;
-</span><span class='line'>  &lt;i class="fa fa-reply"&gt;&lt;/i&gt;
-</span><span class='line'>&lt;/a&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then include a coffee javascript file. Remember to set corrosponding class/id in the html file.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$(document).on 'click', '.comments [data-reply-to]', -&gt;
-</span><span class='line'>  textarea = $('#new_comment textarea')
-</span><span class='line'>  textarea.focus()
-</span><span class='line'>  textarea.val(textarea.val() + $(this).data('reply-to'))</span></code></pre></td></tr></table></div></figure>
-
-
-
 ]]></content>
   </entry>
   
